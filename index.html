@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartGen Fussbal Akademie – App Prototype</title>
+  <title>SmartGen Fussball Akademie – App Prototype</title>
   <meta name="theme-color" content="#0b0f14" />
+
   <style>
     :root{
       --bg:#0b0f14;
@@ -13,13 +14,16 @@
       --text:#e9f0ff;
       --muted:#9fb0c9;
       --line:rgba(255,255,255,.10);
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      /* SmartGen Accent (Orange) */
-      --accent:#ff6a00;
-      --accent2:#ff9a3d;
-      --ok:#2ee59d;
-      --warn:#ffd166;
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+
+      /* Accent (Orange Neon - subtil) */
+      --accent:#ff8a00;
+      --accent2:#ffb14a;
+
+      --ok:#25d07f;
+      --warn:#ffb020;
       --danger:#ff4d4d;
+
       --radius:18px;
     }
 
@@ -28,1027 +32,612 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background:
-        radial-gradient(1200px 500px at 15% -10%, rgba(255,106,0,.22), transparent 55%),
-        radial-gradient(900px 500px at 100% 10%, rgba(46,229,157,.14), transparent 60%),
-        linear-gradient(180deg, #070a0f 0%, #0b0f14 45%, #070a0f 100%);
       color:var(--text);
-      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 520px at 15% -10%, rgba(255,138,0,.14), transparent 55%),
+        radial-gradient(900px 520px at 100% 10%, rgba(255,138,0,.08), transparent 60%),
+        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
+        linear-gradient(180deg, #070a0f 0%, var(--bg) 45%, #070a0f 100%);
     }
 
-    /* App frame */
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:22px 16px 110px;
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap:16px;
-    }
-
-    @media (max-width: 980px){
-      .wrap{grid-template-columns:1fr; padding-bottom:140px;}
-    }
-
-    /* Top bar */
-    .top{
-      position:sticky;
-      top:0;
-      z-index:10;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(11,15,20,.92) 0%, rgba(11,15,20,.55) 100%);
-      border-bottom:1px solid var(--line);
-    }
-    .topInner{
-      max-width:1100px;
-      margin:0 auto;
-      padding:14px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 60px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:16px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px;
+      display:flex; align-items:center; gap:12px;
     }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.25), transparent 70%),
-        linear-gradient(135deg, var(--accent) 0%, var(--accent2) 55%, #ffd3a8 130%);
-      box-shadow: 0 10px 30px rgba(255,106,0,.25);
-      position:relative;
-      overflow:hidden;
+    .logoDot{
+      width:38px; height:38px; border-radius:14px;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+                  linear-gradient(135deg, rgba(255,138,0,.95), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,138,0,.18);
     }
-    .logo:after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-      transform: rotate(25deg);
-      animation: shine 4.5s infinite ease-in-out;
-    }
-    @keyframes shine{
-      0%,55%{transform:translateX(-30%) rotate(25deg)}
-      100%{transform:translateX(55%) rotate(25deg)}
-    }
+    .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
+    .brand p{margin:0; color:var(--muted); font-size:12px}
 
-    .brandTitle{line-height:1.05}
-    .brandTitle b{display:block; font-size:14px; letter-spacing:.2px}
-    .brandTitle span{display:block; font-size:12px; color:var(--muted)}
     .pill{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color:var(--muted);
-      display:flex; align-items:center; gap:8px;
-      white-space:nowrap;
-    }
-    .dot{width:7px; height:7px; border-radius:99px; background:var(--ok); box-shadow: 0 0 0 3px rgba(46,229,157,.12);}
-    .btn{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
-      cursor:pointer;
-      transition: .2s ease;
       display:inline-flex; align-items:center; gap:8px;
-      user-select:none;
+      border:1px solid var(--line);
+      padding:10px 12px; border-radius:999px;
+      background: rgba(16,24,36,.55);
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+      font-size:12px; color:var(--muted);
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07);}
-    .btnAccent{
-      border-color: rgba(255,106,0,.35);
-      background: linear-gradient(135deg, rgba(255,106,0,.25), rgba(255,154,61,.14));
-      color: var(--text);
+    .pill b{color:var(--text); font-weight:600}
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--ok);
+      box-shadow: 0 0 0 4px rgba(37,208,127,.10);
     }
-    .btnAccent:hover{background: linear-gradient(135deg, rgba(255,106,0,.32), rgba(255,154,61,.16));}
 
-    /* Cards */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
+    }
+
     .card{
-      background: linear-gradient(180deg, rgba(16,24,36,.88), rgba(15,23,34,.78));
+      background: linear-gradient(180deg, rgba(16,24,36,.80), rgba(10,14,20,.65));
       border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .cardPad{padding:14px}
-    .cardHeader{
-      padding:14px 14px 10px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .cardHeader h3{
-      margin:0;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:0;
-      font-size:12px;
-      color:var(--muted);
-    }
 
-    /* Left column – mobile preview */
-    .phone{
-      border-radius: 28px;
-      padding:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.10);
-      position:sticky;
-      top:86px;
-      height: calc(100vh - 120px);
-      min-height: 620px;
-      overflow:hidden;
-    }
-    @media (max-width: 980px){
-      .phone{position:relative; top:auto; height:auto; min-height:auto;}
-    }
-
-    .screen{
-      height:100%;
-      border-radius:22px;
+    /* ===== PROFILE HEADER (ID CARD FEEL) ===== */
+    .idHeader{
+      position:relative;
+      padding:18px;
       background:
-        radial-gradient(800px 400px at 50% 0%, rgba(255,106,0,.17), transparent 55%),
-        radial-gradient(700px 420px at 0% 60%, rgba(46,229,157,.12), transparent 60%),
-        linear-gradient(180deg, #091019, #0b0f14);
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
+        radial-gradient(700px 240px at 10% 0%, rgba(255,138,0,.18), transparent 60%),
+        radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border-bottom:1px solid var(--line);
+    }
+    .idHeader::after{
+      content:"";
+      position:absolute; inset:-2px;
+      pointer-events:none;
+      background: radial-gradient(520px 220px at 12% 10%, rgba(255,138,0,.20), transparent 60%);
+      opacity:.8;
+      filter: blur(10px);
     }
 
-    .screenTop{
-      padding:14px 14px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+    .idRow{
+      position:relative;
+      display:flex; gap:14px; align-items:flex-start; z-index:1;
     }
     .avatar{
-      width:34px; height:34px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
-      border:1px solid rgba(255,255,255,.10);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:700; color: rgba(255,255,255,.85);
+      width:74px;height:74px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#0b0f14;
+      overflow:hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      flex:0 0 auto;
     }
-    .screenTitle{
-      display:flex; flex-direction:column; gap:2px;
-      min-width:0;
-    }
-    .screenTitle b{font-size:13px}
-    .screenTitle span{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-    .screenBody{padding:12px; overflow:auto; flex:1;}
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-    .kpi{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius:16px;
-      padding:10px;
-      min-height:76px;
-    }
-    .kpi .label{font-size:11px; color:var(--muted)}
-    .kpi .val{font-size:18px; margin-top:4px; font-weight:800}
-    .kpi .hint{font-size:11px; margin-top:2px; color:rgba(255,255,255,.72)}
-    .kpi.accent{border-color: rgba(255,106,0,.28); background: rgba(255,106,0,.08);}
-    .kpi.ok{border-color: rgba(46,229,157,.26); background: rgba(46,229,157,.07);}
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
 
-    .list{
-      margin-top:10px;
-      display:flex; flex-direction:column; gap:10px;
+    .idInfo{flex:1}
+    .nameLine{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:6px;
     }
-    .item{
-      padding:10px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
+    .name{
+      font-size:18px; margin:0;
+      letter-spacing:.4px;
     }
-    .item b{font-size:12px}
-    .item span{display:block; font-size:11px; color:var(--muted); margin-top:2px}
     .badge{
-      font-size:11px;
-      padding:6px 9px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      color:rgba(255,255,255,.82);
-      background: rgba(255,255,255,.04);
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,138,0,.22);
+      background: rgba(255,138,0,.08);
+      color:#ffd9b0; font-size:12px;
+      box-shadow: 0 10px 30px rgba(255,138,0,.10);
       white-space:nowrap;
     }
-    .badge.accent{border-color: rgba(255,106,0,.35); background: rgba(255,106,0,.10);}
-    .badge.ok{border-color: rgba(46,229,157,.35); background: rgba(46,229,157,.10);}
-    .badge.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.10);}
-
-    /* Bottom nav (mobile) */
-    .nav{
-      display:flex;
-      gap:8px;
-      padding:10px;
-      border-top:1px solid rgba(255,255,255,.08);
-      background: rgba(10,14,18,.72);
-      backdrop-filter: blur(10px);
-    }
-    .tab{
-      flex:1;
-      text-align:center;
-      padding:9px 8px;
-      border-radius:14px;
-      border:1px solid transparent;
-      color: rgba(255,255,255,.75);
-      background: transparent;
-      cursor:pointer;
-      transition:.18s ease;
-      font-size:11px;
-      user-select:none;
-    }
-    .tab:hover{background: rgba(255,255,255,.05);}
-    .tab.active{
-      border-color: rgba(255,106,0,.35);
-      background: rgba(255,106,0,.12);
-      color: var(--text);
-    }
-
-    /* Right column */
-    .rightCol{display:flex; flex-direction:column; gap:16px;}
-
-    .hero{
-      padding:18px 16px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .hero h1{
-      margin:0;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.45;
-      max-width:62ch;
-    }
-
-    .seg{
-      display:flex; gap:8px; flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .chips{
-      display:flex; flex-wrap:wrap; gap:8px;
+    .miniChip{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
     }
     .chip{
-      font-size:12px;
       padding:8px 10px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color:rgba(255,255,255,.82);
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-    }
-    .chip:hover{background: rgba(255,255,255,.06);}
-    .chip.active{
-      border-color: rgba(255,106,0,.35);
-      background: rgba(255,106,0,.12);
-      color: var(--text);
-    }
-
-    .section{
-      padding:14px;
-      display:none;
-      animation: fade .18s ease both;
-    }
-    .section.active{display:block;}
-    @keyframes fade{from{opacity:.5; transform: translateY(4px)} to{opacity:1; transform: translateY(0)}}
-
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    .field{
-      flex:1;
-      min-width: 220px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      padding:10px 12px;
-      border-radius:14px;
-      color:rgba(255,255,255,.86);
+      background: rgba(16,24,36,.55);
+      color:var(--muted);
       font-size:12px;
+    }
+    .chip b{color:var(--text); font-weight:600}
+
+    .idControls{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.65);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:12px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,138,0,.35)}
+    .btn.primary{
+      border-color: rgba(255,138,0,.38);
+      background: linear-gradient(135deg, rgba(255,138,0,.22), rgba(255,177,74,.10));
+      box-shadow: 0 16px 40px rgba(255,138,0,.12);
+    }
+
+    /* ===== content sections ===== */
+    .section{padding:16px 18px;}
+    .section h2{
+      margin:0 0 10px 0;
+      font-size:14px;
+      letter-spacing:.4px;
+      color:#dfe9ff;
+    }
+    .muted{color:var(--muted); font-size:12px; line-height:1.45}
+
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .row{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(16,24,36,.40);
+    }
+    .row .left{display:flex; gap:10px; align-items:center}
+    .icon{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color:#ffd9b0;
+    }
+    .rowTitle{margin:0; font-weight:700; font-size:13px}
+    .rowSub{margin:0; color:var(--muted); font-size:12px}
+    .tag{
+      font-size:11px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .tag.ok{border-color: rgba(37,208,127,.35); color:#bff4de; background: rgba(37,208,127,.10)}
+    .tag.warn{border-color: rgba(255,176,32,.35); color:#ffe2b8; background: rgba(255,176,32,.10)}
+    .tag.danger{border-color: rgba(255,77,77,.35); color:#ffd0d0; background: rgba(255,77,77,.10)}
+
+    /* ===== Slots ===== */
+    .slotsGrid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .slot{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(16,24,36,.40);
+    }
+    .slot strong{font-size:13px}
+    .slot small{display:block; color:var(--muted); margin-top:2px}
+    .slot .right{display:flex; align-items:center; gap:10px}
+    .slotBtn{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,138,0,.35);
+      background: rgba(255,138,0,.10);
+      color:#ffd9b0;
+      cursor:pointer;
+      font-weight:700;
+      font-size:12px;
+    }
+    .slotBtn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    /* ===== Modal ===== */
+    .modalWrap{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      z-index:99;
+    }
+    .modal{
+      width:min(560px, 100%);
+      border-radius:18px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.90));
+      box-shadow: 0 30px 90px rgba(0,0,0,.60);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .modalHead b{letter-spacing:.3px}
+    .x{
+      width:38px;height:38px;border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.15);
+      color:var(--text);
+      cursor:pointer;
+      font-size:16px;
+    }
+    .modalBody{padding:16px}
+    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    .field label{font-size:12px; color:var(--muted)}
+    input, select{
+      background: rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding:12px 12px;
+      border-radius:12px;
       outline:none;
     }
-    .field::placeholder{color:rgba(159,176,201,.75);}
-    .twoCol{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-    @media (max-width: 980px){ .twoCol{grid-template-columns:1fr;}}
-
-    .miniCard{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: 18px;
-      padding:14px;
+    .modalActions{
+      display:flex; gap:10px; justify-content:flex-end;
+      padding:14px 16px;
+      border-top:1px solid var(--line);
     }
-    .miniCard h4{margin:0 0 6px; font-size:13px;}
-    .miniCard p{margin:0; color:var(--muted); font-size:12px; line-height:1.45}
-    .miniCard ul{margin:10px 0 0; padding-left:16px; color:rgba(255,255,255,.82); font-size:12px;}
-    .miniCard li{margin:6px 0;}
-
-    .table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border-radius: 16px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
-    }
-    .table th, .table td{
-      padding:10px 10px;
-      font-size:12px;
-      text-align:left;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .table th{color:rgba(255,255,255,.85); font-weight:700; background: rgba(255,255,255,.03)}
-    .table tr:last-child td{border-bottom:none}
-    .muted{color:var(--muted)}
-    .small{font-size:12px; color:var(--muted)}
-    .hr{height:1px; background: rgba(255,255,255,.10); margin:12px 0;}
 
     .toast{
-      position:fixed;
-      left:50%;
-      bottom:16px;
-      transform:translateX(-50%);
-      background: rgba(15,23,34,.92);
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 60px rgba(0,0,0,.5);
-      color: rgba(255,255,255,.92);
-      padding:10px 12px;
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16,24,36,.90);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
       border-radius: 14px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
       display:none;
-      align-items:center;
-      gap:10px;
-      z-index:50;
-      max-width:min(680px, calc(100% - 20px));
+      z-index:120;
+      font-size:12px;
+      color: var(--muted);
     }
-    .toast.show{display:flex; animation: fade .18s ease both;}
-    .toast .tDot{width:8px; height:8px; border-radius:99px; background:var(--accent);}
-    a{color:inherit}
+    .toast b{color:var(--text)}
   </style>
 </head>
+
 <body>
-
-  <div class="top">
-    <div class="topInner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="brandTitle">
-          <b>SmartGen Fussbal Akademie</b>
-          <span>App Prototype · Spieler-Dashboard</span>
-        </div>
-      </div>
-      <div class="row" style="justify-content:flex-end;">
-        <div class="pill"><span class="dot"></span> Live im Browser</div>
-        <button class="btn btnAccent" id="demoBtn" title="Demo-Daten laden">Demo laden</button>
-      </div>
-    </div>
-  </div>
-
   <div class="wrap">
-    <!-- LEFT: Phone preview -->
-    <div class="phone">
-      <div class="screen" id="phoneScreen">
-        <div class="screenTop">
-          <div class="row" style="gap:10px;">
-            <div class="avatar" id="avatar">A</div>
-            <div class="screenTitle">
-              <b id="pName">Amine Ben Rached</b>
-              <span id="pMeta">U15 · ID: SG-00017 · Status: Aktiv</span>
-            </div>
-          </div>
-          <button class="btn" id="nfcBtn" title="Wallet / NFC Karte">Wallet</button>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <h1>SmartGen Fussball Akademie</h1>
+          <p>App Prototype • Profil + Slots • Live Status</p>
         </div>
+      </div>
 
-        <div class="screenBody" id="screenBody">
-          <!-- dynamic -->
-        </div>
-
-        <div class="nav">
-          <button class="tab active" data-tab="dash">Dashboard</button>
-          <button class="tab" data-tab="termine">Termine</button>
-          <button class="tab" data-tab="buchung">Buchung</button>
-          <button class="tab" data-tab="profil">Profil</button>
-        </div>
+      <div class="pill" title="Live-Status">
+        <span class="dot" id="statusDot"></span>
+        Status: <b id="statusLabel">Aktiv</b>
       </div>
     </div>
 
-    <!-- RIGHT: Detailed sections -->
-    <div class="rightCol">
+    <div class="grid">
+      <!-- LEFT: Profile + Trainings -->
       <div class="card">
-        <div class="hero">
-          <div>
-            <h1>SmartGen App – interne Idee (Prototype)</h1>
-            <p>
-              Dieses Prototype zeigt die Struktur eurer SmartGen Football App: <b>Spieler-Dashboard</b>, Termine (Kalender-Logik als Demo),
-              Buchungen, Veranstaltungen, Wallet/NFC-Mitgliedskarte, personenbezogene Daten und Mitgliedervertrag.
-              <br /><span class="small">Hinweis: Das ist ein klickbarer UI-Prototype (noch ohne echte Backend-Anbindung).</span>
-            </p>
-
-            <div class="seg">
-              <div class="chips" id="chips">
-                <div class="chip active" data-section="dashboard">Dashboard</div>
-                <div class="chip" data-section="termine">Termine</div>
-                <div class="chip" data-section="buchungen">Buchungen</div>
-                <div class="chip" data-section="events">Veranstaltungen</div>
-                <div class="chip" data-section="wallet">Wallet (NFC)</div>
-                <div class="chip" data-section="profil">Personendaten</div>
-                <div class="chip" data-section="vertrag">Mitgliedervertrag</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" style="justify-content:flex-end;">
-            <button class="btn" id="copyLinkBtn" title="Seitenlink anzeigen">Link</button>
-            <button class="btn" id="helpBtn" title="Kurze Erklärung">Hilfe</button>
-          </div>
-        </div>
-
-        <!-- Sections -->
-        <div class="section active" id="sec-dashboard">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Heute</h4>
-              <p><span class="muted">Quick Status</span></p>
-              <div class="hr"></div>
-              <div class="row">
-                <button class="btn btnAccent" onclick="switchPhone('dash');toast('Dashboard im Handy aktualisiert')">Im Handy anzeigen</button>
-                <button class="btn" onclick="toast('Demo: Matchanalyse wird später angebunden (Video/Stats)')">Matchanalyse</button>
-              </div>
-              <ul>
-                <li>Trainingsplan, Belastung, Ziele</li>
-                <li>Performance-KPIs (Technik, Athletik, Kognition)</li>
-                <li>Benachrichtigungen & Aufgaben</li>
-              </ul>
+        <!-- ID HEADER -->
+        <div class="idHeader">
+          <div class="idRow">
+            <div class="avatar" title="Mitglied Foto">
+              <!-- Dein Foto (Beispiel) -->
+              <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=240&q=70" alt="Mitglied Foto">
             </div>
 
-            <div class="miniCard">
-              <h4>Coach-Notiz</h4>
-              <p class="muted">Kurzfeedback für Spieler & Eltern (Demo).</p>
-              <div class="hr"></div>
-              <p style="margin:0; font-size:12px; line-height:1.55;">
-                <b>Stärken:</b> erster Kontakt, schnelle Entscheidungen.<br/>
-                <b>Fokus:</b> Scan vor dem Pass, Körperstellung öffnen.<br/>
-                <span class="muted">Nächste Einheit:</span> 1v1 + Rondos + kognitive Reize.
-              </p>
+            <div class="idInfo">
+              <div class="nameLine">
+                <h2 class="name" style="margin:0">Mitglied: <span id="memberName">Player One</span></h2>
+                <span class="badge">ID • SmartGen</span>
+              </div>
+
+              <div class="muted">
+                <span id="memberMeta">U15 • Technik & Kognition</span> •
+                <span>Mit Trainer: <b>Salem</b></span>
+              </div>
+
+              <div class="miniChip" style="position:relative">
+                <div class="chip"><b>Sportlich:</b> <span id="sportLevel">Fortgeschritten</span></div>
+                <div class="chip"><b>Abo:</b> <span id="subStatus">Aktiv</span></div>
+                <div class="chip"><b>Nächster Termin:</b> <span id="nextSession">Mi 18:00</span></div>
+              </div>
+
+              <div class="idControls">
+                <button class="btn primary" id="btnBook">Jetzt Slot buchen</button>
+                <button class="btn" id="btnStatus">Status ändern</button>
+                <button class="btn" id="btnSwapTrainer">Trainer wechseln</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="section" id="sec-termine">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Termine (Demo-Kalender)</h4>
-              <p>Hier simulieren wir die Kalender-Anbindung: Termine hinzufügen, anzeigen, „als Erinnerung“ markieren.</p>
-              <div class="hr"></div>
-              <div class="row">
-                <input class="field" id="tTitle" placeholder="z.B. Training U15 – Technik" />
-                <input class="field" id="tDate" type="date" />
-                <button class="btn btnAccent" onclick="addAppointment()">Hinzufügen</button>
-              </div>
-              <p class="small" style="margin-top:10px;">Später: echte Anbindung an Google/Apple Kalender + Push Notifications.</p>
-            </div>
-
-            <div class="miniCard">
-              <h4>Kalender – Liste</h4>
-              <div id="appts"></div>
-              <div class="hr"></div>
-              <button class="btn" onclick="switchPhone('termine');toast('Termine im Handy geöffnet')">Im Handy anzeigen</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="sec-buchungen">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Buchungen</h4>
-              <p>Private Training Sessions, VR/Twall, SoccerBot360 Slots, Athletik-Tests.</p>
-              <div class="hr"></div>
-
-              <table class="table" aria-label="Buchungsoptionen">
-                <thead>
-                  <tr><th>Angebot</th><th>Dauer</th><th class="muted">Status</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Personal Training (Technik)</td><td>60 Min</td><td><span class="badge ok">Verfügbar</span></td></tr>
-                  <tr><td>Athletik & Mobility</td><td>45 Min</td><td><span class="badge ok">Verfügbar</span></td></tr>
-                  <tr><td>Kognition (Reaktion/Scan)</td><td>30 Min</td><td><span class="badge warn">Wenig Slots</span></td></tr>
-                  <tr><td>Matchanalyse / Video</td><td>45 Min</td><td><span class="badge accent">Demo</span></td></tr>
-                </tbody>
-              </table>
-
-              <div class="hr"></div>
-              <button class="btn btnAccent" onclick="toast('Demo: Buchung bestätigt (noch ohne Zahlung)')">Buchen (Demo)</button>
-              <button class="btn" onclick="switchPhone('buchung');toast('Buchungen im Handy geöffnet')">Im Handy anzeigen</button>
-            </div>
-
-            <div class="miniCard">
-              <h4>Zahlung / Wallet</h4>
-              <p class="muted">Später: SEPA, Stripe, Apple Pay + Wallet-Verknüpfung.</p>
-              <ul>
-                <li>Guthaben & Rechnungen</li>
-                <li>Mitgliedsstatus + QR/NFC</li>
-                <li>Rabatte & Pakete</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="sec-events">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Veranstaltungen</h4>
-              <p>Tryouts, Camps, Ferienprogramme, Turniere, Eltern-Workshops.</p>
-              <div class="hr"></div>
-
-              <div class="row" style="gap:10px; flex-wrap:wrap;">
-                <div class="badge accent">Tryout</div>
-                <div class="badge ok">Camp</div>
-                <div class="badge warn">Workshop</div>
-              </div>
-
-              <div class="list" style="margin-top:12px;">
-                <div class="item">
-                  <div>
-                    <b>Winter Camp – Technik & Kognition</b>
-                    <span>3 Tage · Gruppen U10–U16 · SmartGen Hall</span>
-                  </div>
-                  <div class="badge ok">Anmeldung offen</div>
-                </div>
-                <div class="item">
-                  <div>
-                    <b>Elternabend: Entwicklung & Ernährung</b>
-                    <span>90 Min · Q&A mit Coaches</span>
-                  </div>
-                  <div class="badge warn">Begrenzte Plätze</div>
+        <!-- Trainings / Fortschritt -->
+        <div class="section">
+          <h2>Heute Fokus</h2>
+          <div class="list">
+            <div class="row">
+              <div class="left">
+                <div class="icon">⚽️</div>
+                <div>
+                  <p class="rowTitle">Technik – erster Kontakt</p>
+                  <p class="rowSub">Ballannahme • Richtungswechsel • Tempo</p>
                 </div>
               </div>
-
-              <div class="hr"></div>
-              <button class="btn btnAccent" onclick="toast('Demo: Event-Anmeldung gespeichert')">Anmelden (Demo)</button>
-              <button class="btn" onclick="switchPhone('events');toast('Events im Handy geöffnet')">Im Handy anzeigen</button>
+              <span class="tag ok">Startbereit</span>
             </div>
 
-            <div class="miniCard">
-              <h4>Event-Check-in</h4>
-              <p class="muted">Später: QR / NFC Check-in am Eingang + Teilnehmerliste.</p>
-              <ul>
-                <li>Einlass per Mitgliedskarte</li>
-                <li>Automatische Anwesenheit</li>
-                <li>Statistiken & Feedback</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="sec-wallet">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Wallet (NFC Mitgliedskarte)</h4>
-              <p>Demo-Karte mit QR-Code Look. Später: Apple Wallet / Google Wallet + NFC-Tag.</p>
-              <div class="hr"></div>
-              <button class="btn btnAccent" onclick="openWallet()">Wallet im Handy öffnen</button>
-              <button class="btn" onclick="toast('Demo: NFC Tag geschrieben (später echte Hardware)')">NFC (Demo)</button>
-            </div>
-
-            <div class="miniCard" id="walletCard" style="background: linear-gradient(135deg, rgba(255,106,0,.25), rgba(255,255,255,.03)); border-color: rgba(255,106,0,.30);">
-              <h4 style="margin-bottom:10px;">SmartGen Member Card</h4>
-              <p class="muted" style="margin-bottom:10px;">ID: <b id="memberId">SG-00017</b> · Status: <b>Aktiv</b></p>
-              <div class="hr"></div>
-              <p style="margin:0; font-size:12px;">
-                <b>QR (Demo):</b> ████ ▓▓▓▓ ████<br/>
-                <span class="muted">Scan für Check-in · Buchung · Zugang</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="sec-profil">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Personenbezogene Daten</h4>
-              <p>Hier steht das Profil (Demo): Spieler, Eltern, Kontakte, medizinische Infos.</p>
-              <div class="hr"></div>
-              <div class="row">
-                <input class="field" id="fName" placeholder="Name" />
-                <input class="field" id="fTeam" placeholder="Team / Gruppe" />
+            <div class="row">
+              <div class="left">
+                <div class="icon">🧠</div>
+                <div>
+                  <p class="rowTitle">Kognition – Reaktion</p>
+                  <p class="rowSub">Scanning • Entscheidung • Timing</p>
+                </div>
               </div>
-              <div class="row" style="margin-top:10px;">
-                <input class="field" id="fEmail" placeholder="E-Mail" />
-                <input class="field" id="fPhone" placeholder="Telefon" />
-              </div>
-              <div class="row" style="margin-top:10px;">
-                <input class="field" id="fNote" placeholder="Hinweis (z.B. Asthma, Allergie…)" />
-                <button class="btn btnAccent" onclick="saveProfile()">Speichern (Demo)</button>
-              </div>
-              <p class="small" style="margin-top:10px;">DSGVO: Einwilligungen, Löschfristen, Export als PDF später.</p>
+              <span class="tag warn">Offene Slots</span>
             </div>
 
-            <div class="miniCard">
-              <h4>Ansicht im Handy</h4>
-              <p class="muted">Öffnet die Profilseite im Phone Preview.</p>
-              <div class="hr"></div>
-              <button class="btn btnAccent" onclick="switchPhone('profil');toast('Profil im Handy geöffnet')">Im Handy anzeigen</button>
-              <div class="hr"></div>
-              <p style="margin:0; font-size:12px; color:rgba(255,255,255,.80);">
-                <b>Datenschutz-Hinweis:</b> In echter App: Rollen (Eltern/Spieler/Coach), Zugriff & Protokollierung.
-              </p>
+            <div class="row">
+              <div class="left">
+                <div class="icon">📈</div>
+                <div>
+                  <p class="rowTitle">Matchanalyse (Light)</p>
+                  <p class="rowSub">Mini-Report • 3 KPI • Video Hinweise</p>
+                </div>
+              </div>
+              <span class="tag">Optional</span>
             </div>
           </div>
         </div>
-
-        <div class="section" id="sec-vertrag">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Mitgliedervertrag (Demo)</h4>
-              <p>Kurzübersicht – später als PDF + digitaler Signatur.</p>
-              <div class="hr"></div>
-              <table class="table" aria-label="Vertragsdaten">
-                <tbody>
-                  <tr><th>Mitglied</th><td id="cMember">Amine Ben Rached</td></tr>
-                  <tr><th>Start</th><td>01.02.2026</td></tr>
-                  <tr><th>Modell</th><td>Premium (Training + Analyse)</td></tr>
-                  <tr><th>Kündigung</th><td>4 Wochen zum Monatsende</td></tr>
-                </tbody>
-              </table>
-              <div class="hr"></div>
-              <button class="btn btnAccent" onclick="toast('Demo: Vertrag als PDF exportieren (später)')">PDF Export (Demo)</button>
-              <button class="btn" onclick="toast('Demo: Digitale Signatur (später)')">Signieren (Demo)</button>
-            </div>
-
-            <div class="miniCard">
-              <h4>Vertragsklauseln (Kurz)</h4>
-              <ul>
-                <li>Teilnahme- & Hausordnung</li>
-                <li>Einwilligung Medien / Analyse</li>
-                <li>Datenschutz & Datenverarbeitung</li>
-                <li>Zahlung, Pausenregelung, Rückerstattung</li>
-              </ul>
-              <div class="hr"></div>
-              <p class="muted">Wenn du willst, baue ich als nächstes den Vertrag als echte PDF-Ansicht in der App ein.</p>
-            </div>
-          </div>
-        </div>
-
       </div>
 
+      <!-- RIGHT: Slots + Aktionen -->
       <div class="card">
-        <div class="cardHeader">
-          <div>
-            <h3>Notizen (intern)</h3>
-            <p class="sub">Was als nächstes: echtes Design wie eure Website + echte Daten (Login, Rollen, Backend).</p>
+        <div class="section">
+          <h2>Offene Slots (Beispiele)</h2>
+          <p class="muted" style="margin-top:-2px">
+            Klick auf <b>Jetzt buchen</b> → kleines Buchungsfenster.
+          </p>
+
+          <div class="slotsGrid" id="slotsGrid">
+            <!-- Slots via JS -->
           </div>
-          <button class="btn" onclick="toast('Nächster Schritt: Farben/Logo 1:1 wie eure Website + mehr Screens')">Plan</button>
         </div>
-        <div class="cardPad">
-          <div class="twoCol">
-            <div class="miniCard">
-              <h4>Was ist schon drin?</h4>
-              <ul>
-                <li>Mobile UI (Phone Preview)</li>
-                <li>Dashboard / Termine / Buchungen / Profil</li>
-                <li>Events, Wallet (NFC) & Mitgliedervertrag (Sektionen)</li>
-                <li>Demo-Interaktionen (Speichern / Hinzufügen / Toast)</li>
-              </ul>
+
+        <div class="section" style="border-top:1px solid var(--line)">
+          <h2>Quick Actions</h2>
+          <div class="list">
+            <div class="row">
+              <div class="left">
+                <div class="icon">🪪</div>
+                <div>
+                  <p class="rowTitle">Profil-ID im Header</p>
+                  <p class="rowSub">Wie Wallet Look, direkt in der App</p>
+                </div>
+              </div>
+              <span class="tag ok">Aktiv</span>
             </div>
-            <div class="miniCard">
-              <h4>Was kommt als nächstes?</h4>
-              <ul>
-                <li>Optik exakt wie eure SmartGen Webseite (Fonts, Buttons, Layout)</li>
-                <li>Mehr echte Screens: Login, Rollen (Spieler/Eltern/Coach)</li>
-                <li>Kalender Sync (Google/Apple), Buchungs-Zahlung</li>
-                <li>Deployment später auch auf Netlify + Custom Domain</li>
-              </ul>
+
+            <div class="row">
+              <div class="left">
+                <div class="icon">🔔</div>
+                <div>
+                  <p class="rowTitle">Benachrichtigung (Demo)</p>
+                  <p class="rowSub">„Slot bestätigt“ / „Termin geändert“</p>
+                </div>
+              </div>
+              <span class="tag">Coming</span>
             </div>
           </div>
-          <div class="hr"></div>
-          <p class="small">Tipp: Auf dem Handy wirkt es wie eine App – du kannst später sogar eine PWA (App-Icon) machen.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast"><span class="tDot"></span><span id="toastTxt"></span></div>
+  <!-- Modal: Booking -->
+  <div class="modalWrap" id="modalWrap">
+    <div class="modal">
+      <div class="modalHead">
+        <b id="modalTitle">Slot buchen</b>
+        <button class="x" id="modalClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <p class="muted" id="modalInfo" style="margin:0 0 10px 0"></p>
+
+        <div class="field">
+          <label>Trainingstyp</label>
+          <select id="bookType">
+            <option>Privattraining (Technik)</option>
+            <option>Kognitives Training</option>
+            <option>Athletik (Schnelligkeit)</option>
+            <option>Matchanalyse</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Notiz (optional)</label>
+          <input id="bookNote" placeholder="z.B. Fokus: erster Kontakt / schwacher Fuß" />
+        </div>
+      </div>
+      <div class="modalActions">
+        <button class="btn" id="btnCancel">Abbrechen</button>
+        <button class="btn primary" id="btnConfirm">Buchen & bestätigen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
-    // ---- Simple state ----
-    const state = {
-      profile: {
-        name: "Amine Ben Rached",
-        team: "U15",
-        email: "amine@example.com",
-        phone: "+49 ...",
-        note: "—",
-        memberId: "SG-00017"
-      },
-      appts: [
-        { title: "Training – Technik & 1. Kontakt", date: nextDate(1), tag:"Training" },
-        { title: "Athletik – Sprint & Mobility", date: nextDate(3), tag:"Athletik" },
-        { title: "Matchanalyse – Video Review", date: nextDate(5), tag:"Analyse" },
-      ],
-      phoneTab: "dash",
+    // ===== Demo Data =====
+    const member = {
+      name: "Amine B.",
+      meta: "U15 • Technik & Kognition",
+      sportLevel: "Fortgeschritten",
+      subStatus: "Aktiv",
+      nextSession: "Mi 18:00",
+      trainer: "Salem",
+      status: "Aktiv" // Aktiv | Pause | Verletzung
     };
 
-    // ---- Helpers ----
-    function nextDate(addDays){
-      const d = new Date();
-      d.setDate(d.getDate() + addDays);
-      return d.toISOString().slice(0,10);
-    }
-    function fmtDate(iso){
-      try{
-        const d = new Date(iso + "T00:00:00");
-        return d.toLocaleDateString("de-DE", { weekday:"short", day:"2-digit", month:"2-digit" });
-      }catch(e){ return iso; }
+    const trainers = ["Salem", "Güni", "Tobi"];
+
+    const slots = [
+      { id: 1, day: "Di", time: "17:00", title: "Privattraining", desc: "Technik • Ballgefühl", open: true },
+      { id: 2, day: "Mi", time: "19:00", title: "Kognitives Training", desc: "Reaktion • Entscheidung", open: true },
+      { id: 3, day: "Do", time: "18:30", title: "Athletik", desc: "Schnelligkeit • Stabilität", open: false },
+      { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPIs", open: true }
+    ];
+
+    // ===== UI Helpers =====
+    const $ = (id) => document.getElementById(id);
+
+    function setStatusUI(status){
+      $("statusLabel").textContent = status;
+      const dot = $("statusDot");
+      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
+      dot.style.boxShadow = status === "Aktiv"
+        ? "0 0 0 4px rgba(37,208,127,.10)"
+        : status === "Pause"
+          ? "0 0 0 4px rgba(255,176,32,.10)"
+          : "0 0 0 4px rgba(255,77,77,.10)";
     }
 
-    // ---- Toast ----
-    let toastTimer = null;
     function toast(msg){
-      const t = document.getElementById("toast");
-      const tx = document.getElementById("toastTxt");
-      tx.textContent = msg;
-      t.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>t.classList.remove("show"), 2400);
+      const el = $("toast");
+      el.innerHTML = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> el.style.display="none", 2600);
     }
 
-    // ---- Phone renderer ----
-    const screenBody = document.getElementById("screenBody");
-    const tabs = [...document.querySelectorAll(".tab")];
-
-    function renderPhone(){
-      const tab = state.phoneTab;
-      tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
-
-      if(tab === "dash"){
-        screenBody.innerHTML = `
-          <div class="grid2">
-            <div class="kpi accent">
-              <div class="label">Technik-Score</div>
-              <div class="val">82</div>
-              <div class="hint">+4 diese Woche</div>
-            </div>
-            <div class="kpi ok">
-              <div class="label">Belastung</div>
-              <div class="val">Normal</div>
-              <div class="hint">bereit fürs Training</div>
-            </div>
-          </div>
-          <div class="list">
-            <div class="item">
-              <div>
-                <b>Nächster Termin</b>
-                <span>${fmtDate(state.appts[0].date)} · ${state.appts[0].title}</span>
-              </div>
-              <div class="badge accent">${state.appts[0].tag}</div>
-            </div>
-            <div class="item">
-              <div>
-                <b>Aufgabe</b>
-                <span>10 Min Scan-Training (Video) · 2 Sets</span>
-              </div>
-              <div class="badge ok">Heute</div>
-            </div>
-            <div class="item">
-              <div>
-                <b>Info</b>
-                <span>Neues Camp: Anmeldung offen</span>
-              </div>
-              <div class="badge warn">Neu</div>
-            </div>
-          </div>
-        `;
-      }
-
-      if(tab === "termine"){
-        screenBody.innerHTML = `
-          <div class="kpi" style="margin-bottom:10px;">
-            <div class="label">Termine (nächste 7 Tage)</div>
-            <div class="val">${state.appts.length}</div>
-            <div class="hint">Tippe rechts auf „+“ in der großen Version</div>
-          </div>
-          <div class="list">
-            ${state.appts.slice(0,6).map(a => `
-              <div class="item">
-                <div>
-                  <b>${fmtDate(a.date)}</b>
-                  <span>${a.title}</span>
-                </div>
-                <div class="badge">${a.tag}</div>
-              </div>
-            `).join("")}
-          </div>
-        `;
-      }
-
-      if(tab === "buchung"){
-        screenBody.innerHTML = `
-          <div class="kpi accent" style="margin-bottom:10px;">
-            <div class="label">Schnellbuchung</div>
-            <div class="val">Slots</div>
-            <div class="hint">PT · Athletik · Kognition</div>
-          </div>
-          <div class="list">
-            <div class="item">
-              <div><b>Personal Training</b><span>60 Min · Technik</span></div>
-              <div class="badge ok">frei</div>
-            </div>
-            <div class="item">
-              <div><b>Athletik Session</b><span>45 Min · Sprint/Mobility</span></div>
-              <div class="badge ok">frei</div>
-            </div>
-            <div class="item">
-              <div><b>Kognition</b><span>30 Min · Reaktion/Scan</span></div>
-              <div class="badge warn">wenig</div>
-            </div>
-          </div>
-        `;
-      }
-
-      if(tab === "profil"){
-        const p = state.profile;
-        screenBody.innerHTML = `
-          <div class="kpi" style="margin-bottom:10px;">
-            <div class="label">Mitglieds-ID</div>
-            <div class="val">${p.memberId}</div>
-            <div class="hint">Status: Aktiv</div>
-          </div>
-          <div class="list">
-            <div class="item">
-              <div><b>Name</b><span>${p.name}</span></div>
-              <div class="badge">Profil</div>
-            </div>
-            <div class="item">
-              <div><b>Team</b><span>${p.team}</span></div>
-              <div class="badge">Gruppe</div>
-            </div>
-            <div class="item">
-              <div><b>Hinweis</b><span>${p.note}</span></div>
-              <div class="badge warn">Info</div>
-            </div>
-          </div>
-        `;
-      }
+    // ===== Render =====
+    function renderMember(){
+      $("memberName").textContent = member.name;
+      $("memberMeta").textContent = member.meta;
+      $("sportLevel").textContent = member.sportLevel;
+      $("subStatus").textContent = member.subStatus;
+      $("nextSession").textContent = member.nextSession;
+      document.querySelector(".muted b").textContent = member.trainer;
+      setStatusUI(member.status);
     }
 
-    function switchPhone(tab){
-      // map sections to phone tabs (best effort)
-      if(tab === "events") tab = "dash";
-      state.phoneTab = tab;
-      renderPhone();
+    function renderSlots(){
+      const grid = $("slotsGrid");
+      grid.innerHTML = "";
+
+      slots.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "slot";
+        div.innerHTML = `
+          <div>
+            <strong>${s.day} • ${s.time} — ${s.title}</strong>
+            <small>${s.desc}</small>
+          </div>
+          <div class="right">
+            <span class="tag ${s.open ? "warn" : ""}">${s.open ? "frei" : "belegt"}</span>
+            <button class="slotBtn" ${s.open ? "" : "disabled"} data-id="${s.id}">
+              Jetzt buchen
+            </button>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+
+      grid.querySelectorAll(".slotBtn").forEach(btn=>{
+        btn.addEventListener("click", () => openBooking(parseInt(btn.dataset.id,10)));
+      });
     }
 
-    tabs.forEach(btn => btn.addEventListener("click", () => {
-      state.phoneTab = btn.dataset.tab;
-      renderPhone();
-    }));
+    // ===== Modal / Booking =====
+    let selectedSlot = null;
 
-    // ---- Sections (right) ----
-    const chips = [...document.querySelectorAll(".chip")];
-    function showSection(id){
-      chips.forEach(c => c.classList.toggle("active", c.dataset.section === id));
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      const map = {
-        dashboard: "sec-dashboard",
-        termine: "sec-termine",
-        buchungen: "sec-buchungen",
-        events: "sec-events",
-        wallet: "sec-wallet",
-        profil: "sec-profil",
-        vertrag: "sec-vertrag"
-      };
-      document.getElementById(map[id]).classList.add("active");
-    }
+    function openBooking(slotId){
+      selectedSlot = slots.find(s=>s.id===slotId);
+      if(!selectedSlot) return;
 
-    chips.forEach(c => c.addEventListener("click", () => {
-      const id = c.dataset.section;
-      showSection(id);
-      if(id === "termine") switchPhone("termine");
-      if(id === "buchungen") switchPhone("buchung");
-      if(id === "profil") switchPhone("profil");
-      if(id === "dashboard") switchPhone("dash");
-      if(id === "wallet") openWallet();
-      if(id === "events") switchPhone("dash");
-      if(id === "vertrag") toast("Mitgliedervertrag (Demo) – später PDF + Signatur");
-    }));
-
-    // ---- Appointments ----
-    const apptsEl = document.getElementById("appts");
-    function renderAppointments(){
-      apptsEl.innerHTML = `
-        <table class="table">
-          <thead>
-            <tr><th>Datum</th><th>Titel</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            ${state.appts.map(a => `
-              <tr>
-                <td>${a.date}</td>
-                <td>${a.title}</td>
-                <td><span class="badge ok">geplant</span></td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
+      $("modalTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
+      $("modalInfo").innerHTML = `
+        <b>${selectedSlot.title}</b> – ${selectedSlot.desc}<br/>
+        Trainer: <b>${member.trainer}</b> • Status: <b>${member.status}</b>
       `;
-      renderPhone();
+      $("modalWrap").style.display = "flex";
     }
 
-    function addAppointment(){
-      const title = (document.getElementById("tTitle").value || "").trim();
-      const date = (document.getElementById("tDate").value || "").trim();
-      if(!title || !date){
-        toast("Bitte Titel und Datum eingeben");
+    function closeModal(){
+      $("modalWrap").style.display = "none";
+      $("bookNote").value = "";
+      selectedSlot = null;
+    }
+
+    $("modalClose").addEventListener("click", closeModal);
+    $("btnCancel").addEventListener("click", closeModal);
+
+    $("btnConfirm").addEventListener("click", () => {
+      if(!selectedSlot) return;
+
+      const type = $("bookType").value;
+      const note = $("bookNote").value.trim();
+
+      selectedSlot.open = false;
+      renderSlots();
+      closeModal();
+
+      toast(`✅ <b>Buchung bestätigt</b><br>${type} • ${selectedSlot.day} ${selectedSlot.time}${note ? " • Notiz: " + note : ""}`);
+    });
+
+    // ===== Top Buttons =====
+    $("btnBook").addEventListener("click", () => {
+      // pick first open slot
+      const firstOpen = slots.find(s=>s.open);
+      if(!firstOpen){
+        toast("⚠️ Keine freien Slots aktuell.");
         return;
       }
-      state.appts.unshift({title, date, tag:"Termin"});
-      document.getElementById("tTitle").value = "";
-      document.getElementById("tDate").value = "";
-      renderAppointments();
-      toast("Termin hinzugefügt");
-      showSection("termine");
-      switchPhone("termine");
-    }
-
-    // ---- Profile ----
-    function saveProfile(){
-      const name = (document.getElementById("fName").value || "").trim();
-      const team = (document.getElementById("fTeam").value || "").trim();
-      const email = (document.getElementById("fEmail").value || "").trim();
-      const phone = (document.getElementById("fPhone").value || "").trim();
-      const note = (document.getElementById("fNote").value || "").trim();
-
-      if(name) state.profile.name = name;
-      if(team) state.profile.team = team;
-      if(email) state.profile.email = email;
-      if(phone) state.profile.phone = phone;
-      if(note) state.profile.note = note;
-
-      document.getElementById("pName").textContent = state.profile.name;
-      document.getElementById("pMeta").textContent = `${state.profile.team} · ID: ${state.profile.memberId} · Status: Aktiv`;
-      document.getElementById("avatar").textContent = (state.profile.name || "A").trim().slice(0,1).toUpperCase();
-      document.getElementById("cMember").textContent = state.profile.name;
-
-      renderPhone();
-      toast("Profil gespeichert (Demo)");
-    }
-
-    // ---- Wallet ----
-    function openWallet(){
-      toast("Wallet geöffnet (Demo)");
-      document.getElementById("memberId").textContent = state.profile.memberId;
-      // also reflect in phone via quick view
-      document.getElementById("nfcBtn").classList.add("btnAccent");
-      setTimeout(()=>document.getElementById("nfcBtn").classList.remove("btnAccent"), 700);
-    }
-    document.getElementById("nfcBtn").addEventListener("click", openWallet);
-
-    // ---- Demo button ----
-    document.getElementById("demoBtn").addEventListener("click", () => {
-      // Fill profile inputs with demo
-      document.getElementById("fName").value = state.profile.name;
-      document.getElementById("fTeam").value = state.profile.team;
-      document.getElementById("fEmail").value = state.profile.email;
-      document.getElementById("fPhone").value = state.profile.phone;
-      document.getElementById("fNote").value = "z.B. Asthma / Allergie – Demo";
-      saveProfile();
-      toast("Demo-Daten geladen");
+      openBooking(firstOpen.id);
     });
 
-    // ---- Link & Help ----
-    document.getElementById("copyLinkBtn").addEventListener("click", async () => {
-      const url = window.location.href;
-      try{
-        await navigator.clipboard.writeText(url);
-        toast("Link kopiert");
-      }catch(e){
-        toast("Link: " + url);
-      }
-    });
-    document.getElementById("helpBtn").addEventListener("click", () => {
-      toast("Tipp: Rechts Sektionen klicken – links im Handy siehst du die App-Vorschau.");
+    $("btnStatus").addEventListener("click", () => {
+      const order = ["Aktiv","Pause","Verletzung"];
+      const idx = order.indexOf(member.status);
+      member.status = order[(idx+1) % order.length];
+      renderMember();
+      toast(`Status geändert: <b>${member.status}</b>`);
     });
 
-    // initial render
-    renderAppointments();
-    renderPhone();
+    $("btnSwapTrainer").addEventListener("click", () => {
+      const idx = trainers.indexOf(member.trainer);
+      member.trainer = trainers[(idx+1) % trainers.length];
+      renderMember();
+      toast(`Trainer: <b>${member.trainer}</b>`);
+    });
+
+    // init
+    renderMember();
+    renderSlots();
   </script>
 </body>
 </html>
