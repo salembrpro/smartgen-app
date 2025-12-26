@@ -1,24 +1,643 @@
-/* BACKGROUND PATTERN (safe) */
-body{
-  position: relative;
-}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartGen Fussball Akademie – App Prototype</title>
+  <meta name="theme-color" content="#0b0f14" />
 
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='74' viewBox='0 0 64 74'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1'%3E%3Cpath d='M32 2l26 15v30L32 62 6 47V17L32 2z'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px 208px;
-  opacity: .35;
-  mix-blend-mode: overlay;
-}
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#101824;
+      --panel2:#0f1722;
+      --text:#e9f0ff;
+      --muted:#9fb0c9;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
 
-/* bring your app above the overlay */
-main, .app, .container, .wrap, .shell{
-  position: relative;
-  z-index: 1;
-}
+      /* Accent (Orange Neon - subtil) */
+      --accent:#ff8a00;
+      --accent2:#ffb14a;
+
+      --ok:#25d07f;
+      --warn:#ffb020;
+      --danger:#ff4d4d;
+
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 520px at 15% -10%, rgba(255,138,0,.14), transparent 55%),
+        radial-gradient(900px 520px at 100% 10%, rgba(255,138,0,.08), transparent 60%),
+        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
+        linear-gradient(180deg, #070a0f 0%, var(--bg) 45%, #070a0f 100%);
+    }
+
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 60px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logoDot{
+      width:38px; height:38px; border-radius:14px;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+                  linear-gradient(135deg, rgba(255,138,0,.95), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,138,0,.18);
+    }
+    .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
+    .brand p{margin:0; color:var(--muted); font-size:12px}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      padding:10px 12px; border-radius:999px;
+      background: rgba(16,24,36,.55);
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+      font-size:12px; color:var(--muted);
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--ok);
+      box-shadow: 0 0 0 4px rgba(37,208,127,.10);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(16,24,36,.80), rgba(10,14,20,.65));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* ===== PROFILE HEADER (ID CARD FEEL) ===== */
+    .idHeader{
+      position:relative;
+      padding:18px;
+      background:
+        radial-gradient(700px 240px at 10% 0%, rgba(255,138,0,.18), transparent 60%),
+        radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border-bottom:1px solid var(--line);
+    }
+    .idHeader::after{
+      content:"";
+      position:absolute; inset:-2px;
+      pointer-events:none;
+      background: radial-gradient(520px 220px at 12% 10%, rgba(255,138,0,.20), transparent 60%);
+      opacity:.8;
+      filter: blur(10px);
+    }
+
+    .idRow{
+      position:relative;
+      display:flex; gap:14px; align-items:flex-start; z-index:1;
+    }
+    .avatar{
+      width:74px;height:74px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#0b0f14;
+      overflow:hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      flex:0 0 auto;
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+
+    .idInfo{flex:1}
+    .nameLine{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:6px;
+    }
+    .name{
+      font-size:18px; margin:0;
+      letter-spacing:.4px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,138,0,.22);
+      background: rgba(255,138,0,.08);
+      color:#ffd9b0; font-size:12px;
+      box-shadow: 0 10px 30px rgba(255,138,0,.10);
+      white-space:nowrap;
+    }
+    .miniChip{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.55);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .chip b{color:var(--text); font-weight:600}
+
+    .idControls{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.65);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:12px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,138,0,.35)}
+    .btn.primary{
+      border-color: rgba(255,138,0,.38);
+      background: linear-gradient(135deg, rgba(255,138,0,.22), rgba(255,177,74,.10));
+      box-shadow: 0 16px 40px rgba(255,138,0,.12);
+    }
+
+    /* ===== content sections ===== */
+    .section{padding:16px 18px;}
+    .section h2{
+      margin:0 0 10px 0;
+      font-size:14px;
+      letter-spacing:.4px;
+      color:#dfe9ff;
+    }
+    .muted{color:var(--muted); font-size:12px; line-height:1.45}
+
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .row{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(16,24,36,.40);
+    }
+    .row .left{display:flex; gap:10px; align-items:center}
+    .icon{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color:#ffd9b0;
+    }
+    .rowTitle{margin:0; font-weight:700; font-size:13px}
+    .rowSub{margin:0; color:var(--muted); font-size:12px}
+    .tag{
+      font-size:11px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .tag.ok{border-color: rgba(37,208,127,.35); color:#bff4de; background: rgba(37,208,127,.10)}
+    .tag.warn{border-color: rgba(255,176,32,.35); color:#ffe2b8; background: rgba(255,176,32,.10)}
+    .tag.danger{border-color: rgba(255,77,77,.35); color:#ffd0d0; background: rgba(255,77,77,.10)}
+
+    /* ===== Slots ===== */
+    .slotsGrid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .slot{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(16,24,36,.40);
+    }
+    .slot strong{font-size:13px}
+    .slot small{display:block; color:var(--muted); margin-top:2px}
+    .slot .right{display:flex; align-items:center; gap:10px}
+    .slotBtn{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,138,0,.35);
+      background: rgba(255,138,0,.10);
+      color:#ffd9b0;
+      cursor:pointer;
+      font-weight:700;
+      font-size:12px;
+    }
+    .slotBtn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    /* ===== Modal ===== */
+    .modalWrap{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      z-index:99;
+    }
+    .modal{
+      width:min(560px, 100%);
+      border-radius:18px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.90));
+      box-shadow: 0 30px 90px rgba(0,0,0,.60);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .modalHead b{letter-spacing:.3px}
+    .x{
+      width:38px;height:38px;border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.15);
+      color:var(--text);
+      cursor:pointer;
+      font-size:16px;
+    }
+    .modalBody{padding:16px}
+    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    .field label{font-size:12px; color:var(--muted)}
+    input, select{
+      background: rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding:12px 12px;
+      border-radius:12px;
+      outline:none;
+    }
+    .modalActions{
+      display:flex; gap:10px; justify-content:flex-end;
+      padding:14px 16px;
+      border-top:1px solid var(--line);
+    }
+
+    .toast{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16,24,36,.90);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      display:none;
+      z-index:120;
+      font-size:12px;
+      color: var(--muted);
+    }
+    .toast b{color:var(--text)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <h1>SmartGen Fussball Akademie</h1>
+          <p>App Prototype • Profil + Slots • Live Status</p>
+        </div>
+      </div>
+
+      <div class="pill" title="Live-Status">
+        <span class="dot" id="statusDot"></span>
+        Status: <b id="statusLabel">Aktiv</b>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT: Profile + Trainings -->
+      <div class="card">
+        <!-- ID HEADER -->
+        <div class="idHeader">
+          <div class="idRow">
+            <div class="avatar" title="Mitglied Foto">
+              <!-- Dein Foto (Beispiel) -->
+              <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=240&q=70" alt="Mitglied Foto">
+            </div>
+
+            <div class="idInfo">
+              <div class="nameLine">
+                <h2 class="name" style="margin:0">Mitglied: <span id="memberName">Player One</span></h2>
+                <span class="badge">ID • SmartGen</span>
+              </div>
+
+              <div class="muted">
+                <span id="memberMeta">U15 • Technik & Kognition</span> •
+                <span>Mit Trainer: <b>Salem</b></span>
+              </div>
+
+              <div class="miniChip" style="position:relative">
+                <div class="chip"><b>Sportlich:</b> <span id="sportLevel">Fortgeschritten</span></div>
+                <div class="chip"><b>Abo:</b> <span id="subStatus">Aktiv</span></div>
+                <div class="chip"><b>Nächster Termin:</b> <span id="nextSession">Mi 18:00</span></div>
+              </div>
+
+              <div class="idControls">
+                <button class="btn primary" id="btnBook">Jetzt Slot buchen</button>
+                <button class="btn" id="btnStatus">Status ändern</button>
+                <button class="btn" id="btnSwapTrainer">Trainer wechseln</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trainings / Fortschritt -->
+        <div class="section">
+          <h2>Heute Fokus</h2>
+          <div class="list">
+            <div class="row">
+              <div class="left">
+                <div class="icon">⚽️</div>
+                <div>
+                  <p class="rowTitle">Technik – erster Kontakt</p>
+                  <p class="rowSub">Ballannahme • Richtungswechsel • Tempo</p>
+                </div>
+              </div>
+              <span class="tag ok">Startbereit</span>
+            </div>
+
+            <div class="row">
+              <div class="left">
+                <div class="icon">🧠</div>
+                <div>
+                  <p class="rowTitle">Kognition – Reaktion</p>
+                  <p class="rowSub">Scanning • Entscheidung • Timing</p>
+                </div>
+              </div>
+              <span class="tag warn">Offene Slots</span>
+            </div>
+
+            <div class="row">
+              <div class="left">
+                <div class="icon">📈</div>
+                <div>
+                  <p class="rowTitle">Matchanalyse (Light)</p>
+                  <p class="rowSub">Mini-Report • 3 KPI • Video Hinweise</p>
+                </div>
+              </div>
+              <span class="tag">Optional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Slots + Aktionen -->
+      <div class="card">
+        <div class="section">
+          <h2>Offene Slots (Beispiele)</h2>
+          <p class="muted" style="margin-top:-2px">
+            Klick auf <b>Jetzt buchen</b> → kleines Buchungsfenster.
+          </p>
+
+          <div class="slotsGrid" id="slotsGrid">
+            <!-- Slots via JS -->
+          </div>
+        </div>
+
+        <div class="section" style="border-top:1px solid var(--line)">
+          <h2>Quick Actions</h2>
+          <div class="list">
+            <div class="row">
+              <div class="left">
+                <div class="icon">🪪</div>
+                <div>
+                  <p class="rowTitle">Profil-ID im Header</p>
+                  <p class="rowSub">Wie Wallet Look, direkt in der App</p>
+                </div>
+              </div>
+              <span class="tag ok">Aktiv</span>
+            </div>
+
+            <div class="row">
+              <div class="left">
+                <div class="icon">🔔</div>
+                <div>
+                  <p class="rowTitle">Benachrichtigung (Demo)</p>
+                  <p class="rowSub">„Slot bestätigt“ / „Termin geändert“</p>
+                </div>
+              </div>
+              <span class="tag">Coming</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Booking -->
+  <div class="modalWrap" id="modalWrap">
+    <div class="modal">
+      <div class="modalHead">
+        <b id="modalTitle">Slot buchen</b>
+        <button class="x" id="modalClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <p class="muted" id="modalInfo" style="margin:0 0 10px 0"></p>
+
+        <div class="field">
+          <label>Trainingstyp</label>
+          <select id="bookType">
+            <option>Privattraining (Technik)</option>
+            <option>Kognitives Training</option>
+            <option>Athletik (Schnelligkeit)</option>
+            <option>Matchanalyse</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Notiz (optional)</label>
+          <input id="bookNote" placeholder="z.B. Fokus: erster Kontakt / schwacher Fuß" />
+        </div>
+      </div>
+      <div class="modalActions">
+        <button class="btn" id="btnCancel">Abbrechen</button>
+        <button class="btn primary" id="btnConfirm">Buchen & bestätigen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== Demo Data =====
+    const member = {
+      name: "Amine B.",
+      meta: "U15 • Technik & Kognition",
+      sportLevel: "Fortgeschritten",
+      subStatus: "Aktiv",
+      nextSession: "Mi 18:00",
+      trainer: "Salem",
+      status: "Aktiv" // Aktiv | Pause | Verletzung
+    };
+
+    const trainers = ["Salem", "Güni", "Tobi"];
+
+    const slots = [
+      { id: 1, day: "Di", time: "17:00", title: "Privattraining", desc: "Technik • Ballgefühl", open: true },
+      { id: 2, day: "Mi", time: "19:00", title: "Kognitives Training", desc: "Reaktion • Entscheidung", open: true },
+      { id: 3, day: "Do", time: "18:30", title: "Athletik", desc: "Schnelligkeit • Stabilität", open: false },
+      { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPIs", open: true }
+    ];
+
+    // ===== UI Helpers =====
+    const $ = (id) => document.getElementById(id);
+
+    function setStatusUI(status){
+      $("statusLabel").textContent = status;
+      const dot = $("statusDot");
+      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
+      dot.style.boxShadow = status === "Aktiv"
+        ? "0 0 0 4px rgba(37,208,127,.10)"
+        : status === "Pause"
+          ? "0 0 0 4px rgba(255,176,32,.10)"
+          : "0 0 0 4px rgba(255,77,77,.10)";
+    }
+
+    function toast(msg){
+      const el = $("toast");
+      el.innerHTML = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> el.style.display="none", 2600);
+    }
+
+    // ===== Render =====
+    function renderMember(){
+      $("memberName").textContent = member.name;
+      $("memberMeta").textContent = member.meta;
+      $("sportLevel").textContent = member.sportLevel;
+      $("subStatus").textContent = member.subStatus;
+      $("nextSession").textContent = member.nextSession;
+      document.querySelector(".muted b").textContent = member.trainer;
+      setStatusUI(member.status);
+    }
+
+    function renderSlots(){
+      const grid = $("slotsGrid");
+      grid.innerHTML = "";
+
+      slots.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "slot";
+        div.innerHTML = `
+          <div>
+            <strong>${s.day} • ${s.time} — ${s.title}</strong>
+            <small>${s.desc}</small>
+          </div>
+          <div class="right">
+            <span class="tag ${s.open ? "warn" : ""}">${s.open ? "frei" : "belegt"}</span>
+            <button class="slotBtn" ${s.open ? "" : "disabled"} data-id="${s.id}">
+              Jetzt buchen
+            </button>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+
+      grid.querySelectorAll(".slotBtn").forEach(btn=>{
+        btn.addEventListener("click", () => openBooking(parseInt(btn.dataset.id,10)));
+      });
+    }
+
+    // ===== Modal / Booking =====
+    let selectedSlot = null;
+
+    function openBooking(slotId){
+      selectedSlot = slots.find(s=>s.id===slotId);
+      if(!selectedSlot) return;
+
+      $("modalTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
+      $("modalInfo").innerHTML = `
+        <b>${selectedSlot.title}</b> – ${selectedSlot.desc}<br/>
+        Trainer: <b>${member.trainer}</b> • Status: <b>${member.status}</b>
+      `;
+      $("modalWrap").style.display = "flex";
+    }
+
+    function closeModal(){
+      $("modalWrap").style.display = "none";
+      $("bookNote").value = "";
+      selectedSlot = null;
+    }
+
+    $("modalClose").addEventListener("click", closeModal);
+    $("btnCancel").addEventListener("click", closeModal);
+
+    $("btnConfirm").addEventListener("click", () => {
+      if(!selectedSlot) return;
+
+      const type = $("bookType").value;
+      const note = $("bookNote").value.trim();
+
+      selectedSlot.open = false;
+      renderSlots();
+      closeModal();
+
+      toast(`✅ <b>Buchung bestätigt</b><br>${type} • ${selectedSlot.day} ${selectedSlot.time}${note ? " • Notiz: " + note : ""}`);
+    });
+
+    // ===== Top Buttons =====
+    $("btnBook").addEventListener("click", () => {
+      // pick first open slot
+      const firstOpen = slots.find(s=>s.open);
+      if(!firstOpen){
+        toast("⚠️ Keine freien Slots aktuell.");
+        return;
+      }
+      openBooking(firstOpen.id);
+    });
+
+    $("btnStatus").addEventListener("click", () => {
+      const order = ["Aktiv","Pause","Verletzung"];
+      const idx = order.indexOf(member.status);
+      member.status = order[(idx+1) % order.length];
+      renderMember();
+      toast(`Status geändert: <b>${member.status}</b>`);
+    });
+
+    $("btnSwapTrainer").addEventListener("click", () => {
+      const idx = trainers.indexOf(member.trainer);
+      member.trainer = trainers[(idx+1) % trainers.length];
+      renderMember();
+      toast(`Trainer: <b>${member.trainer}</b>`);
+    });
+
+    // init
+    renderMember();
+    renderSlots();
+  </script>
+</body>
+</html>
