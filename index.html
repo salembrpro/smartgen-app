@@ -8,24 +8,27 @@
 
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#101824;
-      --panel2:#0f1722;
-      --text:#e9f0ff;
-      --muted:#9fb0c9;
-      --line:rgba(255,255,255,.10);
-      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      :root{
+  /* Base */
+  --bg:#070a10;
+  --panel:#0c1220;
+  --panel2:#0a0f1a;
+  --text:#eaf2ff;
+  --muted:#90a1bd;
+  --line:rgba(255,255,255,.08);
 
-      /* Accent (Orange Neon - subtil) */
-      --accent:#ff8a00;
-      --accent2:#ffb14a;
+  /* Accent (Orange NEON, aber sparsam verwenden) */
+  --accent:#ff7a18;
+  --accent2:#ffb14a;
 
-      --ok:#25d07f;
-      --warn:#ffb020;
-      --danger:#ff4d4d;
+  /* Shadows / Radius */
+  --radius:18px;
+  --shadow: 0 24px 70px rgba(0,0,0,.55);
+  --shadow2: 0 10px 30px rgba(0,0,0,.45);
 
-      --radius:18px;
-    }
+  /* “Pro” Highlights */
+  --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.12);
+}
 
     *{box-sizing:border-box}
     html,body{height:100%}
