@@ -4,58 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartGen Fussball Akademie – App Prototype</title>
-  <meta name="theme-color" content="#0b0f14" />
+  <meta name="theme-color" content="#070a10" />
 
   <style>
     :root{
-      :root{
-  /* Base */
-  --bg:#070a10;
-  --panel:#0c1220;
-  --panel2:#0a0f1a;
-  --text:#eaf2ff;
-  --muted:#90a1bd;
-  --line:rgba(255,255,255,.08);
+      /* Base */
+      --bg:#070a10;
+      --panel:#0c1220;
+      --panel2:#0a0f1a;
+      --text:#eaf2ff;
+      --muted:#90a1bd;
+      --line:rgba(255,255,255,.08);
 
-  /* Accent (Orange NEON, aber sparsam verwenden) */
-  --accent:#ff7a18;
-  --accent2:#ffb14a;
+      /* Status colors */
+      --ok:#25d07f;
+      --warn:#ffb020;
+      --danger:#ff4d4d;
 
-  /* Shadows / Radius */
-  --radius:18px;
-  --shadow: 0 24px 70px rgba(0,0,0,.55);
-  --shadow2: 0 10px 30px rgba(0,0,0,.45);
+      /* Accent */
+      --accent:#ff7a18;
+      --accent2:#ffb14a;
 
-  /* “Pro” Highlights */
-  --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.12);
-}
+      /* Shadows / Radius */
+      --radius:18px;
+      --shadow: 0 24px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.45);
+
+      /* Pro highlights */
+      --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.12);
+    }
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    /* ==== CARBON BACKGROUND (ohne Bild-Upload, nur CSS Pattern) ==== */
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(1200px 520px at 15% -10%, rgba(255,138,0,.14), transparent 55%),
-        radial-gradient(900px 520px at 100% 10%, rgba(255,138,0,.08), transparent 60%),
+        /* carbon weave */
+        linear-gradient(135deg, rgba(255,255,255,.05) 25%, transparent 25%) 0 0/18px 18px,
+        linear-gradient(225deg, rgba(255,255,255,.05) 25%, transparent 25%) 0 0/18px 18px,
+        linear-gradient(315deg, rgba(255,255,255,.03) 25%, transparent 25%) 0 0/18px 18px,
+        linear-gradient(45deg,  rgba(255,255,255,.03) 25%, transparent 25%) 0 0/18px 18px,
+        /* subtle glows */
+        radial-gradient(1200px 520px at 15% -10%, rgba(255,122,24,.14), transparent 55%),
+        radial-gradient(900px 520px at 100% 10%, rgba(255,177,74,.09), transparent 60%),
         radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
-        linear-gradient(180deg, #070a0f 0%, var(--bg) 45%, #070a0f 100%);
+        linear-gradient(180deg, #05070c 0%, var(--bg) 45%, #05070c 100%);
+      background-blend-mode: overlay, overlay, overlay, overlay, normal, normal, normal, normal;
     }
 
     .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 60px;}
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom:16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
+
+    /* Top bar */
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px;}
+    .brand{display:flex; align-items:center; gap:12px;}
     .logoDot{
       width:38px; height:38px; border-radius:14px;
-      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
-                  linear-gradient(135deg, rgba(255,138,0,.95), rgba(255,177,74,.55));
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,138,0,.18);
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,122,24,.18);
     }
     .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
     .brand p{margin:0; color:var(--muted); font-size:12px}
@@ -67,22 +78,18 @@
       background: rgba(16,24,36,.55);
       box-shadow: 0 8px 28px rgba(0,0,0,.25);
       font-size:12px; color:var(--muted);
+      backdrop-filter: blur(8px);
     }
-    .pill b{color:var(--text); font-weight:600}
+    .pill b{color:var(--text); font-weight:700}
     .dot{
       width:8px;height:8px;border-radius:50%;
       background:var(--ok);
       box-shadow: 0 0 0 4px rgba(37,208,127,.10);
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns:1fr}
-    }
+    /* Layout */
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:16px;}
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
 
     .card{
       background: linear-gradient(180deg, rgba(16,24,36,.80), rgba(10,14,20,.65));
@@ -90,14 +97,15 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
+      backdrop-filter: blur(10px);
     }
 
-    /* ===== PROFILE HEADER (ID CARD FEEL) ===== */
+    /* ID Header */
     .idHeader{
       position:relative;
       padding:18px;
       background:
-        radial-gradient(700px 240px at 10% 0%, rgba(255,138,0,.18), transparent 60%),
+        radial-gradient(700px 240px at 10% 0%, rgba(255,122,24,.18), transparent 60%),
         radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
       border-bottom:1px solid var(--line);
@@ -106,47 +114,63 @@
       content:"";
       position:absolute; inset:-2px;
       pointer-events:none;
-      background: radial-gradient(520px 220px at 12% 10%, rgba(255,138,0,.20), transparent 60%);
+      background: radial-gradient(520px 220px at 12% 10%, rgba(255,122,24,.20), transparent 60%);
       opacity:.8;
       filter: blur(10px);
     }
 
-    .idRow{
-      position:relative;
-      display:flex; gap:14px; align-items:flex-start; z-index:1;
-    }
+    .idRow{position:relative; display:flex; gap:14px; align-items:flex-start; z-index:1;}
+
+    /* Avatar replaced with football badge */
     .avatar{
       width:74px;height:74px;border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
-      background:#0b0f14;
-      overflow:hidden;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.14), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,24,.35), rgba(0,0,0,.25));
       box-shadow: 0 14px 40px rgba(0,0,0,.45);
       flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
     }
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+    .avatar::before{
+      content:"";
+      position:absolute;
+      inset:-20px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 60%),
+        conic-gradient(from 20deg, rgba(255,255,255,.08), transparent 25%, rgba(255,255,255,.06), transparent 55%);
+      filter: blur(0px);
+      opacity:.9;
+    }
+    .ball{
+      position:relative;
+      width:48px; height:48px;
+      border-radius:50%;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), rgba(255,255,255,.08) 35%, rgba(0,0,0,.25) 70%);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.12);
+      display:grid;
+      place-items:center;
+      font-size:22px;
+    }
+    .ball span{filter: drop-shadow(0 6px 14px rgba(0,0,0,.55));}
 
     .idInfo{flex:1}
-    .nameLine{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:6px;
-    }
-    .name{
-      font-size:18px; margin:0;
-      letter-spacing:.4px;
-    }
+    .nameLine{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;}
+    .name{font-size:18px; margin:0; letter-spacing:.4px;}
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(255,138,0,.22);
-      background: rgba(255,138,0,.08);
+      border:1px solid rgba(255,122,24,.22);
+      background: rgba(255,122,24,.08);
       color:#ffd9b0; font-size:12px;
-      box-shadow: 0 10px 30px rgba(255,138,0,.10);
+      box-shadow: 0 10px 30px rgba(255,122,24,.10);
       white-space:nowrap;
     }
-    .miniChip{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .muted{color:var(--muted); font-size:12px; line-height:1.45}
+    .miniChip{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
     .chip{
       padding:8px 10px;
       border-radius:999px;
@@ -155,12 +179,9 @@
       color:var(--muted);
       font-size:12px;
     }
-    .chip b{color:var(--text); font-weight:600}
+    .chip b{color:var(--text); font-weight:700}
 
-    .idControls{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:14px;
-    }
+    .idControls{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
     .btn{
       border:1px solid var(--line);
       background: rgba(16,24,36,.65);
@@ -168,30 +189,22 @@
       padding:10px 12px;
       border-radius:12px;
       cursor:pointer;
-      font-weight:600;
+      font-weight:700;
       font-size:12px;
       transition: transform .12s ease, border-color .12s ease, background .12s ease;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,138,0,.35)}
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,122,24,.35)}
     .btn.primary{
-      border-color: rgba(255,138,0,.38);
-      background: linear-gradient(135deg, rgba(255,138,0,.22), rgba(255,177,74,.10));
-      box-shadow: 0 16px 40px rgba(255,138,0,.12);
+      border-color: rgba(255,122,24,.38);
+      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
+      box-shadow: 0 16px 40px rgba(255,122,24,.12);
     }
 
-    /* ===== content sections ===== */
+    /* Sections */
     .section{padding:16px 18px;}
-    .section h2{
-      margin:0 0 10px 0;
-      font-size:14px;
-      letter-spacing:.4px;
-      color:#dfe9ff;
-    }
-    .muted{color:var(--muted); font-size:12px; line-height:1.45}
+    .section h2{margin:0 0 10px 0; font-size:14px; letter-spacing:.4px; color:#dfe9ff;}
 
-    .list{
-      display:flex; flex-direction:column; gap:10px;
-    }
+    .list{display:flex; flex-direction:column; gap:10px;}
     .row{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:12px 12px;
@@ -207,7 +220,7 @@
       background: rgba(0,0,0,.18);
       color:#ffd9b0;
     }
-    .rowTitle{margin:0; font-weight:700; font-size:13px}
+    .rowTitle{margin:0; font-weight:800; font-size:13px}
     .rowSub{margin:0; color:var(--muted); font-size:12px}
     .tag{
       font-size:11px;
@@ -222,12 +235,8 @@
     .tag.warn{border-color: rgba(255,176,32,.35); color:#ffe2b8; background: rgba(255,176,32,.10)}
     .tag.danger{border-color: rgba(255,77,77,.35); color:#ffd0d0; background: rgba(255,77,77,.10)}
 
-    /* ===== Slots ===== */
-    .slotsGrid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-    }
+    /* Slots */
+    .slotsGrid{display:grid; grid-template-columns:1fr; gap:10px;}
     .slot{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:12px;
@@ -241,11 +250,11 @@
     .slotBtn{
       padding:10px 12px;
       border-radius:12px;
-      border:1px solid rgba(255,138,0,.35);
-      background: rgba(255,138,0,.10);
+      border:1px solid rgba(255,122,24,.35);
+      background: rgba(255,122,24,.10);
       color:#ffd9b0;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       font-size:12px;
     }
     .slotBtn:disabled{
@@ -256,7 +265,7 @@
       color: var(--muted);
     }
 
-    /* ===== Modal ===== */
+    /* Modal */
     .modalWrap{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -304,6 +313,7 @@
       border-top:1px solid var(--line);
     }
 
+    /* Toast */
     .toast{
       position: fixed;
       bottom: 18px;
@@ -320,6 +330,98 @@
       color: var(--muted);
     }
     .toast b{color:var(--text)}
+
+    /* ==== Stats Card (neu, damit nix fehlt) ==== */
+    #statsCard{
+      margin-top:10px;
+      box-shadow: var(--shadow2);
+      border-radius: 16px;
+    }
+    .cardHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 14px 10px 14px;
+      border-bottom:1px solid var(--line);
+      background: rgba(0,0,0,.10);
+    }
+    .cardHead h3{
+      margin:0;
+      font-size:13px;
+      letter-spacing:.35px;
+      color:#dfe9ff;
+    }
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      padding:12px 14px 6px 14px;
+    }
+    @media(max-width:700px){
+      .kpiGrid{grid-template-columns:1fr}
+    }
+    .kpi{
+      border:1px solid var(--line);
+      background: rgba(16,24,36,.40);
+      border-radius:14px;
+      padding:12px;
+    }
+    .kpiLabel{font-size:11px; color:var(--muted)}
+    .kpiValue{font-size:20px; font-weight:900; letter-spacing:.3px; margin-top:4px}
+    .kpiSub{font-size:11px; color:var(--muted); margin-top:2px}
+
+    .progressWrap{padding:10px 14px 14px 14px;}
+    .progressTop{display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:12px; color:#dfe9ff}
+    .progressBar{
+      margin-top:10px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      overflow:hidden;
+    }
+    .progressFill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(255,122,24,.85), rgba(255,177,74,.55));
+      box-shadow: var(--glow);
+      border-radius:999px;
+      transition: width .25s ease;
+    }
+
+    .chartWrap{padding:0 14px 14px 14px;}
+    canvas{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .actionsRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:0 14px 14px 14px;
+    }
+    .btnPrimary, .btnGhost{
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      border:1px solid var(--line);
+    }
+    .btnPrimary{
+      border-color: rgba(255,122,24,.38);
+      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
+      color: var(--text);
+      box-shadow: 0 16px 40px rgba(255,122,24,.10);
+    }
+    .btnGhost{
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+    }
+    .btnGhost:hover, .btnPrimary:hover{transform: translateY(-1px)}
   </style>
 </head>
 
@@ -341,35 +443,33 @@
     </div>
 
     <div class="grid">
-      <!-- LEFT: Profile + Trainings -->
+      <!-- LEFT -->
       <div class="card">
-        <!-- ID HEADER -->
         <div class="idHeader">
           <div class="idRow">
-            <div class="avatar" title="Mitglied Foto">
-              <!-- Dein Foto (Beispiel) -->
-              <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=240&q=70" alt="Mitglied Foto">
+            <div class="avatar" title="SmartGen Member Card">
+              <div class="ball"><span>⚽️</span></div>
             </div>
 
             <div class="idInfo">
               <div class="nameLine">
-                <h2 class="name" style="margin:0">Mitglied: <span id="memberName">Player One</span></h2>
+                <h2 class="name">Mitglied: <span id="memberName">Player One</span></h2>
                 <span class="badge">ID • SmartGen</span>
               </div>
 
               <div class="muted">
                 <span id="memberMeta">U15 • Technik & Kognition</span> •
-                <span>Mit Trainer: <b>Salem</b></span>
+                <span>Trainer: <b id="trainerName">Salem</b></span>
               </div>
 
-              <div class="miniChip" style="position:relative">
-                <div class="chip"><b>Sportlich:</b> <span id="sportLevel">Fortgeschritten</span></div>
+              <div class="miniChip">
+                <div class="chip"><b>Level:</b> <span id="sportLevel">Fortgeschritten</span></div>
                 <div class="chip"><b>Abo:</b> <span id="subStatus">Aktiv</span></div>
                 <div class="chip"><b>Nächster Termin:</b> <span id="nextSession">Mi 18:00</span></div>
               </div>
 
               <div class="idControls">
-                <button class="btn primary" id="btnBook">Jetzt Slot buchen</button>
+                <button class="btn primary" id="btnBook">Slot buchen</button>
                 <button class="btn" id="btnStatus">Status ändern</button>
                 <button class="btn" id="btnSwapTrainer">Trainer wechseln</button>
               </div>
@@ -377,10 +477,60 @@
           </div>
         </div>
 
-        <!-- Trainings / Fortschritt -->
         <div class="section">
-          <h2>Heute Fokus</h2>
-          <div class="list">
+          <h2>Heute im Fokus</h2>
+
+          <!-- Stats / Progress -->
+          <section class="card" id="statsCard">
+            <div class="cardHead">
+              <h3>Statistik & Progress</h3>
+              <span class="chip" id="attendanceChip">Anwesenheit: --%</span>
+            </div>
+
+            <div class="kpiGrid">
+              <div class="kpi">
+                <div class="kpiLabel">Sessions</div>
+                <div class="kpiValue" id="kpiSessions">0</div>
+                <div class="kpiSub">letzte Einträge</div>
+              </div>
+
+              <div class="kpi">
+                <div class="kpiLabel">Streak</div>
+                <div class="kpiValue" id="kpiStreak">0</div>
+                <div class="kpiSub">in Folge anwesend</div>
+              </div>
+
+              <div class="kpi">
+                <div class="kpiLabel">Performance</div>
+                <div class="kpiValue" id="kpiPerf">--</div>
+                <div class="kpiSub">Score (0–100)</div>
+              </div>
+            </div>
+
+            <div class="progressWrap">
+              <div class="progressTop">
+                <span>Progress Level</span>
+                <span class="muted" id="progressLabel">0%</span>
+              </div>
+              <div class="progressBar">
+                <div class="progressFill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <div class="chartWrap">
+              <div class="muted" style="margin-bottom:8px;">Letzte 10 Sessions (Anwesenheit + Score)</div>
+              <canvas id="miniChart" width="800" height="220" style="width:100%; height:auto;"></canvas>
+            </div>
+
+            <div class="actionsRow">
+              <button class="btnPrimary" id="btnPresent" type="button">Heute anwesend ✅</button>
+              <button class="btnGhost" id="btnAbsent" type="button">Heute gefehlt ❌</button>
+              <button class="btnGhost" id="btnResetStats" type="button">Reset</button>
+            </div>
+          </section>
+
+          <!-- Focus list -->
+          <div class="list" style="margin-top:12px;">
             <div class="row">
               <div class="left">
                 <div class="icon">⚽️</div>
@@ -400,7 +550,7 @@
                   <p class="rowSub">Scanning • Entscheidung • Timing</p>
                 </div>
               </div>
-              <span class="tag warn">Offene Slots</span>
+              <span class="tag warn">Empfohlen</span>
             </div>
 
             <div class="row">
@@ -408,7 +558,7 @@
                 <div class="icon">📈</div>
                 <div>
                   <p class="rowTitle">Matchanalyse (Light)</p>
-                  <p class="rowSub">Mini-Report • 3 KPI • Video Hinweise</p>
+                  <p class="rowSub">Mini-Report • KPIs • Video Hinweise</p>
                 </div>
               </div>
               <span class="tag">Optional</span>
@@ -417,17 +567,15 @@
         </div>
       </div>
 
-      <!-- RIGHT: Slots + Aktionen -->
+      <!-- RIGHT -->
       <div class="card">
         <div class="section">
           <h2>Offene Slots (Beispiele)</h2>
           <p class="muted" style="margin-top:-2px">
-            Klick auf <b>Jetzt buchen</b> → kleines Buchungsfenster.
+            Klick auf <b>Jetzt buchen</b> → Buchungsfenster.
           </p>
 
-          <div class="slotsGrid" id="slotsGrid">
-            <!-- Slots via JS -->
-          </div>
+          <div class="slotsGrid" id="slotsGrid"></div>
         </div>
 
         <div class="section" style="border-top:1px solid var(--line)">
@@ -438,7 +586,7 @@
                 <div class="icon">🪪</div>
                 <div>
                   <p class="rowTitle">Profil-ID im Header</p>
-                  <p class="rowSub">Wie Wallet Look, direkt in der App</p>
+                  <p class="rowSub">Wallet-Look, direkt in der App</p>
                 </div>
               </div>
               <span class="tag ok">Aktiv</span>
@@ -448,7 +596,7 @@
               <div class="left">
                 <div class="icon">🔔</div>
                 <div>
-                  <p class="rowTitle">Benachrichtigung (Demo)</p>
+                  <p class="rowTitle">Benachrichtigungen (Demo)</p>
                   <p class="rowSub">„Slot bestätigt“ / „Termin geändert“</p>
                 </div>
               </div>
@@ -457,10 +605,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div><!-- grid -->
+  </div><!-- wrap -->
 
-  <!-- Modal: Booking -->
+  <!-- Modal -->
   <div class="modalWrap" id="modalWrap">
     <div class="modal">
       <div class="modalHead">
@@ -515,7 +663,6 @@
       { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPIs", open: true }
     ];
 
-    // ===== UI Helpers =====
     const $ = (id) => document.getElementById(id);
 
     function setStatusUI(status){
@@ -537,14 +684,13 @@
       window.__t = setTimeout(()=> el.style.display="none", 2600);
     }
 
-    // ===== Render =====
     function renderMember(){
       $("memberName").textContent = member.name;
       $("memberMeta").textContent = member.meta;
       $("sportLevel").textContent = member.sportLevel;
       $("subStatus").textContent = member.subStatus;
       $("nextSession").textContent = member.nextSession;
-      document.querySelector(".muted b").textContent = member.trainer;
+      $("trainerName").textContent = member.trainer;
       setStatusUI(member.status);
     }
 
@@ -614,10 +760,9 @@
 
     // ===== Top Buttons =====
     $("btnBook").addEventListener("click", () => {
-      // pick first open slot
       const firstOpen = slots.find(s=>s.open);
       if(!firstOpen){
-        toast("⚠️ Keine freien Slots aktuell.");
+        toast("⚠️ Aktuell keine freien Slots.");
         return;
       }
       openBooking(firstOpen.id);
@@ -638,9 +783,177 @@
       toast(`Trainer: <b>${member.trainer}</b>`);
     });
 
-    // init
     renderMember();
     renderSlots();
+  </script>
+
+  <script>
+    // ===== Stats Model (LocalStorage) =====
+    const KEY = "sg_stats_v1";
+
+    const ui = {
+      sessions: document.getElementById("kpiSessions"),
+      streak: document.getElementById("kpiStreak"),
+      perf: document.getElementById("kpiPerf"),
+      chip: document.getElementById("attendanceChip"),
+      fill: document.getElementById("progressFill"),
+      label: document.getElementById("progressLabel"),
+      chart: document.getElementById("miniChart"),
+      btnPresent: document.getElementById("btnPresent"),
+      btnAbsent: document.getElementById("btnAbsent"),
+      btnReset: document.getElementById("btnResetStats"),
+    };
+
+    function todayKey(){
+      const d = new Date();
+      return d.toISOString().slice(0,10); // YYYY-MM-DD
+    }
+
+    function loadStats(){
+      const raw = localStorage.getItem(KEY);
+      if(raw) return JSON.parse(raw);
+
+      // Seed
+      return {
+        level: 42, // 0-100
+        history: [
+          {date:"2025-12-17", present:true,  score:68},
+          {date:"2025-12-18", present:true,  score:71},
+          {date:"2025-12-19", present:false, score:0},
+          {date:"2025-12-20", present:true,  score:73},
+          {date:"2025-12-21", present:true,  score:75},
+          {date:"2025-12-22", present:true,  score:77},
+          {date:"2025-12-23", present:true,  score:78},
+          {date:"2025-12-24", present:false, score:0},
+          {date:"2025-12-25", present:true,  score:80},
+          {date:"2025-12-26", present:true,  score:82},
+        ]
+      };
+    }
+
+    function saveStats(s){
+      localStorage.setItem(KEY, JSON.stringify(s));
+    }
+
+    function calcAttendance(history){
+      if(!history.length) return 0;
+      const present = history.filter(x=>x.present).length;
+      return Math.round((present / history.length) * 100);
+    }
+
+    function calcStreak(history){
+      let streak = 0;
+      for(let i=history.length-1; i>=0; i--){
+        if(history[i].present) streak++;
+        else break;
+      }
+      return streak;
+    }
+
+    function avgScore(history){
+      const scored = history.filter(x=>x.present && x.score>0);
+      if(!scored.length) return 0;
+      const sum = scored.reduce((a,b)=>a+b.score,0);
+      return Math.round(sum / scored.length);
+    }
+
+    function drawChart(history){
+      if(!ui.chart) return;
+      const ctx = ui.chart.getContext("2d");
+
+      const w = ui.chart.width, h = ui.chart.height;
+      ctx.clearRect(0,0,w,h);
+
+      // grid
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1;
+      for(let y=20; y<h; y+=40){
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      const last = history.slice(-10);
+      const padding = 40;
+      const chartW = w - padding*2;
+      const chartH = h - padding*2;
+
+      // axes
+      ctx.globalAlpha = 0.25;
+      ctx.beginPath();
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, padding+chartH);
+      ctx.lineTo(padding+chartW, padding+chartH);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      const barGap = 10;
+      const barW = (chartW - barGap*(last.length-1)) / last.length;
+
+      last.forEach((d,i)=>{
+        const x = padding + i*(barW+barGap);
+        const baseY = padding+chartH;
+
+        // bar
+        const bh = d.present ? chartH*0.35 : chartH*0.12;
+        ctx.globalAlpha = d.present ? 0.55 : 0.18;
+        ctx.fillStyle = "#ff7a18";
+        ctx.fillRect(x, baseY-bh, barW, bh);
+        ctx.globalAlpha = 1;
+
+        // dot
+        const score = d.present ? d.score : 0;
+        const sy = padding + chartH - (score/100)*chartH;
+        ctx.globalAlpha = d.present ? 0.9 : 0.25;
+        ctx.beginPath();
+        ctx.arc(x + barW/2, sy, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    function renderStats(){
+      const s = loadStats();
+      const att = calcAttendance(s.history);
+      const st = calcStreak(s.history);
+      const perf = avgScore(s.history);
+      const sessions = s.history.length;
+
+      ui.sessions.textContent = sessions;
+      ui.streak.textContent = st;
+      ui.perf.textContent = perf;
+      ui.chip.textContent = `Anwesenheit: ${att}%`;
+
+      const level = Math.max(0, Math.min(100, s.level ?? 0));
+      ui.fill.style.width = `${level}%`;
+      ui.label.textContent = `${level}%`;
+
+      drawChart(s.history);
+    }
+
+    function upsertToday(present){
+      const s = loadStats();
+      const t = todayKey();
+      const score = present ? Math.floor(65 + Math.random()*25) : 0;
+
+      const idx = s.history.findIndex(x=>x.date===t);
+      if(idx >= 0) s.history[idx] = {date:t, present, score};
+      else s.history.push({date:t, present, score});
+
+      s.level = Math.max(0, Math.min(100, (s.level ?? 40) + (present ? 2 : -1)));
+
+      saveStats(s);
+      renderStats();
+    }
+
+    ui.btnPresent.addEventListener("click", ()=> upsertToday(true));
+    ui.btnAbsent.addEventListener("click", ()=> upsertToday(false));
+    ui.btnReset.addEventListener("click", ()=>{
+      localStorage.removeItem(KEY);
+      renderStats();
+    });
+
+    renderStats();
   </script>
 </body>
 </html>
