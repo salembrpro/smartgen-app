@@ -203,7 +203,7 @@
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(16,24,36,.55);
       color: var(--text);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 14px;
       cursor:pointer;
       transition: transform .12s ease, border-color .12s ease;
@@ -281,12 +281,13 @@
     .name{
       margin:0;
       font-size: 18px;
-      font-weight: 900;
+      font-weight: 1000;
       letter-spacing:.3px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
+    /* IMPORTANT: badge is now a BUTTON */
     .badge{
       padding:8px 10px;
       border-radius:999px;
@@ -294,9 +295,13 @@
       background: rgba(255,122,24,.08);
       color:#ffd9b0;
       font-size:12px;
-      font-weight:800;
+      font-weight:1000;
       white-space:nowrap;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
     }
+    .badge:hover{ border-color: rgba(255,122,24,.45); }
+    .badge:active{ transform: scale(.98); }
 
     .chips{
       display:flex;
@@ -311,7 +316,7 @@
       background: rgba(16,24,36,.55);
       color: var(--muted);
       font-size:12px;
-      font-weight:800;
+      font-weight:1000;
     }
     .chip b{ color: var(--text); }
 
@@ -328,7 +333,7 @@
       border:1px solid rgba(255,255,255,.12);
       background: rgba(16,24,36,.60);
       color: var(--text);
-      font-weight: 950;
+      font-weight: 1000;
       font-size: 15px;
       cursor:pointer;
       display:flex;
@@ -375,7 +380,7 @@
       background: rgba(16,24,36,.55);
       color: var(--muted);
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 1000;
       white-space:nowrap;
     }
     .pill b{ color: var(--text); }
@@ -393,7 +398,7 @@
       padding: 10px 10px;
       min-height: 76px;
     }
-    .kpiLabel{ color: var(--muted); font-size: 12px; font-weight: 900; }
+    .kpiLabel{ color: var(--muted); font-size: 12px; font-weight: 1000; }
     .kpiValue{ font-size: 22px; font-weight: 1000; margin-top: 4px; }
     .kpiSub{ color: var(--muted); font-size: 11px; margin-top: 4px; }
 
@@ -408,7 +413,7 @@
       justify-content:space-between;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 1000;
       margin-bottom: 8px;
     }
     .bar{
@@ -536,7 +541,7 @@
       color: var(--muted);
     }
 
-    /* ===== Modal ===== */
+    /* ===== Modal (shared) ===== */
     .modalWrap{
       position:fixed; inset:0;
       display:none;
@@ -546,7 +551,7 @@
       z-index: 999;
     }
     .modal{
-      width: min(560px, 100%);
+      width: min(620px, 100%);
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.90));
@@ -572,7 +577,7 @@
       cursor:pointer;
     }
     .modalBody{ padding: 14px 16px; }
-    label{ display:block; color: var(--muted); font-size: 12px; font-weight: 900; margin-top: 10px; }
+    label{ display:block; color: var(--muted); font-size: 12px; font-weight: 1000; margin-top: 10px; }
     select, input{
       width: 100%;
       margin-top: 6px;
@@ -584,7 +589,7 @@
       padding: 0 12px;
       outline:none;
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 1000;
     }
     .modalActions{
       padding: 14px 16px;
@@ -623,7 +628,7 @@
       box-shadow: 0 18px 60px rgba(0,0,0,.55);
       color: var(--muted);
       font-size: 13px;
-      font-weight: 900;
+      font-weight: 1000;
       display:none;
       z-index: 1000;
       min-width: min(420px, calc(100vw - 24px));
@@ -641,6 +646,114 @@
     @media (max-width: 960px){
       .panel{ display:none; }
       .panel.active{ display:block; }
+    }
+
+    /* ===== Wallet Card ===== */
+    .walletCard{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(900px 280px at 10% 0%, rgba(255,122,24,.18), transparent 60%),
+        radial-gradient(900px 280px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
+        linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.86));
+      padding: 14px;
+      box-shadow: 0 26px 90px rgba(0,0,0,.55);
+    }
+
+    .walletTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 12px;
+    }
+
+    .walletLogo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .wlDot{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display:block;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,122,24,.18);
+    }
+
+    .wlTitle{ font-weight: 1000; letter-spacing:.2px; }
+    .wlSub{ color: var(--muted); font-weight: 1000; font-size: 12px; margin-top:2px; }
+
+    .nfcTag{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      font-weight: 1000;
+      color: #ffd9b0;
+    }
+
+    .walletMid{ margin-top: 6px; }
+    .wlName{ font-size: 18px; font-weight: 1000; margin-bottom: 4px; }
+    .wlMeta{ color: var(--muted); font-weight: 1000; font-size: 12px; }
+
+    .wlRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .wlChip{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.55);
+      color: var(--muted);
+      font-weight: 1000;
+      font-size: 12px;
+    }
+    .wlChip b{ color: var(--text); }
+
+    .walletBottom{
+      display:grid;
+      grid-template-columns: 180px 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width:520px){
+      .walletBottom{ grid-template-columns: 1fr; }
+    }
+
+    .qrBox{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+    }
+    .qrText{ color: var(--muted); font-weight: 1000; font-size: 12px; }
+
+    .wlHint{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .hintTitle{ font-weight: 1000; margin-bottom: 8px; }
+    .wlHint ul{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-weight: 1000;
+      font-size: 12px;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -694,10 +807,10 @@
                 <div class="idInfo">
                   <div class="nameLine">
                     <h2 class="name">👦 <span id="memberName">Amine B.</span></h2>
-                    <span class="badge">ID • SmartGen</span>
+                    <button class="badge" id="btnIdCard" type="button">ID • SmartGen</button>
                   </div>
 
-                  <div class="muted" style="font-weight:900">
+                  <div class="muted" style="font-weight:1000">
                     <span id="memberMeta">U15 • Technik & Kognition</span> • Trainer: <b id="trainerName">Salem</b>
                   </div>
 
@@ -823,7 +936,7 @@
                 </div>
 
                 <div class="miniChart">
-                  <div class="muted" style="margin-bottom:6px; font-weight:900">Letzte 10 Sessions</div>
+                  <div class="muted" style="margin-bottom:6px; font-weight:1000">Letzte 10 Sessions</div>
                   <canvas id="miniChart" width="800" height="220"></canvas>
                 </div>
 
@@ -906,7 +1019,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Booking Modal -->
   <div class="modalWrap" id="modalWrap">
     <div class="modal">
       <div class="modalHead">
@@ -914,7 +1027,7 @@
         <button class="x" id="modalClose">✕</button>
       </div>
       <div class="modalBody">
-        <p class="muted" id="modalInfo" style="margin:0 0 10px 0; font-weight:900"></p>
+        <p class="muted" id="modalInfo" style="margin:0 0 10px 0; font-weight:1000"></p>
 
         <label>Training</label>
         <select id="bookType">
@@ -930,6 +1043,64 @@
       <div class="modalActions">
         <button class="mBtn" id="btnCancel">Abbrechen</button>
         <button class="mBtn primary" id="btnConfirm">Buchen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wallet / NFC Card Modal -->
+  <div class="modalWrap" id="idModal">
+    <div class="modal">
+      <div class="modalHead">
+        <b>SmartGen Mitgliedskarte</b>
+        <button class="x" id="idClose">✕</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="walletCard">
+          <div class="walletTop">
+            <div class="walletLogo">
+              <span class="wlDot"></span>
+              <div>
+                <div class="wlTitle">SmartGen Fussball Akademie</div>
+                <div class="wlSub">Mitglieds-ID • NFC / QR</div>
+              </div>
+            </div>
+            <div class="nfcTag">📶 NFC</div>
+          </div>
+
+          <div class="walletMid">
+            <div class="wlName" id="wlName">Amine B.</div>
+            <div class="wlMeta" id="wlMeta">U15 • Technik & Kognition</div>
+
+            <div class="wlRow">
+              <div class="wlChip">ID: <b id="wlId">SG-000214</b></div>
+              <div class="wlChip">Status: <b id="wlStatus">Aktiv</b></div>
+            </div>
+          </div>
+
+          <div class="walletBottom">
+            <div class="qrBox">
+              <canvas id="qrCanvas" width="160" height="160"></canvas>
+              <div class="qrText">Scan für Check-in</div>
+            </div>
+
+            <div class="wlHint">
+              <div class="hintTitle">So funktioniert’s</div>
+              <ul>
+                <li><b>Heute (Demo):</b> QR-Scan oder NFC-Tap</li>
+                <li><b>Später:</b> Apple Wallet / Google Wallet</li>
+                <li><b>Ziel:</b> Check-in + Zugang + Punkte</li>
+              </ul>
+              <div style="margin-top:10px">
+                <button class="mBtn primary" id="btnSimNfc" type="button">NFC-Tap simulieren</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modalActions">
+        <button class="mBtn" id="idClose2">Schließen</button>
       </div>
     </div>
   </div>
@@ -989,9 +1160,9 @@
        Points + Stats (LocalStorage)
        - Punkte: Anwesenheit +10
        - Buchen: +3
-       - Bonus Button: +5
+       - Bonus: +5
        - Gefehlt: -4
-       - Level: jede 50 Punkte = +1 Level
+       - Level: jede 50 Punkte = +1
     ========================== */
     const KEY = "sg_points_stats_v2";
 
@@ -1067,13 +1238,14 @@
       const sign = delta >= 0 ? "+" : "";
       toast(`${reason} <br><b>${sign}${delta} Punkte</b> (gesamt: ${s.points})`);
 
-      // kleine Animation auf Punkte
-      const el = document.querySelectorAll("#pointsText, #pointsTextM, #pointsTextD");
-      el.forEach(x => {
-        x.animate([{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}], {duration: 320, easing:"ease-out"});
-      });
+      // kleine Animation
+      const els = document.querySelectorAll("#pointsText, #pointsTextM, #pointsTextD");
+      els.forEach(x => x && x.animate(
+        [{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}],
+        {duration: 320, easing:"ease-out"}
+      ));
 
-      // Level-Up Toast
+      // Level-Up
       if(getLevel(before) < getLevel(s.points)){
         toast(`🎉 <b>LEVEL UP!</b><br>Du bist jetzt Level ${getLevel(s.points)} ⚡`);
       }
@@ -1226,7 +1398,7 @@
     }
 
     /* =========================
-       Modal / Booking
+       Booking Modal
     ========================== */
     let selectedSlot = null;
 
@@ -1313,7 +1485,7 @@
 
     function resetAll(){
       localStorage.removeItem(KEY);
-      slots.forEach(s => { if(s.id !== 3) s.open = true; }); // demo reset
+      slots.forEach(s => { if(s.id !== 3) s.open = true; });
       renderSlots();
       renderStats();
       toast("Reset ✅");
@@ -1333,6 +1505,85 @@
         $("panel-"+t).classList.add("active");
       });
     });
+
+    /* =========================
+       ID Card (Wallet) Modal + NFC + QR Demo
+    ========================== */
+    const idModal = $("idModal");
+    const btnIdCard = $("btnIdCard");
+    const idClose = $("idClose");
+    const idClose2 = $("idClose2");
+    const btnSimNfc = $("btnSimNfc");
+
+    function openId(){
+      $("wlName").textContent = member.name;
+      $("wlMeta").textContent = member.meta;
+      $("wlStatus").textContent = member.status;
+
+      const idValue = "SG-" + String(214).padStart(6,"0");
+      $("wlId").textContent = idValue;
+
+      drawDemoQR(`${member.name}|${member.status}|${idValue}`);
+      idModal.style.display = "flex";
+    }
+    function closeId(){
+      idModal.style.display = "none";
+    }
+
+    if(btnIdCard) btnIdCard.addEventListener("click", openId);
+    if(idClose) idClose.addEventListener("click", closeId);
+    if(idClose2) idClose2.addEventListener("click", closeId);
+    if(idModal) idModal.addEventListener("click", (e)=>{ if(e.target === idModal) closeId(); });
+
+    if(btnSimNfc){
+      btnSimNfc.addEventListener("click", ()=>{
+        toast("📶 <b>NFC Check-in</b><br>Zugang bestätigt ✅");
+        addPoints(+2, "NFC Check-in!");
+      });
+    }
+
+    // Simple QR-like demo (kein echtes QR, aber sieht aus wie QR)
+    function drawDemoQR(text){
+      const c = $("qrCanvas");
+      if(!c) return;
+      const ctx = c.getContext("2d");
+      const size = c.width;
+      ctx.clearRect(0,0,size,size);
+
+      // bg
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.fillRect(0,0,size,size);
+
+      // pseudo pattern hash
+      let h=0;
+      for(let i=0;i<text.length;i++) h = (h*31 + text.charCodeAt(i)) >>> 0;
+
+      const cells = 25;
+      const cell = Math.floor(size / cells);
+
+      for(let y=0;y<cells;y++){
+        for(let x=0;x<cells;x++){
+          h = (h * 1664525 + 1013904223) >>> 0;
+          const on = (h % 7) < 3;
+          if(on){
+            ctx.fillStyle = "rgba(10,12,18,.92)";
+            ctx.fillRect(x*cell, y*cell, cell, cell);
+          }
+        }
+      }
+
+      function finder(px,py){
+        ctx.fillStyle = "rgba(10,12,18,.95)";
+        ctx.fillRect(px,py,cell*5,cell*5);
+        ctx.fillStyle = "rgba(255,255,255,.92)";
+        ctx.fillRect(px+cell,py+cell,cell*3,cell*3);
+        ctx.fillStyle = "rgba(10,12,18,.95)";
+        ctx.fillRect(px+cell*2,py+cell*2,cell,cell);
+      }
+      finder(cell*1, cell*1);
+      finder(cell*19, cell*1);
+      finder(cell*1, cell*19);
+    }
 
     /* Init */
     renderMember();
