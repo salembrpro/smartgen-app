@@ -10,13 +10,13 @@
     :root{
       /* Base */
       --bg:#070a10;
-      --panel:#0c1220;
-      --panel2:#0a0f1a;
+      --panel:rgba(12,18,32,.78);
+      --panel2:rgba(10,15,26,.72);
       --text:#eaf2ff;
-      --muted:#90a1bd;
-      --line:rgba(255,255,255,.08);
+      --muted:#95a7c7;
+      --line:rgba(255,255,255,.10);
 
-      /* Status colors */
+      /* Status */
       --ok:#25d07f;
       --warn:#ffb020;
       --danger:#ff4d4d;
@@ -25,250 +25,406 @@
       --accent:#ff7a18;
       --accent2:#ffb14a;
 
-      /* Shadows / Radius */
       --radius:18px;
-      --shadow: 0 24px 70px rgba(0,0,0,.55);
-      --shadow2: 0 10px 30px rgba(0,0,0,.45);
-
-      /* Pro highlights */
-      --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.12);
+      --shadow: 0 24px 70px rgba(0,0,0,.60);
+      --shadow2: 0 12px 30px rgba(0,0,0,.45);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
 
-    /* ==== CARBON BACKGROUND (ohne Bild-Upload, nur CSS Pattern) ==== */
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
-      background:
-        /* carbon weave */
-        linear-gradient(135deg, rgba(255,255,255,.05) 25%, transparent 25%) 0 0/18px 18px,
-        linear-gradient(225deg, rgba(255,255,255,.05) 25%, transparent 25%) 0 0/18px 18px,
-        linear-gradient(315deg, rgba(255,255,255,.03) 25%, transparent 25%) 0 0/18px 18px,
-        linear-gradient(45deg,  rgba(255,255,255,.03) 25%, transparent 25%) 0 0/18px 18px,
-        /* subtle glows */
-        radial-gradient(1200px 520px at 15% -10%, rgba(255,122,24,.14), transparent 55%),
-        radial-gradient(900px 520px at 100% 10%, rgba(255,177,74,.09), transparent 60%),
-        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
-        linear-gradient(180deg, #05070c 0%, var(--bg) 45%, #05070c 100%);
-      background-blend-mode: overlay, overlay, overlay, overlay, normal, normal, normal, normal;
+      background: var(--bg);
+      overflow-x:hidden;
     }
 
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 60px;}
+    /* ===== Carbon Background ===== */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        /* Carbon weave */
+        repeating-linear-gradient(45deg,
+          rgba(255,255,255,.045) 0 10px,
+          rgba(0,0,0,.10) 10px 20px
+        ),
+        repeating-linear-gradient(-45deg,
+          rgba(255,255,255,.035) 0 10px,
+          rgba(0,0,0,.12) 10px 20px
+        ),
+        radial-gradient(1200px 520px at 12% -10%, rgba(255,122,24,.16), transparent 55%),
+        radial-gradient(900px 520px at 100% 10%, rgba(255,177,74,.10), transparent 60%),
+        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 65%),
+        linear-gradient(180deg, #070a10 0%, #05070c 100%);
+      opacity:1;
+      z-index:-2;
+    }
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.05), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,.04), transparent 40%);
+      mix-blend-mode: overlay;
+      opacity:.65;
+      z-index:-1;
+      pointer-events:none;
+    }
 
-    /* Top bar */
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px;}
+    /* ===== Layout ===== */
+    .wrap{max-width:1120px; margin:0 auto; padding:22px 16px 70px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; margin-bottom:14px;
+    }
     .brand{display:flex; align-items:center; gap:12px;}
     .logoDot{
-      width:38px; height:38px; border-radius:14px;
+      width:42px; height:42px; border-radius:16px;
       background:
         radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
-        linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.55));
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,122,24,.18);
+        linear-gradient(135deg, rgba(255,122,24,1), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 18px 50px rgba(255,122,24,.18);
     }
-    .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
-    .brand p{margin:0; color:var(--muted); font-size:12px}
+    .brand h1{font-size:18px; margin:0; letter-spacing:.3px}
+    .brand p{margin:0; color:var(--muted); font-size:13px}
 
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex; align-items:center; gap:10px;
       border:1px solid var(--line);
       padding:10px 12px; border-radius:999px;
-      background: rgba(16,24,36,.55);
+      background: rgba(12,18,32,.55);
       box-shadow: 0 8px 28px rgba(0,0,0,.25);
-      font-size:12px; color:var(--muted);
-      backdrop-filter: blur(8px);
+      font-size:13px; color:var(--muted);
+      user-select:none;
+      white-space:nowrap;
     }
-    .pill b{color:var(--text); font-weight:700}
+    .pill b{color:var(--text); font-weight:800}
     .dot{
-      width:8px;height:8px;border-radius:50%;
+      width:10px;height:10px;border-radius:50%;
       background:var(--ok);
-      box-shadow: 0 0 0 4px rgba(37,208,127,.10);
+      box-shadow: 0 0 0 5px rgba(37,208,127,.10);
     }
 
-    /* Layout */
-    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:16px;}
-    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 950px){
+      .grid{grid-template-columns:1fr}
+      .pill{display:none}
+    }
 
     .card{
-      background: linear-gradient(180deg, rgba(16,24,36,.80), rgba(10,14,20,.65));
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
       border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
-      backdrop-filter: blur(10px);
     }
 
-    /* ID Header */
+    /* ===== ID Header ===== */
     .idHeader{
       position:relative;
       padding:18px;
       background:
-        radial-gradient(700px 240px at 10% 0%, rgba(255,122,24,.18), transparent 60%),
-        radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
+        radial-gradient(700px 240px at 10% 0%, rgba(255,122,24,.20), transparent 60%),
+        radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.12), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
       border-bottom:1px solid var(--line);
     }
-    .idHeader::after{
-      content:"";
-      position:absolute; inset:-2px;
-      pointer-events:none;
-      background: radial-gradient(520px 220px at 12% 10%, rgba(255,122,24,.20), transparent 60%);
-      opacity:.8;
-      filter: blur(10px);
+    .idRow{
+      display:flex; gap:14px; align-items:flex-start;
     }
 
-    .idRow{position:relative; display:flex; gap:14px; align-items:flex-start; z-index:1;}
-
-    /* Avatar replaced with football badge */
+    /* Avatar replaced with BIG football icon */
     .avatar{
-      width:74px;height:74px;border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.14), transparent 55%),
-        linear-gradient(135deg, rgba(255,122,24,.35), rgba(0,0,0,.25));
+      width:86px;height:86px;border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
       box-shadow: 0 14px 40px rgba(0,0,0,.45);
       flex:0 0 auto;
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       position:relative;
       overflow:hidden;
     }
     .avatar::before{
       content:"";
-      position:absolute;
-      inset:-20px;
+      position:absolute; inset:-1px;
       background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 60%),
-        conic-gradient(from 20deg, rgba(255,255,255,.08), transparent 25%, rgba(255,255,255,.06), transparent 55%);
-      filter: blur(0px);
-      opacity:.9;
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.08));
+      opacity:1;
     }
-    .ball{
+    .avatar .ball{
       position:relative;
-      width:48px; height:48px;
-      border-radius:50%;
-      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), rgba(255,255,255,.08) 35%, rgba(0,0,0,.25) 70%);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.12);
-      display:grid;
-      place-items:center;
-      font-size:22px;
+      width:54px; height:54px;
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,.55));
     }
-    .ball span{filter: drop-shadow(0 6px 14px rgba(0,0,0,.55));}
-
     .idInfo{flex:1}
-    .nameLine{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;}
-    .name{font-size:18px; margin:0; letter-spacing:.4px;}
+    .nameLine{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:8px;
+    }
+    .name{
+      font-size:20px; margin:0;
+      letter-spacing:.3px;
+      font-weight:900;
+    }
     .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(255,122,24,.22);
-      background: rgba(255,122,24,.08);
-      color:#ffd9b0; font-size:12px;
+      padding:9px 12px; border-radius:999px;
+      border:1px solid rgba(255,122,24,.28);
+      background: rgba(255,122,24,.10);
+      color:#ffe3c5; font-size:13px;
       box-shadow: 0 10px 30px rgba(255,122,24,.10);
       white-space:nowrap;
+      font-weight:800;
     }
-    .muted{color:var(--muted); font-size:12px; line-height:1.45}
-    .miniChip{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+
+    .muted{color:var(--muted); font-size:13px; line-height:1.35}
+    .miniChip{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
     .chip{
-      padding:8px 10px;
+      padding:9px 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(16,24,36,.55);
+      background: rgba(12,18,32,.55);
       color:var(--muted);
-      font-size:12px;
+      font-size:13px;
+      font-weight:700;
     }
-    .chip b{color:var(--text); font-weight:700}
+    .chip b{color:var(--text); font-weight:900}
 
-    .idControls{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+    /* BIGGER buttons for kids */
+    .idControls{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
     .btn{
       border:1px solid var(--line);
-      background: rgba(16,24,36,.65);
+      background: rgba(12,18,32,.70);
       color: var(--text);
-      padding:10px 12px;
-      border-radius:12px;
+      padding:12px 14px;
+      border-radius:14px;
       cursor:pointer;
-      font-weight:700;
-      font-size:12px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.2px;
+      transition: transform .10s ease, border-color .10s ease, background .10s ease;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,122,24,.35)}
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,122,24,.38)}
     .btn.primary{
-      border-color: rgba(255,122,24,.38);
-      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
+      border-color: rgba(255,122,24,.45);
+      background: linear-gradient(135deg, rgba(255,122,24,.25), rgba(255,177,74,.10));
       box-shadow: 0 16px 40px rgba(255,122,24,.12);
     }
 
-    /* Sections */
     .section{padding:16px 18px;}
-    .section h2{margin:0 0 10px 0; font-size:14px; letter-spacing:.4px; color:#dfe9ff;}
+    .section h2{
+      margin:0 0 10px 0;
+      font-size:16px;
+      letter-spacing:.2px;
+      color:#eaf2ff;
+      font-weight:900;
+    }
 
+    /* ===== Simple rows with BIG icons ===== */
     .list{display:flex; flex-direction:column; gap:10px;}
     .row{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:12px 12px;
       border:1px solid var(--line);
-      border-radius:14px;
-      background: rgba(16,24,36,.40);
+      border-radius:16px;
+      background: rgba(12,18,32,.45);
     }
-    .row .left{display:flex; gap:10px; align-items:center}
+    .row .left{display:flex; gap:12px; align-items:center}
     .icon{
-      width:34px;height:34px;border-radius:12px;
+      width:46px;height:46px;border-radius:16px;
       display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.18);
-      color:#ffd9b0;
+      color:#ffe3c5;
+      font-size:22px;
     }
-    .rowTitle{margin:0; font-weight:800; font-size:13px}
-    .rowSub{margin:0; color:var(--muted); font-size:12px}
+    .rowTitle{margin:0; font-weight:900; font-size:15px}
+    .rowSub{margin:2px 0 0; color:var(--muted); font-size:13px; font-weight:700}
     .tag{
-      font-size:11px;
-      padding:7px 10px;
+      font-size:12px;
+      padding:9px 12px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.18);
       color: var(--muted);
       white-space:nowrap;
+      font-weight:900;
     }
     .tag.ok{border-color: rgba(37,208,127,.35); color:#bff4de; background: rgba(37,208,127,.10)}
     .tag.warn{border-color: rgba(255,176,32,.35); color:#ffe2b8; background: rgba(255,176,32,.10)}
     .tag.danger{border-color: rgba(255,77,77,.35); color:#ffd0d0; background: rgba(255,77,77,.10)}
 
-    /* Slots */
+    /* ===== Slots ===== */
     .slotsGrid{display:grid; grid-template-columns:1fr; gap:10px;}
     .slot{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:12px;
       border:1px solid var(--line);
-      border-radius:14px;
-      background: rgba(16,24,36,.40);
+      border-radius:16px;
+      background: rgba(12,18,32,.45);
     }
-    .slot strong{font-size:13px}
-    .slot small{display:block; color:var(--muted); margin-top:2px}
+    .slot strong{font-size:15px; font-weight:900}
+    .slot small{display:block; color:var(--muted); margin-top:2px; font-size:13px; font-weight:700}
     .slot .right{display:flex; align-items:center; gap:10px}
+
     .slotBtn{
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,122,24,.35);
-      background: rgba(255,122,24,.10);
-      color:#ffd9b0;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,122,24,.40);
+      background: rgba(255,122,24,.12);
+      color:#ffe3c5;
       cursor:pointer;
-      font-weight:800;
-      font-size:12px;
+      font-weight:900;
+      font-size:14px;
     }
     .slotBtn:disabled{
       opacity:.45;
       cursor:not-allowed;
-      border-color: rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
       color: var(--muted);
     }
 
-    /* Modal */
+    /* ===== Stats Card (Kid-friendly + Pro) ===== */
+    .stats{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background: rgba(0,0,0,.14);
+      padding:14px;
+      box-shadow: var(--shadow2);
+      margin-bottom:12px;
+    }
+    .statsTop{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:12px;
+    }
+    .statsTop h3{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-bottom:12px;
+    }
+    @media (max-width: 520px){
+      .kpiGrid{grid-template-columns: 1fr}
+    }
+    .kpi{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(12,18,32,.45);
+      padding:12px;
+    }
+    .kpiLabel{color:var(--muted); font-size:12px; font-weight:900; letter-spacing:.2px}
+    .kpiValue{font-size:22px; font-weight:1000; margin-top:4px}
+    .kpiSub{color:var(--muted); font-size:12px; font-weight:800; margin-top:2px}
+
+    .progressRow{
+      display:flex; gap:12px; align-items:center;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(12,18,32,.45);
+      padding:12px;
+      margin-bottom:12px;
+    }
+    .ring{
+      width:72px; height:72px; border-radius:50%;
+      display:grid; place-items:center;
+      background:
+        conic-gradient(var(--accent) 0deg, rgba(255,255,255,.10) 0deg);
+      position:relative;
+      box-shadow: 0 18px 40px rgba(0,0,0,.45);
+      flex:0 0 auto;
+    }
+    .ring::after{
+      content:"";
+      position:absolute; inset:8px;
+      border-radius:50%;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .ring b{
+      position:relative;
+      font-size:16px;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .progressText{
+      flex:1;
+      min-width:0;
+    }
+    .progressText .big{
+      font-size:15px;
+      font-weight:1000;
+      margin:0;
+    }
+    .progressText .small{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .chartWrap{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(12,18,32,.45);
+      padding:12px;
+      margin-bottom:12px;
+    }
+    canvas{width:100%; height:160px; display:block}
+
+    .actionsRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .btnBig{
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:1000;
+      font-size:14px;
+      border:1px solid var(--line);
+      background: rgba(12,18,32,.70);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .btnBig.primary{
+      border-color: rgba(37,208,127,.35);
+      background: rgba(37,208,127,.12);
+    }
+    .btnBig.warn{
+      border-color: rgba(255,176,32,.35);
+      background: rgba(255,176,32,.10);
+      color:#ffe2b8;
+    }
+    .btnBig.ghost{
+      border-color: rgba(255,255,255,.14);
+      background: rgba(0,0,0,.10);
+      color:var(--muted);
+    }
+
+    /* ===== Modal ===== */
     .modalWrap{
       position:fixed; inset:0;
-      background: rgba(0,0,0,.55);
+      background: rgba(0,0,0,.60);
       display:none;
       align-items:center; justify-content:center;
       padding:18px;
@@ -278,8 +434,8 @@
       width:min(560px, 100%);
       border-radius:18px;
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.90));
-      box-shadow: 0 30px 90px rgba(0,0,0,.60);
+      background: linear-gradient(180deg, rgba(12,18,32,.95), rgba(10,15,26,.92));
+      box-shadow: 0 30px 90px rgba(0,0,0,.65);
       overflow:hidden;
     }
     .modalHead{
@@ -287,25 +443,28 @@
       border-bottom:1px solid var(--line);
       display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-    .modalHead b{letter-spacing:.3px}
+    .modalHead b{letter-spacing:.2px; font-weight:1000}
     .x{
-      width:38px;height:38px;border-radius:12px;
+      width:42px;height:42px;border-radius:14px;
       border:1px solid var(--line);
       background: rgba(0,0,0,.15);
       color:var(--text);
       cursor:pointer;
       font-size:16px;
+      font-weight:1000;
     }
     .modalBody{padding:16px}
     .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
-    .field label{font-size:12px; color:var(--muted)}
+    .field label{font-size:12px; color:var(--muted); font-weight:900}
     input, select{
       background: rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
       color: var(--text);
       padding:12px 12px;
-      border-radius:12px;
+      border-radius:14px;
       outline:none;
+      font-size:14px;
+      font-weight:800;
     }
     .modalActions{
       display:flex; gap:10px; justify-content:flex-end;
@@ -313,115 +472,23 @@
       border-top:1px solid var(--line);
     }
 
-    /* Toast */
     .toast{
       position: fixed;
       bottom: 18px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(16,24,36,.90);
+      background: rgba(12,18,32,.92);
       border: 1px solid var(--line);
       padding: 12px 14px;
-      border-radius: 14px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      border-radius: 16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.60);
       display:none;
       z-index:120;
-      font-size:12px;
+      font-size:13px;
       color: var(--muted);
+      max-width: 92vw;
     }
     .toast b{color:var(--text)}
-
-    /* ==== Stats Card (neu, damit nix fehlt) ==== */
-    #statsCard{
-      margin-top:10px;
-      box-shadow: var(--shadow2);
-      border-radius: 16px;
-    }
-    .cardHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:14px 14px 10px 14px;
-      border-bottom:1px solid var(--line);
-      background: rgba(0,0,0,.10);
-    }
-    .cardHead h3{
-      margin:0;
-      font-size:13px;
-      letter-spacing:.35px;
-      color:#dfe9ff;
-    }
-    .kpiGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      padding:12px 14px 6px 14px;
-    }
-    @media(max-width:700px){
-      .kpiGrid{grid-template-columns:1fr}
-    }
-    .kpi{
-      border:1px solid var(--line);
-      background: rgba(16,24,36,.40);
-      border-radius:14px;
-      padding:12px;
-    }
-    .kpiLabel{font-size:11px; color:var(--muted)}
-    .kpiValue{font-size:20px; font-weight:900; letter-spacing:.3px; margin-top:4px}
-    .kpiSub{font-size:11px; color:var(--muted); margin-top:2px}
-
-    .progressWrap{padding:10px 14px 14px 14px;}
-    .progressTop{display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:12px; color:#dfe9ff}
-    .progressBar{
-      margin-top:10px;
-      height:12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.20);
-      overflow:hidden;
-    }
-    .progressFill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(255,122,24,.85), rgba(255,177,74,.55));
-      box-shadow: var(--glow);
-      border-radius:999px;
-      transition: width .25s ease;
-    }
-
-    .chartWrap{padding:0 14px 14px 14px;}
-    canvas{
-      border:1px solid var(--line);
-      border-radius:14px;
-      background: rgba(0,0,0,.12);
-    }
-
-    .actionsRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      padding:0 14px 14px 14px;
-    }
-    .btnPrimary, .btnGhost{
-      padding:10px 12px;
-      border-radius:12px;
-      font-weight:800;
-      font-size:12px;
-      cursor:pointer;
-      border:1px solid var(--line);
-    }
-    .btnPrimary{
-      border-color: rgba(255,122,24,.38);
-      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
-      color: var(--text);
-      box-shadow: 0 16px 40px rgba(255,122,24,.10);
-    }
-    .btnGhost{
-      background: rgba(16,24,36,.55);
-      color: var(--text);
-    }
-    .btnGhost:hover, .btnPrimary:hover{transform: translateY(-1px)}
   </style>
 </head>
 
@@ -432,7 +499,7 @@
         <div class="logoDot"></div>
         <div>
           <h1>SmartGen Fussball Akademie</h1>
-          <p>App Prototype • Profil + Slots • Live Status</p>
+          <p>Profil • Slots • Statistik (Demo)</p>
         </div>
       </div>
 
@@ -447,19 +514,34 @@
       <div class="card">
         <div class="idHeader">
           <div class="idRow">
-            <div class="avatar" title="SmartGen Member Card">
-              <div class="ball"><span>⚽️</span></div>
+            <div class="avatar" title="Fußball">
+              <!-- Inline SVG football -->
+              <svg class="ball" viewBox="0 0 64 64" aria-hidden="true">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="rgba(255,255,255,.95)"/>
+                    <stop offset="1" stop-color="rgba(255,255,255,.75)"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="32" cy="32" r="26" fill="url(#g1)" opacity="0.95"/>
+                <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"/>
+                <polygon points="32,18 25,23 27,31 37,31 39,23" fill="rgba(0,0,0,.55)"/>
+                <path d="M25 23 L18 26 L19 35 L27 31" fill="rgba(0,0,0,.35)"/>
+                <path d="M39 23 L46 26 L45 35 L37 31" fill="rgba(0,0,0,.35)"/>
+                <path d="M27 31 L22 40 L28 47 L32 43 L36 47 L42 40 L37 31"
+                      fill="rgba(0,0,0,.25)"/>
+              </svg>
             </div>
 
             <div class="idInfo">
               <div class="nameLine">
-                <h2 class="name">Mitglied: <span id="memberName">Player One</span></h2>
-                <span class="badge">ID • SmartGen</span>
+                <h2 class="name">Mitglied: <span id="memberName">Amine B.</span></h2>
+                <span class="badge">SmartGen • ID</span>
               </div>
 
               <div class="muted">
                 <span id="memberMeta">U15 • Technik & Kognition</span> •
-                <span>Trainer: <b id="trainerName">Salem</b></span>
+                Trainer: <b id="trainerName">Salem</b>
               </div>
 
               <div class="miniChip">
@@ -470,7 +552,7 @@
 
               <div class="idControls">
                 <button class="btn primary" id="btnBook">Slot buchen</button>
-                <button class="btn" id="btnStatus">Status ändern</button>
+                <button class="btn" id="btnStatus">Status wechseln</button>
                 <button class="btn" id="btnSwapTrainer">Trainer wechseln</button>
               </div>
             </div>
@@ -478,115 +560,109 @@
         </div>
 
         <div class="section">
-          <h2>Heute im Fokus</h2>
+          <h2>Heute</h2>
 
-          <!-- Stats / Progress -->
-          <section class="card" id="statsCard">
-            <div class="cardHead">
-              <h3>Statistik & Progress</h3>
+          <!-- Stats -->
+          <div class="stats" id="statsCard">
+            <div class="statsTop">
+              <h3>Statistik & Fortschritt</h3>
               <span class="chip" id="attendanceChip">Anwesenheit: --%</span>
             </div>
 
             <div class="kpiGrid">
               <div class="kpi">
-                <div class="kpiLabel">Sessions</div>
+                <div class="kpiLabel">Trainings</div>
                 <div class="kpiValue" id="kpiSessions">0</div>
                 <div class="kpiSub">letzte Einträge</div>
               </div>
-
               <div class="kpi">
-                <div class="kpiLabel">Streak</div>
+                <div class="kpiLabel">Serie</div>
                 <div class="kpiValue" id="kpiStreak">0</div>
                 <div class="kpiSub">in Folge anwesend</div>
               </div>
-
               <div class="kpi">
-                <div class="kpiLabel">Performance</div>
+                <div class="kpiLabel">Score</div>
                 <div class="kpiValue" id="kpiPerf">--</div>
-                <div class="kpiSub">Score (0–100)</div>
+                <div class="kpiSub">0–100 (Demo)</div>
               </div>
             </div>
 
-            <div class="progressWrap">
-              <div class="progressTop">
-                <span>Progress Level</span>
-                <span class="muted" id="progressLabel">0%</span>
-              </div>
-              <div class="progressBar">
-                <div class="progressFill" id="progressFill"></div>
+            <div class="progressRow">
+              <div class="ring" id="ring"><b id="ringVal">0%</b></div>
+              <div class="progressText">
+                <p class="big">Progress Level</p>
+                <p class="small" id="progressHint">Je mehr Training, desto höher.</p>
               </div>
             </div>
 
             <div class="chartWrap">
-              <div class="muted" style="margin-bottom:8px;">Letzte 10 Sessions (Anwesenheit + Score)</div>
-              <canvas id="miniChart" width="800" height="220" style="width:100%; height:auto;"></canvas>
+              <div class="muted" style="margin-bottom:8px;">Letzte 10 Trainings (Anwesend + Score)</div>
+              <canvas id="miniChart" width="900" height="200"></canvas>
             </div>
 
             <div class="actionsRow">
-              <button class="btnPrimary" id="btnPresent" type="button">Heute anwesend ✅</button>
-              <button class="btnGhost" id="btnAbsent" type="button">Heute gefehlt ❌</button>
-              <button class="btnGhost" id="btnResetStats" type="button">Reset</button>
+              <button class="btnBig primary" id="btnPresent" type="button">Heute da ✅</button>
+              <button class="btnBig warn" id="btnAbsent" type="button">Heute gefehlt ❌</button>
+              <button class="btnBig ghost" id="btnResetStats" type="button">Reset</button>
             </div>
-          </section>
+          </div>
 
-          <!-- Focus list -->
-          <div class="list" style="margin-top:12px;">
+          <!-- Simple focus list -->
+          <div class="list">
             <div class="row">
               <div class="left">
                 <div class="icon">⚽️</div>
                 <div>
-                  <p class="rowTitle">Technik – erster Kontakt</p>
-                  <p class="rowSub">Ballannahme • Richtungswechsel • Tempo</p>
+                  <p class="rowTitle">Technik</p>
+                  <p class="rowSub">Erster Kontakt • Ballannahme • Tempo</p>
                 </div>
               </div>
-              <span class="tag ok">Startbereit</span>
+              <span class="tag ok">Start</span>
             </div>
 
             <div class="row">
               <div class="left">
                 <div class="icon">🧠</div>
                 <div>
-                  <p class="rowTitle">Kognition – Reaktion</p>
-                  <p class="rowSub">Scanning • Entscheidung • Timing</p>
+                  <p class="rowTitle">Kognition</p>
+                  <p class="rowSub">Reaktion • Entscheidung • Timing</p>
                 </div>
               </div>
-              <span class="tag warn">Empfohlen</span>
+              <span class="tag warn">Offen</span>
             </div>
 
             <div class="row">
               <div class="left">
                 <div class="icon">📈</div>
                 <div>
-                  <p class="rowTitle">Matchanalyse (Light)</p>
-                  <p class="rowSub">Mini-Report • KPIs • Video Hinweise</p>
+                  <p class="rowTitle">Matchanalyse</p>
+                  <p class="rowSub">Mini-Report • 3 KPIs • Hinweise</p>
                 </div>
               </div>
               <span class="tag">Optional</span>
             </div>
           </div>
+
         </div>
       </div>
 
       <!-- RIGHT -->
       <div class="card">
         <div class="section">
-          <h2>Offene Slots (Beispiele)</h2>
-          <p class="muted" style="margin-top:-2px">
-            Klick auf <b>Jetzt buchen</b> → Buchungsfenster.
-          </p>
-
+          <h2>Freie Slots</h2>
+          <p class="muted" style="margin-top:-4px">Tippe auf <b>Jetzt buchen</b> → kleines Fenster.</p>
           <div class="slotsGrid" id="slotsGrid"></div>
         </div>
 
         <div class="section" style="border-top:1px solid var(--line)">
-          <h2>Quick Actions</h2>
+          <h2>Schnell</h2>
           <div class="list">
             <div class="row">
               <div class="left">
                 <div class="icon">🪪</div>
                 <div>
-                  <p class="rowTitle">Profil-ID im Header</p>
-                  <p class="rowSub">Wallet-Look, direkt in der App</p>
+                  <p class="rowTitle">Profil</p>
+                  <p class="rowSub">Einfach & klar für Kinder</p>
                 </div>
               </div>
               <span class="tag ok">Aktiv</span>
@@ -596,8 +672,8 @@
               <div class="left">
                 <div class="icon">🔔</div>
                 <div>
-                  <p class="rowTitle">Benachrichtigungen (Demo)</p>
-                  <p class="rowSub">„Slot bestätigt“ / „Termin geändert“</p>
+                  <p class="rowTitle">Benachrichtigungen</p>
+                  <p class="rowSub">„Slot bestätigt“ (später)</p>
                 </div>
               </div>
               <span class="tag">Coming</span>
@@ -605,8 +681,8 @@
           </div>
         </div>
       </div>
-    </div><!-- grid -->
-  </div><!-- wrap -->
+    </div>
+  </div>
 
   <!-- Modal -->
   <div class="modalWrap" id="modalWrap">
@@ -619,23 +695,23 @@
         <p class="muted" id="modalInfo" style="margin:0 0 10px 0"></p>
 
         <div class="field">
-          <label>Trainingstyp</label>
+          <label>Training</label>
           <select id="bookType">
             <option>Privattraining (Technik)</option>
             <option>Kognitives Training</option>
-            <option>Athletik (Schnelligkeit)</option>
+            <option>Athletik</option>
             <option>Matchanalyse</option>
           </select>
         </div>
 
         <div class="field">
           <label>Notiz (optional)</label>
-          <input id="bookNote" placeholder="z.B. Fokus: erster Kontakt / schwacher Fuß" />
+          <input id="bookNote" placeholder="z.B. schwacher Fuß / erster Kontakt" />
         </div>
       </div>
       <div class="modalActions">
         <button class="btn" id="btnCancel">Abbrechen</button>
-        <button class="btn primary" id="btnConfirm">Buchen & bestätigen</button>
+        <button class="btn primary" id="btnConfirm">Buchen</button>
       </div>
     </div>
   </div>
@@ -653,9 +729,7 @@
       trainer: "Salem",
       status: "Aktiv" // Aktiv | Pause | Verletzung
     };
-
     const trainers = ["Salem", "Güni", "Tobi"];
-
     const slots = [
       { id: 1, day: "Di", time: "17:00", title: "Privattraining", desc: "Technik • Ballgefühl", open: true },
       { id: 2, day: "Mi", time: "19:00", title: "Kognitives Training", desc: "Reaktion • Entscheidung", open: true },
@@ -663,159 +737,15 @@
       { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPIs", open: true }
     ];
 
-    const $ = (id) => document.getElementById(id);
-
-    function setStatusUI(status){
-      $("statusLabel").textContent = status;
-      const dot = $("statusDot");
-      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
-      dot.style.boxShadow = status === "Aktiv"
-        ? "0 0 0 4px rgba(37,208,127,.10)"
-        : status === "Pause"
-          ? "0 0 0 4px rgba(255,176,32,.10)"
-          : "0 0 0 4px rgba(255,77,77,.10)";
-    }
-
-    function toast(msg){
-      const el = $("toast");
-      el.innerHTML = msg;
-      el.style.display = "block";
-      clearTimeout(window.__t);
-      window.__t = setTimeout(()=> el.style.display="none", 2600);
-    }
-
-    function renderMember(){
-      $("memberName").textContent = member.name;
-      $("memberMeta").textContent = member.meta;
-      $("sportLevel").textContent = member.sportLevel;
-      $("subStatus").textContent = member.subStatus;
-      $("nextSession").textContent = member.nextSession;
-      $("trainerName").textContent = member.trainer;
-      setStatusUI(member.status);
-    }
-
-    function renderSlots(){
-      const grid = $("slotsGrid");
-      grid.innerHTML = "";
-
-      slots.forEach(s => {
-        const div = document.createElement("div");
-        div.className = "slot";
-        div.innerHTML = `
-          <div>
-            <strong>${s.day} • ${s.time} — ${s.title}</strong>
-            <small>${s.desc}</small>
-          </div>
-          <div class="right">
-            <span class="tag ${s.open ? "warn" : ""}">${s.open ? "frei" : "belegt"}</span>
-            <button class="slotBtn" ${s.open ? "" : "disabled"} data-id="${s.id}">
-              Jetzt buchen
-            </button>
-          </div>
-        `;
-        grid.appendChild(div);
-      });
-
-      grid.querySelectorAll(".slotBtn").forEach(btn=>{
-        btn.addEventListener("click", () => openBooking(parseInt(btn.dataset.id,10)));
-      });
-    }
-
-    // ===== Modal / Booking =====
-    let selectedSlot = null;
-
-    function openBooking(slotId){
-      selectedSlot = slots.find(s=>s.id===slotId);
-      if(!selectedSlot) return;
-
-      $("modalTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
-      $("modalInfo").innerHTML = `
-        <b>${selectedSlot.title}</b> – ${selectedSlot.desc}<br/>
-        Trainer: <b>${member.trainer}</b> • Status: <b>${member.status}</b>
-      `;
-      $("modalWrap").style.display = "flex";
-    }
-
-    function closeModal(){
-      $("modalWrap").style.display = "none";
-      $("bookNote").value = "";
-      selectedSlot = null;
-    }
-
-    $("modalClose").addEventListener("click", closeModal);
-    $("btnCancel").addEventListener("click", closeModal);
-
-    $("btnConfirm").addEventListener("click", () => {
-      if(!selectedSlot) return;
-
-      const type = $("bookType").value;
-      const note = $("bookNote").value.trim();
-
-      selectedSlot.open = false;
-      renderSlots();
-      closeModal();
-
-      toast(`✅ <b>Buchung bestätigt</b><br>${type} • ${selectedSlot.day} ${selectedSlot.time}${note ? " • Notiz: " + note : ""}`);
-    });
-
-    // ===== Top Buttons =====
-    $("btnBook").addEventListener("click", () => {
-      const firstOpen = slots.find(s=>s.open);
-      if(!firstOpen){
-        toast("⚠️ Aktuell keine freien Slots.");
-        return;
-      }
-      openBooking(firstOpen.id);
-    });
-
-    $("btnStatus").addEventListener("click", () => {
-      const order = ["Aktiv","Pause","Verletzung"];
-      const idx = order.indexOf(member.status);
-      member.status = order[(idx+1) % order.length];
-      renderMember();
-      toast(`Status geändert: <b>${member.status}</b>`);
-    });
-
-    $("btnSwapTrainer").addEventListener("click", () => {
-      const idx = trainers.indexOf(member.trainer);
-      member.trainer = trainers[(idx+1) % trainers.length];
-      renderMember();
-      toast(`Trainer: <b>${member.trainer}</b>`);
-    });
-
-    renderMember();
-    renderSlots();
-  </script>
-
-  <script>
-    // ===== Stats Model (LocalStorage) =====
-    const KEY = "sg_stats_v1";
-
-    const ui = {
-      sessions: document.getElementById("kpiSessions"),
-      streak: document.getElementById("kpiStreak"),
-      perf: document.getElementById("kpiPerf"),
-      chip: document.getElementById("attendanceChip"),
-      fill: document.getElementById("progressFill"),
-      label: document.getElementById("progressLabel"),
-      chart: document.getElementById("miniChart"),
-      btnPresent: document.getElementById("btnPresent"),
-      btnAbsent: document.getElementById("btnAbsent"),
-      btnReset: document.getElementById("btnResetStats"),
-    };
-
-    function todayKey(){
-      const d = new Date();
-      return d.toISOString().slice(0,10); // YYYY-MM-DD
-    }
+    // ===== Stats (LocalStorage) =====
+    const KEY = "sg_stats_v2";
+    function todayKey(){ return new Date().toISOString().slice(0,10); }
 
     function loadStats(){
       const raw = localStorage.getItem(KEY);
       if(raw) return JSON.parse(raw);
-
-      // Seed
       return {
-        level: 42, // 0-100
+        level: 42,
         history: [
           {date:"2025-12-17", present:true,  score:68},
           {date:"2025-12-18", present:true,  score:71},
@@ -830,17 +760,13 @@
         ]
       };
     }
-
-    function saveStats(s){
-      localStorage.setItem(KEY, JSON.stringify(s));
-    }
+    function saveStats(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
 
     function calcAttendance(history){
       if(!history.length) return 0;
       const present = history.filter(x=>x.present).length;
       return Math.round((present / history.length) * 100);
     }
-
     function calcStreak(history){
       let streak = 0;
       for(let i=history.length-1; i>=0; i--){
@@ -849,7 +775,6 @@
       }
       return streak;
     }
-
     function avgScore(history){
       const scored = history.filter(x=>x.present && x.score>0);
       if(!scored.length) return 0;
@@ -857,15 +782,114 @@
       return Math.round(sum / scored.length);
     }
 
-    function drawChart(history){
-      if(!ui.chart) return;
-      const ctx = ui.chart.getContext("2d");
+    // ===== UI helpers =====
+    const $ = (id) => document.getElementById(id);
 
-      const w = ui.chart.width, h = ui.chart.height;
+    function setStatusUI(status){
+      $("statusLabel").textContent = status;
+      const dot = $("statusDot");
+      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
+      dot.style.boxShadow = status === "Aktiv"
+        ? "0 0 0 5px rgba(37,208,127,.10)"
+        : status === "Pause"
+          ? "0 0 0 5px rgba(255,176,32,.10)"
+          : "0 0 0 5px rgba(255,77,77,.10)";
+    }
+
+    function toast(msg){
+      const el = $("toast");
+      el.innerHTML = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> el.style.display="none", 2400);
+    }
+
+    // ===== Render Member =====
+    function renderMember(){
+      $("memberName").textContent = member.name;
+      $("memberMeta").textContent = member.meta;
+      $("sportLevel").textContent = member.sportLevel;
+      $("subStatus").textContent = member.subStatus;
+      $("nextSession").textContent = member.nextSession;
+      $("trainerName").textContent = member.trainer;
+      setStatusUI(member.status);
+    }
+
+    // ===== Render Slots =====
+    function renderSlots(){
+      const grid = $("slotsGrid");
+      grid.innerHTML = "";
+
+      slots.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "slot";
+        div.innerHTML = `
+          <div>
+            <strong>${s.day} • ${s.time} — ${s.title}</strong>
+            <small>${s.desc}</small>
+          </div>
+          <div class="right">
+            <span class="tag ${s.open ? "warn" : ""}">${s.open ? "frei" : "belegt"}</span>
+            <button class="slotBtn" ${s.open ? "" : "disabled"} data-id="${s.id}">Jetzt buchen</button>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+
+      grid.querySelectorAll(".slotBtn").forEach(btn=>{
+        btn.addEventListener("click", () => openBooking(parseInt(btn.dataset.id,10)));
+      });
+    }
+
+    // ===== Modal / Booking =====
+    let selectedSlot = null;
+    function openBooking(slotId){
+      selectedSlot = slots.find(s=>s.id===slotId);
+      if(!selectedSlot) return;
+
+      $("modalTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
+      $("modalInfo").innerHTML = `
+        <b>${selectedSlot.title}</b> – ${selectedSlot.desc}<br/>
+        Trainer: <b>${member.trainer}</b> • Status: <b>${member.status}</b>
+      `;
+      $("modalWrap").style.display = "flex";
+    }
+    function closeModal(){
+      $("modalWrap").style.display = "none";
+      $("bookNote").value = "";
+      selectedSlot = null;
+    }
+    $("modalClose").addEventListener("click", closeModal);
+    $("btnCancel").addEventListener("click", closeModal);
+    $("btnConfirm").addEventListener("click", () => {
+      if(!selectedSlot) return;
+      const type = $("bookType").value;
+      const note = $("bookNote").value.trim();
+
+      selectedSlot.open = false;
+      renderSlots();
+      closeModal();
+      toast(`✅ <b>Buchung bestätigt</b><br>${type} • ${selectedSlot.day} ${selectedSlot.time}${note ? " • Notiz: " + note : ""}`);
+    });
+
+    // ===== Stats: ring + chart =====
+    function setRing(percent){
+      const p = Math.max(0, Math.min(100, percent));
+      const ring = $("ring");
+      const ringVal = $("ringVal");
+      ring.style.background = `conic-gradient(var(--accent) ${p*3.6}deg, rgba(255,255,255,.12) 0deg)`;
+      ringVal.textContent = `${p}%`;
+    }
+
+    function drawChart(history){
+      const canvas = $("miniChart");
+      if(!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
       ctx.clearRect(0,0,w,h);
 
       // grid
-      ctx.globalAlpha = 0.18;
+      ctx.globalAlpha = 0.22;
       ctx.strokeStyle = "#ffffff";
       ctx.lineWidth = 1;
       for(let y=20; y<h; y+=40){
@@ -874,39 +898,40 @@
       ctx.globalAlpha = 1;
 
       const last = history.slice(-10);
-      const padding = 40;
-      const chartW = w - padding*2;
-      const chartH = h - padding*2;
+      const pad = 28;
+      const chartW = w - pad*2;
+      const chartH = h - pad*2;
 
       // axes
-      ctx.globalAlpha = 0.25;
+      ctx.globalAlpha = 0.28;
       ctx.beginPath();
-      ctx.moveTo(padding, padding);
-      ctx.lineTo(padding, padding+chartH);
-      ctx.lineTo(padding+chartW, padding+chartH);
+      ctx.moveTo(pad, pad);
+      ctx.lineTo(pad, pad+chartH);
+      ctx.lineTo(pad+chartW, pad+chartH);
       ctx.stroke();
       ctx.globalAlpha = 1;
 
-      const barGap = 10;
-      const barW = (chartW - barGap*(last.length-1)) / last.length;
+      const gap = 10;
+      const barW = (chartW - gap*(last.length-1)) / last.length;
 
       last.forEach((d,i)=>{
-        const x = padding + i*(barW+barGap);
-        const baseY = padding+chartH;
+        const x = pad + i*(barW+gap);
+        const baseY = pad+chartH;
 
-        // bar
-        const bh = d.present ? chartH*0.35 : chartH*0.12;
-        ctx.globalAlpha = d.present ? 0.55 : 0.18;
+        // attendance bar
+        const bh = d.present ? chartH*0.36 : chartH*0.10;
+        ctx.globalAlpha = d.present ? 0.60 : 0.18;
         ctx.fillStyle = "#ff7a18";
         ctx.fillRect(x, baseY-bh, barW, bh);
         ctx.globalAlpha = 1;
 
-        // dot
+        // score dot
         const score = d.present ? d.score : 0;
-        const sy = padding + chartH - (score/100)*chartH;
-        ctx.globalAlpha = d.present ? 0.9 : 0.25;
+        const sy = pad + chartH - (score/100)*chartH;
+
+        ctx.globalAlpha = d.present ? 0.90 : 0.25;
         ctx.beginPath();
-        ctx.arc(x + barW/2, sy, 6, 0, Math.PI*2);
+        ctx.arc(x + barW/2, sy, 7, 0, Math.PI*2);
         ctx.fill();
         ctx.globalAlpha = 1;
       });
@@ -919,14 +944,13 @@
       const perf = avgScore(s.history);
       const sessions = s.history.length;
 
-      ui.sessions.textContent = sessions;
-      ui.streak.textContent = st;
-      ui.perf.textContent = perf;
-      ui.chip.textContent = `Anwesenheit: ${att}%`;
+      $("kpiSessions").textContent = sessions;
+      $("kpiStreak").textContent = st;
+      $("kpiPerf").textContent = perf;
+      $("attendanceChip").textContent = `Anwesenheit: ${att}%`;
 
       const level = Math.max(0, Math.min(100, s.level ?? 0));
-      ui.fill.style.width = `${level}%`;
-      ui.label.textContent = `${level}%`;
+      setRing(level);
 
       drawChart(s.history);
     }
@@ -946,13 +970,39 @@
       renderStats();
     }
 
-    ui.btnPresent.addEventListener("click", ()=> upsertToday(true));
-    ui.btnAbsent.addEventListener("click", ()=> upsertToday(false));
-    ui.btnReset.addEventListener("click", ()=>{
+    $("btnPresent").addEventListener("click", ()=> { upsertToday(true); toast("✅ Training eingetragen: <b>anwesend</b>"); });
+    $("btnAbsent").addEventListener("click", ()=> { upsertToday(false); toast("❌ Training eingetragen: <b>gefehlt</b>"); });
+    $("btnResetStats").addEventListener("click", ()=>{
       localStorage.removeItem(KEY);
       renderStats();
+      toast("Reset ✅");
     });
 
+    // ===== Top buttons =====
+    $("btnBook").addEventListener("click", () => {
+      const firstOpen = slots.find(s=>s.open);
+      if(!firstOpen){ toast("⚠️ Keine freien Slots."); return; }
+      openBooking(firstOpen.id);
+    });
+
+    $("btnStatus").addEventListener("click", () => {
+      const order = ["Aktiv","Pause","Verletzung"];
+      const idx = order.indexOf(member.status);
+      member.status = order[(idx+1) % order.length];
+      renderMember();
+      toast(`Status: <b>${member.status}</b>`);
+    });
+
+    $("btnSwapTrainer").addEventListener("click", () => {
+      const idx = trainers.indexOf(member.trainer);
+      member.trainer = trainers[(idx+1) % trainers.length];
+      renderMember();
+      toast(`Trainer: <b>${member.trainer}</b>`);
+    });
+
+    // init
+    renderMember();
+    renderSlots();
     renderStats();
   </script>
 </body>
