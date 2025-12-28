@@ -1,151 +1,1343 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SmartGen Fußball Akademie</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartGen Fussball Akademie – App Prototype</title>
+  <meta name="theme-color" content="#070a10" />
 
-<style>
-:root{
-  --bg:#070a10;
-  --card:#0c1220;
-  --text:#ffffff;
-  --muted:#9fb0cc;
-  --accent:#ff7a18;
-}
+  <style>
+    :root{
+      /* Carbon + Neon Base */
+      --bg:#070a10;
+      --panel: rgba(14,18,28,.86);
+      --panel2: rgba(10,12,18,.72);
+      --line: rgba(255,255,255,.10);
 
-/* ===== BODY mit CARBON ===== */
-body{
-  margin:0;
-  font-family: system-ui, Arial, sans-serif;
-  color:var(--text);
-  background:
-    repeating-linear-gradient(
-      45deg,
-      #0b0f14 0px,
-      #0b0f14 10px,
-      #070a10 10px,
-      #070a10 20px
-    );
-}
+      --text:#eaf2ff;
+      --muted:#97a7c2;
 
-/* ===== LAYOUT ===== */
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
+      --accent:#ff7a18;
+      --accent2:#ffb14a;
 
-.card{
-  background:rgba(12,18,32,.95);
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:20px;
-}
+      --ok:#25d07f;
+      --warn:#ffb020;
+      --danger:#ff4d4d;
 
-/* ===== HEADER ===== */
-.header{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
+      --radius:18px;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.45);
+      --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.12);
 
-.avatar{
-  width:100px;
-  height:100px;
-  border-radius:20px;
-  background:
-    radial-gradient(circle at 30% 30%, #ffb14a, #ff7a18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:48px;
-}
+      --tap: 60px; /* große Buttons für Kinder */
+    }
 
-h1{
-  margin:0;
-  font-size:22px;
-}
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x:hidden;
+    }
 
-.status{
-  margin-top:6px;
-  font-size:16px;
-  color:#25d07f;
-}
+    /* ===== Carbon Background ===== */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(255,122,24,.16), transparent 55%),
+        radial-gradient(1000px 620px at 110% 10%, rgba(255,177,74,.10), transparent 60%),
+        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
+        linear-gradient(180deg, #05070c 0%, #070a10 40%, #05070c 100%),
+        repeating-linear-gradient(135deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 4px,
+          rgba(0,0,0,.18) 4px,
+          rgba(0,0,0,.18) 10px
+        );
+      filter: contrast(112%) saturate(105%);
+      opacity: 1;
+      z-index:-2;
+    }
+    /* leichte Noise */
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.22;
+      z-index:-1;
+      pointer-events:none;
+    }
 
-/* ===== BIG ICON BUTTONS ===== */
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin-top:20px;
-}
+    /* ===== App Shell / Phone Look ===== */
+    .shell{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 22px 14px 44px;
+    }
 
-.btn{
-  background:#11182a;
-  border-radius:18px;
-  padding:20px;
-  text-align:center;
-  font-size:18px;
-  cursor:pointer;
-}
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
 
-.btn span{
-  display:block;
-  font-size:36px;
-  margin-bottom:10px;
-}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
+    }
+    .logoDot{
+      width:42px; height:42px;
+      border-radius:14px;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.55));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 50px rgba(255,122,24,.18);
+      flex:0 0 auto;
+      animation: floaty 4.5s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0) }
+      50%{ transform: translateY(-2px) }
+    }
+    .brand h1{
+      font-size:16px;
+      margin:0;
+      letter-spacing:.3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-/* ===== STATS ===== */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-top:20px;
-}
+    .statusPill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(16,24,36,.55);
+      border:1px solid var(--line);
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+      font-size:12px;
+      color:var(--muted);
+      flex:0 0 auto;
+    }
+    .dot{
+      width:10px; height:10px;
+      border-radius:50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 5px rgba(37,208,127,.12);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform: scale(1); opacity: 1 }
+      50%{ transform: scale(1.12); opacity: .85 }
+    }
+    .statusPill b{ color:var(--text) }
 
-.stat{
-  background:#11182a;
-  border-radius:16px;
-  padding:16px;
-  text-align:center;
-}
+    /* Layout: desktop = 2 Spalten, mobile = Phone */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 960px){
+      .grid{ grid-template-columns: 1fr; }
+    }
 
-.stat b{
-  font-size:26px;
-  display:block;
-}
-</style>
+    /* PHONE FRAME (mobile-first) */
+    .phone{
+      border-radius: 28px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+    .phone::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 260px at 15% 10%, rgba(255,122,24,.16), transparent 60%);
+      filter: blur(12px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .screen{
+      position:relative;
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(10,12,18,.82), rgba(10,12,18,.58));
+      box-shadow: var(--shadow2);
+    }
+
+    /* Tabs (mobile) */
+    .tabs{
+      display:none;
+      gap:10px;
+      padding:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .tabBtn{
+      flex:1;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .tabBtn:active{ transform: scale(.98) }
+    .tabBtn.active{
+      border-color: rgba(255,122,24,.45);
+      box-shadow: var(--glow);
+      background: linear-gradient(135deg, rgba(255,122,24,.18), rgba(255,177,74,.08));
+    }
+    @media (max-width: 960px){
+      .tabs{ display:flex; }
+    }
+
+    /* Cards */
+    .card{
+      background: linear-gradient(180deg, rgba(16,24,36,.80), rgba(10,14,20,.60));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+
+    .section{ padding: 14px 14px; }
+    .titleRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .section h2{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.3px;
+    }
+    .muted{ color:var(--muted); font-size:12px; line-height:1.45; }
+
+    /* ===== Profile Header (Kids friendly) ===== */
+    .profileHead{
+      padding:14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(700px 240px at 10% 0%, rgba(255,122,24,.18), transparent 60%),
+        radial-gradient(700px 240px at 90% 20%, rgba(255,177,74,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    }
+
+    .idRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .avatar{
+      width: 78px;
+      height: 78px;
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.28);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      flex:0 0 auto;
+    }
+    .avatar svg{ width: 54px; height: 54px; }
+
+    .idInfo{ flex:1; min-width:0; }
+    .nameLine{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:6px;
+    }
+    .name{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .badge{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,24,.22);
+      background: rgba(255,122,24,.08);
+      color:#ffd9b0;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .chip{
+      padding:9px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.55);
+      color: var(--muted);
+      font-size:12px;
+      font-weight:800;
+    }
+    .chip b{ color: var(--text); }
+
+    /* Big actions */
+    .actions{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    .bigBtn{
+      height: var(--tap);
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(16,24,36,.60);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 15px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+      user-select:none;
+    }
+    .bigBtn:active{ transform: scale(.98); }
+    .bigBtn:hover{ border-color: rgba(255,122,24,.35); }
+    .bigBtn.primary{
+      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,177,74,.10));
+      border-color: rgba(255,122,24,.38);
+      box-shadow: var(--glow);
+      animation: softGlow 3s ease-in-out infinite;
+    }
+    @keyframes softGlow{
+      0%,100%{ filter: brightness(1); }
+      50%{ filter: brightness(1.06); }
+    }
+
+    /* Emoji icons bigger */
+    .emoji{ font-size: 22px; }
+
+    /* ===== Stats (Points / Level) ===== */
+    .statsCard{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding: 12px;
+    }
+    .statsTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .pill{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.55);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      white-space:nowrap;
+    }
+    .pill b{ color: var(--text); }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+      margin: 10px 0 12px;
+    }
+    .kpi{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.45);
+      border-radius: 16px;
+      padding: 10px 10px;
+      min-height: 76px;
+    }
+    .kpiLabel{ color: var(--muted); font-size: 12px; font-weight: 900; }
+    .kpiValue{ font-size: 22px; font-weight: 1000; margin-top: 4px; }
+    .kpiSub{ color: var(--muted); font-size: 11px; margin-top: 4px; }
+
+    @media (max-width: 520px){
+      .kpis{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .progressWrap{ margin-top: 6px; }
+    .progressTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .bar{
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .fill{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(255,122,24,.85), rgba(255,177,74,.75));
+      box-shadow: 0 0 28px rgba(255,122,24,.18);
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+
+    .miniChart{
+      margin-top: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(0,0,0,.14);
+      overflow:hidden;
+      padding: 8px;
+    }
+    canvas{ display:block; width:100%; height:auto; }
+
+    .statsActions{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .smallBtn{
+      height: 52px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+      font-weight: 1000;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .smallBtn:active{ transform: scale(.98); }
+    .smallBtn.ok{
+      border-color: rgba(37,208,127,.35);
+      background: rgba(37,208,127,.10);
+    }
+    .smallBtn.danger{
+      border-color: rgba(255,77,77,.35);
+      background: rgba(255,77,77,.10);
+    }
+
+    /* ===== Slots ===== */
+    .slotList{ display:flex; flex-direction:column; gap:10px; }
+    .slot{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(16,24,36,.45);
+    }
+    .slotLeft{ display:flex; gap:10px; align-items:center; min-width:0; }
+    .slotIcon{
+      width:46px; height:46px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      display:grid; place-items:center;
+      font-size: 24px;
+      flex:0 0 auto;
+    }
+    .slotText{ min-width:0; }
+    .slotTitle{
+      margin:0;
+      font-weight: 1000;
+      font-size: 14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .slotSub{
+      margin:2px 0 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .slotRight{ display:flex; align-items:center; gap:10px; }
+    .tag{
+      padding:8px 10px;
+      border-radius:999px;
+      font-size: 12px;
+      font-weight: 1000;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .tag.free{ border-color: rgba(255,176,32,.35); background: rgba(255,176,32,.10); color:#ffe2b8; }
+    .tag.busy{ opacity:.55; }
+    .bookBtn{
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,122,24,.38);
+      background: rgba(255,122,24,.12);
+      color:#ffd9b0;
+      font-weight: 1000;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .bookBtn:active{ transform: scale(.98) }
+    .bookBtn:disabled{
+      opacity:.40;
+      cursor:not-allowed;
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    /* ===== Modal ===== */
+    .modalWrap{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      z-index: 999;
+    }
+    .modal{
+      width: min(560px, 100%);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.90));
+      box-shadow: 0 30px 90px rgba(0,0,0,.60);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .modalHead b{ font-weight: 1000; }
+    .x{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--text);
+      font-size: 18px;
+      cursor:pointer;
+    }
+    .modalBody{ padding: 14px 16px; }
+    label{ display:block; color: var(--muted); font-size: 12px; font-weight: 900; margin-top: 10px; }
+    select, input{
+      width: 100%;
+      margin-top: 6px;
+      height: 50px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding: 0 12px;
+      outline:none;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .modalActions{
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+    }
+    .mBtn{
+      height: 50px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(16,24,36,.55);
+      color: var(--text);
+      font-weight: 1000;
+      cursor:pointer;
+    }
+    .mBtn.primary{
+      border-color: rgba(255,122,24,.38);
+      background: rgba(255,122,24,.12);
+      color:#ffd9b0;
+      box-shadow: var(--glow);
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(16,24,36,.92);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      display:none;
+      z-index: 1000;
+      min-width: min(420px, calc(100vw - 24px));
+    }
+    .toast b{ color: var(--text); }
+
+    /* Panels for desktop */
+    .rightCol{ display:block; }
+    @media (max-width: 960px){
+      .rightCol{ display:none; }
+    }
+
+    /* Mobile panel switching */
+    .panel{ display:block; }
+    @media (max-width: 960px){
+      .panel{ display:none; }
+      .panel.active{ display:block; }
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div style="min-width:0">
+          <h1>SmartGen Fussball Akademie</h1>
+          <p>Einfach • Klar • Für Kids (8+)</p>
+        </div>
+      </div>
 
-  <!-- PROFIL -->
-  <div class="card header">
-    <div class="avatar">⚽️</div>
-    <div>
-      <h1>Amine B. – SmartGen</h1>
-      <div class="status">🟢 Aktiv</div>
-      <div style="color:var(--muted)">U15 • Technik & Kognition</div>
+      <div class="statusPill" title="Live-Status">
+        <span class="dot" id="statusDot"></span>
+        Status: <b id="statusLabel">Aktiv</b>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT / PHONE -->
+      <div class="phone">
+        <div class="screen">
+          <!-- Tabs (mobile) -->
+          <div class="tabs">
+            <button class="tabBtn active" data-tab="profil">Profil</button>
+            <button class="tabBtn" data-tab="slots">Slots</button>
+            <button class="tabBtn" data-tab="stats">Stats</button>
+          </div>
+
+          <!-- PROFIL -->
+          <div class="panel active" id="panel-profil">
+            <div class="profileHead">
+              <div class="idRow">
+                <div class="avatar" title="SmartGen Avatar">
+                  <!-- Soccer Ball SVG -->
+                  <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                    <circle cx="32" cy="32" r="24" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+                    <circle cx="32" cy="32" r="18" stroke="rgba(255,255,255,.10)" stroke-width="2"/>
+                    <path d="M32 22l6 4-2 7h-8l-2-7 6-4z" fill="rgba(255,122,24,.95)"/>
+                    <path d="M20 26l6-4" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M44 26l-6-4" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M26 40l-6 6" stroke="rgba(255,255,255,.20)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M38 40l6 6" stroke="rgba(255,255,255,.20)" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="32" cy="32" r="2" fill="rgba(255,255,255,.35)"/>
+                  </svg>
+                </div>
+
+                <div class="idInfo">
+                  <div class="nameLine">
+                    <h2 class="name">👦 <span id="memberName">Amine B.</span></h2>
+                    <span class="badge">ID • SmartGen</span>
+                  </div>
+
+                  <div class="muted" style="font-weight:900">
+                    <span id="memberMeta">U15 • Technik & Kognition</span> • Trainer: <b id="trainerName">Salem</b>
+                  </div>
+
+                  <div class="chips">
+                    <div class="chip">⚡ Level: <b id="levelText">1</b></div>
+                    <div class="chip">⭐ Punkte: <b id="pointsText">0</b></div>
+                    <div class="chip">📅 Nächster: <b id="nextSession">Mi 18:00</b></div>
+                  </div>
+
+                  <div class="actions">
+                    <button class="bigBtn primary" id="btnBook">
+                      <span class="emoji">🗓️</span> Slot buchen
+                    </button>
+                    <button class="bigBtn" id="btnStatus">
+                      <span class="emoji">🟢</span> Status
+                    </button>
+                  </div>
+
+                  <div class="actions" style="margin-top:10px">
+                    <button class="bigBtn" id="btnSwapTrainer">
+                      <span class="emoji">👨‍🏫</span> Trainer
+                    </button>
+                    <button class="bigBtn" id="btnReward">
+                      <span class="emoji">🎁</span> Bonus
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="titleRow">
+                <h2>Heute Fokus</h2>
+                <span class="pill">⭐ Ziel: <b id="goalText">+10</b></span>
+              </div>
+
+              <div class="slotList">
+                <div class="slot">
+                  <div class="slotLeft">
+                    <div class="slotIcon">⚽️</div>
+                    <div class="slotText">
+                      <p class="slotTitle">Erster Kontakt</p>
+                      <p class="slotSub">Annahme • Richtungswechsel</p>
+                    </div>
+                  </div>
+                  <span class="tag free">bereit</span>
+                </div>
+
+                <div class="slot">
+                  <div class="slotLeft">
+                    <div class="slotIcon">🧠</div>
+                    <div class="slotText">
+                      <p class="slotTitle">Reaktion</p>
+                      <p class="slotSub">Scan • Entscheidung • Timing</p>
+                    </div>
+                  </div>
+                  <span class="tag free">frei</span>
+                </div>
+
+                <div class="slot">
+                  <div class="slotLeft">
+                    <div class="slotIcon">📈</div>
+                    <div class="slotText">
+                      <p class="slotTitle">Mini-Analyse</p>
+                      <p class="slotSub">3 KPI • Kurz-Report</p>
+                    </div>
+                  </div>
+                  <span class="tag">optional</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLOTS (mobile) -->
+          <div class="panel" id="panel-slots">
+            <div class="section">
+              <div class="titleRow">
+                <h2>Freie Slots</h2>
+                <span class="pill">Tippen 👇</span>
+              </div>
+              <div class="slotList" id="slotsGridMobile"></div>
+            </div>
+          </div>
+
+          <!-- STATS (mobile) -->
+          <div class="panel" id="panel-stats">
+            <div class="section">
+              <div class="titleRow">
+                <h2>Statistik</h2>
+                <span class="pill">Anw.: <b id="attTextM">--%</b></span>
+              </div>
+
+              <div class="statsCard">
+                <div class="statsTop">
+                  <div class="pill">⭐ Punkte: <b id="pointsTextM">0</b></div>
+                  <div class="pill">⚡ Level: <b id="levelTextM">1</b></div>
+                </div>
+
+                <div class="kpis">
+                  <div class="kpi">
+                    <div class="kpiLabel">Sessions</div>
+                    <div class="kpiValue" id="kpiSessions">0</div>
+                    <div class="kpiSub">letzte Tage</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="kpiLabel">Streak</div>
+                    <div class="kpiValue" id="kpiStreak">0</div>
+                    <div class="kpiSub">in Folge</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="kpiLabel">Score</div>
+                    <div class="kpiValue" id="kpiPerf">--</div>
+                    <div class="kpiSub">0–100</div>
+                  </div>
+                </div>
+
+                <div class="progressWrap">
+                  <div class="progressTop">
+                    <span>Level-Fortschritt</span>
+                    <span id="progressLabel">0%</span>
+                  </div>
+                  <div class="bar"><div class="fill" id="progressFill"></div></div>
+                </div>
+
+                <div class="miniChart">
+                  <div class="muted" style="margin-bottom:6px; font-weight:900">Letzte 10 Sessions</div>
+                  <canvas id="miniChart" width="800" height="220"></canvas>
+                </div>
+
+                <div class="statsActions">
+                  <button class="smallBtn ok" id="btnPresent">✅ Anwesend</button>
+                  <button class="smallBtn danger" id="btnAbsent">❌ Gefehlt</button>
+                </div>
+
+                <div class="statsActions" style="grid-template-columns:1fr; margin-top:10px">
+                  <button class="smallBtn" id="btnResetStats">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- screen -->
+      </div><!-- phone -->
+
+      <!-- RIGHT (Desktop panels) -->
+      <div class="rightCol">
+        <div class="card">
+          <div class="section">
+            <div class="titleRow">
+              <h2>Freie Slots</h2>
+              <span class="pill">Klick → buchen</span>
+            </div>
+            <div class="slotList" id="slotsGrid"></div>
+          </div>
+
+          <div class="section" style="border-top:1px solid rgba(255,255,255,.10)">
+            <div class="titleRow">
+              <h2>Statistik</h2>
+              <span class="pill">Anw.: <b id="attText">--%</b></span>
+            </div>
+
+            <div class="statsCard">
+              <div class="statsTop">
+                <div class="pill">⭐ Punkte: <b id="pointsTextD">0</b></div>
+                <div class="pill">⚡ Level: <b id="levelTextD">1</b></div>
+              </div>
+
+              <div class="kpis">
+                <div class="kpi">
+                  <div class="kpiLabel">Sessions</div>
+                  <div class="kpiValue" id="kpiSessionsD">0</div>
+                  <div class="kpiSub">letzte Tage</div>
+                </div>
+                <div class="kpi">
+                  <div class="kpiLabel">Streak</div>
+                  <div class="kpiValue" id="kpiStreakD">0</div>
+                  <div class="kpiSub">in Folge</div>
+                </div>
+                <div class="kpi">
+                  <div class="kpiLabel">Score</div>
+                  <div class="kpiValue" id="kpiPerfD">--</div>
+                  <div class="kpiSub">0–100</div>
+                </div>
+              </div>
+
+              <div class="progressWrap">
+                <div class="progressTop">
+                  <span>Level-Fortschritt</span>
+                  <span id="progressLabelD">0%</span>
+                </div>
+                <div class="bar"><div class="fill" id="progressFillD"></div></div>
+              </div>
+
+              <div class="statsActions" style="margin-top:12px">
+                <button class="smallBtn ok" id="btnPresentD">✅ Anwesend</button>
+                <button class="smallBtn danger" id="btnAbsentD">❌ Gefehlt</button>
+              </div>
+
+              <div class="statsActions" style="grid-template-columns:1fr; margin-top:10px">
+                <button class="smallBtn" id="btnResetStatsD">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- rightCol -->
     </div>
   </div>
 
-  <!-- AKTIONEN -->
-  <div class="card actions">
-    <div class="btn"><span>📅</span>Slot buchen</div>
-    <div class="btn"><span>👟</span>Training</div>
-    <div class="btn"><span>🧠</span>Kognition</div>
-    <div class="btn"><span>📊</span>Statistik</div>
+  <!-- Modal -->
+  <div class="modalWrap" id="modalWrap">
+    <div class="modal">
+      <div class="modalHead">
+        <b id="modalTitle">Slot buchen</b>
+        <button class="x" id="modalClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <p class="muted" id="modalInfo" style="margin:0 0 10px 0; font-weight:900"></p>
+
+        <label>Training</label>
+        <select id="bookType">
+          <option>Privattraining (Technik)</option>
+          <option>Kognitives Training</option>
+          <option>Athletik (Schnelligkeit)</option>
+          <option>Matchanalyse</option>
+        </select>
+
+        <label>Notiz (optional)</label>
+        <input id="bookNote" placeholder="z.B. schwacher Fuß / erster Kontakt" />
+      </div>
+      <div class="modalActions">
+        <button class="mBtn" id="btnCancel">Abbrechen</button>
+        <button class="mBtn primary" id="btnConfirm">Buchen</button>
+      </div>
+    </div>
   </div>
 
-  <!-- STATISTIK -->
-  <div class="card stats">
-    <div class="stat"><b>24</b>Trainings</div>
-    <div class="stat"><b>85%</b>Anwesenheit</div>
-    <div class="stat"><b>78</b>Score</div>
-  </div>
+  <div class="toast" id="toast"></div>
 
-</div>
+  <script>
+    /* =========================
+       Demo Data + Helpers
+    ========================== */
+    const member = {
+      name: "Amine B.",
+      meta: "U15 • Technik & Kognition",
+      trainer: "Salem",
+      next: "Mi 18:00",
+      status: "Aktiv" // Aktiv | Pause | Verletzung
+    };
+    const trainers = ["Salem", "Güni", "Tobi"];
+
+    const slots = [
+      { id: 1, day: "Di", time: "17:00", title: "Privattraining", desc: "Technik • Ballgefühl", open: true, icon:"⚽️" },
+      { id: 2, day: "Mi", time: "19:00", title: "Kognitives Training", desc: "Reaktion • Entscheidung", open: true, icon:"🧠" },
+      { id: 3, day: "Do", time: "18:30", title: "Athletik", desc: "Schnelligkeit • Stabilität", open: false, icon:"🏃‍♂️" },
+      { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPIs", open: true, icon:"📈" }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    function toast(msg){
+      const el = $("toast");
+      el.innerHTML = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> el.style.display="none", 2400);
+    }
+
+    function setStatusUI(status){
+      $("statusLabel").textContent = status;
+      const dot = $("statusDot");
+      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
+      dot.style.boxShadow = status === "Aktiv"
+        ? "0 0 0 5px rgba(37,208,127,.12)"
+        : status === "Pause"
+          ? "0 0 0 5px rgba(255,176,32,.12)"
+          : "0 0 0 5px rgba(255,77,77,.12)";
+    }
+
+    function renderMember(){
+      $("memberName").textContent = member.name;
+      $("memberMeta").textContent = member.meta;
+      $("trainerName").textContent = member.trainer;
+      $("nextSession").textContent = member.next;
+      setStatusUI(member.status);
+    }
+
+    /* =========================
+       Points + Stats (LocalStorage)
+       - Punkte: Anwesenheit +10
+       - Buchen: +3
+       - Bonus Button: +5
+       - Gefehlt: -4
+       - Level: jede 50 Punkte = +1 Level
+    ========================== */
+    const KEY = "sg_points_stats_v2";
+
+    function todayKey(){
+      const d = new Date();
+      return d.toISOString().slice(0,10);
+    }
+
+    function loadState(){
+      const raw = localStorage.getItem(KEY);
+      if(raw) return JSON.parse(raw);
+      return {
+        points: 0,
+        history: [
+          {date:"2025-12-17", present:true, score:68},
+          {date:"2025-12-18", present:true, score:71},
+          {date:"2025-12-19", present:false, score:0},
+          {date:"2025-12-20", present:true, score:73},
+          {date:"2025-12-21", present:true, score:75},
+          {date:"2025-12-22", present:true, score:77},
+          {date:"2025-12-23", present:true, score:78},
+          {date:"2025-12-24", present:false, score:0},
+          {date:"2025-12-25", present:true, score:80},
+          {date:"2025-12-26", present:true, score:82},
+        ]
+      };
+    }
+
+    function saveState(s){
+      localStorage.setItem(KEY, JSON.stringify(s));
+    }
+
+    function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
+
+    function calcAttendance(history){
+      if(!history.length) return 0;
+      const present = history.filter(x=>x.present).length;
+      return Math.round((present / history.length) * 100);
+    }
+
+    function calcStreak(history){
+      let streak = 0;
+      for(let i=history.length-1; i>=0; i--){
+        if(history[i].present) streak++;
+        else break;
+      }
+      return streak;
+    }
+
+    function avgScore(history){
+      const scored = history.filter(x=>x.present && x.score>0);
+      if(!scored.length) return 0;
+      const sum = scored.reduce((a,b)=>a+b.score,0);
+      return Math.round(sum / scored.length);
+    }
+
+    function getLevel(points){
+      return Math.floor(points / 50) + 1;
+    }
+
+    function getLevelProgress(points){
+      const inLevel = points % 50;
+      return Math.round((inLevel / 50) * 100);
+    }
+
+    function addPoints(delta, reason){
+      const s = loadState();
+      const before = s.points;
+      s.points = clamp(s.points + delta, 0, 9999);
+      saveState(s);
+
+      renderStats();
+      const sign = delta >= 0 ? "+" : "";
+      toast(`${reason} <br><b>${sign}${delta} Punkte</b> (gesamt: ${s.points})`);
+
+      // kleine Animation auf Punkte
+      const el = document.querySelectorAll("#pointsText, #pointsTextM, #pointsTextD");
+      el.forEach(x => {
+        x.animate([{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}], {duration: 320, easing:"ease-out"});
+      });
+
+      // Level-Up Toast
+      if(getLevel(before) < getLevel(s.points)){
+        toast(`🎉 <b>LEVEL UP!</b><br>Du bist jetzt Level ${getLevel(s.points)} ⚡`);
+      }
+    }
+
+    function upsertToday(present){
+      const s = loadState();
+      const t = todayKey();
+      const score = present ? Math.floor(65 + Math.random()*25) : 0;
+
+      const idx = s.history.findIndex(x=>x.date===t);
+      if(idx >= 0) s.history[idx] = {date:t, present, score};
+      else s.history.push({date:t, present, score});
+
+      saveState(s);
+      renderStats();
+    }
+
+    function drawChart(history){
+      const c = $("miniChart");
+      if(!c) return;
+      const ctx = c.getContext("2d");
+      const w = c.width, h = c.height;
+      ctx.clearRect(0,0,w,h);
+
+      // grid
+      ctx.globalAlpha = 0.22;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1;
+      for(let y=24; y<h; y+=42){
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      const last = history.slice(-10);
+      const pad = 40;
+      const chartW = w - pad*2;
+      const chartH = h - pad*2;
+
+      // axes
+      ctx.globalAlpha = 0.30;
+      ctx.beginPath();
+      ctx.moveTo(pad, pad);
+      ctx.lineTo(pad, pad+chartH);
+      ctx.lineTo(pad+chartW, pad+chartH);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      const gap = 10;
+      const barW = (chartW - gap*(last.length-1)) / last.length;
+
+      last.forEach((d,i)=>{
+        const x = pad + i*(barW+gap);
+        const baseY = pad+chartH;
+
+        // attendance bar
+        const bh = d.present ? chartH*0.36 : chartH*0.14;
+        ctx.globalAlpha = d.present ? 0.55 : 0.18;
+        ctx.fillStyle = "#ff7a18";
+        ctx.fillRect(x, baseY-bh, barW, bh);
+        ctx.globalAlpha = 1;
+
+        // score dot
+        const score = d.present ? d.score : 0;
+        const sy = pad + chartH - (score/100)*chartH;
+
+        ctx.globalAlpha = d.present ? 0.92 : 0.24;
+        ctx.beginPath();
+        ctx.arc(x + barW/2, sy, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    function renderStats(){
+      const s = loadState();
+      const att = calcAttendance(s.history);
+      const st = calcStreak(s.history);
+      const perf = avgScore(s.history);
+
+      const level = getLevel(s.points);
+      const progress = getLevelProgress(s.points);
+
+      // profile
+      $("pointsText").textContent = s.points;
+      $("levelText").textContent = level;
+
+      // mobile stats
+      $("pointsTextM").textContent = s.points;
+      $("levelTextM").textContent = level;
+      $("attTextM").textContent = `${att}%`;
+
+      // desktop stats
+      const ptsD = $("pointsTextD"); if(ptsD) ptsD.textContent = s.points;
+      const lvlD = $("levelTextD"); if(lvlD) lvlD.textContent = level;
+      const attD = $("attText"); if(attD) attD.textContent = `${att}%`;
+
+      // KPIs (mobile)
+      $("kpiSessions").textContent = s.history.length;
+      $("kpiStreak").textContent = st;
+      $("kpiPerf").textContent = perf || "--";
+
+      // KPIs (desktop)
+      const ks = $("kpiSessionsD"); if(ks) ks.textContent = s.history.length;
+      const kst = $("kpiStreakD"); if(kst) kst.textContent = st;
+      const kp = $("kpiPerfD"); if(kp) kp.textContent = perf || "--";
+
+      // progress bars
+      $("progressFill").style.width = `${progress}%`;
+      $("progressLabel").textContent = `${progress}%`;
+
+      const pfd = $("progressFillD"); if(pfd) pfd.style.width = `${progress}%`;
+      const pld = $("progressLabelD"); if(pld) pld.textContent = `${progress}%`;
+
+      drawChart(s.history);
+    }
+
+    /* =========================
+       Slots Rendering
+    ========================== */
+    function slotHTML(s){
+      const tag = s.open ? `<span class="tag free">frei</span>` : `<span class="tag busy">belegt</span>`;
+      const disabled = s.open ? "" : "disabled";
+      return `
+        <div class="slot">
+          <div class="slotLeft">
+            <div class="slotIcon">${s.icon}</div>
+            <div class="slotText">
+              <p class="slotTitle">${s.day} • ${s.time} — ${s.title}</p>
+              <p class="slotSub">${s.desc}</p>
+            </div>
+          </div>
+          <div class="slotRight">
+            ${tag}
+            <button class="bookBtn" ${disabled} data-id="${s.id}">Buchen</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSlots(){
+      const grid = $("slotsGrid");
+      const gridM = $("slotsGridMobile");
+      if(grid) grid.innerHTML = slots.map(slotHTML).join("");
+      if(gridM) gridM.innerHTML = slots.map(slotHTML).join("");
+
+      document.querySelectorAll(".bookBtn").forEach(btn=>{
+        btn.addEventListener("click", ()=> openBooking(parseInt(btn.dataset.id,10)));
+      });
+    }
+
+    /* =========================
+       Modal / Booking
+    ========================== */
+    let selectedSlot = null;
+
+    function openBooking(slotId){
+      selectedSlot = slots.find(x => x.id === slotId);
+      if(!selectedSlot) return;
+
+      $("modalTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
+      $("modalInfo").innerHTML = `<b>${selectedSlot.title}</b> • ${selectedSlot.desc}<br>Trainer: <b>${member.trainer}</b>`;
+      $("modalWrap").style.display = "flex";
+    }
+
+    function closeModal(){
+      $("modalWrap").style.display = "none";
+      $("bookNote").value = "";
+      selectedSlot = null;
+    }
+
+    $("modalClose").addEventListener("click", closeModal);
+    $("btnCancel").addEventListener("click", closeModal);
+
+    $("btnConfirm").addEventListener("click", () => {
+      if(!selectedSlot) return;
+
+      const type = $("bookType").value;
+      const note = $("bookNote").value.trim();
+
+      selectedSlot.open = false;
+      renderSlots();
+      closeModal();
+
+      addPoints(+3, "🗓️ Slot gebucht!");
+      toast(`✅ <b>Gebucht!</b><br>${type}${note ? "<br>Notiz: " + note : ""}`);
+    });
+
+    /* =========================
+       Top Buttons
+    ========================== */
+    $("btnBook").addEventListener("click", () => {
+      const firstOpen = slots.find(s=>s.open);
+      if(!firstOpen){
+        toast("⚠️ Keine freien Slots.");
+        return;
+      }
+      openBooking(firstOpen.id);
+    });
+
+    $("btnStatus").addEventListener("click", () => {
+      const order = ["Aktiv","Pause","Verletzung"];
+      const idx = order.indexOf(member.status);
+      member.status = order[(idx+1) % order.length];
+      renderMember();
+      toast(`Status: <b>${member.status}</b>`);
+    });
+
+    $("btnSwapTrainer").addEventListener("click", () => {
+      const idx = trainers.indexOf(member.trainer);
+      member.trainer = trainers[(idx+1) % trainers.length];
+      renderMember();
+      toast(`Trainer: <b>${member.trainer}</b>`);
+    });
+
+    $("btnReward").addEventListener("click", () => {
+      addPoints(+5, "🎁 Bonus bekommen!");
+    });
+
+    /* =========================
+       Attendance Buttons (mobile + desktop)
+    ========================== */
+    function setPresent(){
+      upsertToday(true);
+      addPoints(+10, "✅ Training geschafft!");
+    }
+    function setAbsent(){
+      upsertToday(false);
+      addPoints(-4, "❌ Heute gefehlt.");
+    }
+
+    $("btnPresent").addEventListener("click", setPresent);
+    $("btnAbsent").addEventListener("click", setAbsent);
+
+    const btnPresentD = $("btnPresentD"); if(btnPresentD) btnPresentD.addEventListener("click", setPresent);
+    const btnAbsentD = $("btnAbsentD"); if(btnAbsentD) btnAbsentD.addEventListener("click", setAbsent);
+
+    function resetAll(){
+      localStorage.removeItem(KEY);
+      slots.forEach(s => { if(s.id !== 3) s.open = true; }); // demo reset
+      renderSlots();
+      renderStats();
+      toast("Reset ✅");
+    }
+    $("btnResetStats").addEventListener("click", resetAll);
+    const btnResetStatsD = $("btnResetStatsD"); if(btnResetStatsD) btnResetStatsD.addEventListener("click", resetAll);
+
+    /* =========================
+       Tabs (mobile)
+    ========================== */
+    document.querySelectorAll(".tabBtn").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        document.querySelectorAll(".tabBtn").forEach(x=>x.classList.remove("active"));
+        b.classList.add("active");
+        const t = b.dataset.tab;
+        document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+        $("panel-"+t).classList.add("active");
+      });
+    });
+
+    /* Init */
+    renderMember();
+    renderSlots();
+    renderStats();
+  </script>
 </body>
 </html>
