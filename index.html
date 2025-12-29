@@ -59,16 +59,25 @@ body{
   mix-blend-mode: overlay;
   filter: contrast(1.1);
 }
-.bg::after{
+.bg::before{
   content:"";
   position:absolute; inset:0;
-  opacity:.12;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.25) 1px, transparent 1.2px),
-    linear-gradient(60deg, rgba(255,255,255,.08) 1px, transparent 1px),
-    linear-gradient(-60deg, rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 22px 22px, 44px 38px, 44px 38px;
-  mix-blend-mode: screen;
+
+  /* BIG CARBON (größere Struktur) + leichter Orange-Touch */
+  opacity:.55;
+  background:
+    /* Orange Glow */
+    radial-gradient(900px 500px at 20% 0%, rgba(255,122,24,.18), transparent 62%),
+
+    /* Carbon Web (größer) */
+    linear-gradient(135deg, rgba(255,255,255,.06) 0 10px, rgba(0,0,0,0) 10px 22px),
+    linear-gradient(315deg, rgba(255,255,255,.045) 0 10px, rgba(0,0,0,0) 10px 22px);
+
+  /* HIER macht’s „grosse Carbon“-Form */
+  background-size: 60px 60px, 60px 60px, 60px 60px;
+
+  mix-blend-mode: overlay;
+  filter: contrast(1.2) saturate(1.15);
 }
 
 /* Parent Mode Overlay (more orange neon) */
