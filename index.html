@@ -489,20 +489,118 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
     <!-- LEFT COLUMN -->
     <div>
 
-      <!-- PLAYER DASH -->
-      <div id="playerDash" class="card">
-        <div class="cardPad">
-          <h2>⚽ Spieler Dashboard</h2>
-          <div class="row"><b>Name</b><span>Amine B.</span></div>
-          <div class="row"><b>Alter</b><span>13 Jahre</span></div>
-          <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
-          <div class="row"><b>Nächster Termin</b><span>Mi 18:00</span></div>
-          <div class="row"><b>Status</b><span class="tag ok" id="playerStatusTag">Aktiv</span></div>
-          <hr class="hr">
-          <div class="small">Hinweis: Kinder-Trainingszeiten blockieren automatisch Eltern-Fitness.</div>
+     <!-- PLAYER DASH -->
+<div id="playerDash" class="card">
+  <div class="cardPad">
+    <h2>⚽ Spieler Dashboard</h2>
+
+    <div class="row">
+      <b>Spieler</b><span id="pName">Amine B.</span>
+    </div>
+    <div class="row">
+      <b>Profil</b><span class="tag ok">U15 • Technik & Kognition</span>
+    </div>
+    <div class="row">
+      <b>Status</b><span class="tag ok" id="pStatus">Aktiv</span>
+    </div>
+
+    <hr class="hr">
+
+    <button class="walletBtn" onclick="toast('🪪 <b>Spieler-ID</b><br>Wallet/NFC Demo kommt als nächstes.');">
+      <div class="left">
+        <span class="ic">🪪</span>
+        <div>
+          <div style="font-weight:1000">SmartGen Spieler-ID (Wallet/NFC)</div>
+          <div class="small">Tap & Check-in • QR • Zugang</div>
+        </div>
+      </div>
+      <div class="right">›</div>
+    </button>
+
+    <div class="kpiRow" style="margin-top:12px">
+      <div class="kpi"><b>Anwesenheit</b><span>84%</span></div>
+      <div class="kpi"><b>Streak</b><span>6</span></div>
+      <div class="kpi"><b>Score</b><span>78</span></div>
+    </div>
+
+    <div class="progressBar" title="Progress (Demo)">
+      <div class="progressFill" style="width:62%"></div>
+    </div>
+    <div class="small" style="margin-top:8px">Progress Level: <b>62%</b> (Demo)</div>
+
+    <hr class="hr">
+
+    <h2>📅 Nächste Termine</h2>
+    <div class="list">
+      <div class="slot">
+        <div>
+          <strong>Mi • 18:00–19:30 — Kindertraining</strong>
+          <small>Technik • Kognition • Ballkontrolle</small>
+        </div>
+        <div class="right">
+          <span class="tag ok">Fix</span>
+          <button class="btn primary" onclick="toast('📅 <b>Kalender</b><br>Später: Add to Calendar.');">+ Kalender</button>
         </div>
       </div>
 
+      <div class="slot">
+        <div>
+          <strong>Sa • 10:00–11:30 — Kindertraining</strong>
+          <small>Matchnah • 1v1 • Decision Making</small>
+        </div>
+        <div class="right">
+          <span class="tag ok">Fix</span>
+          <button class="btn primary" onclick="toast('📅 <b>Kalender</b><br>Später: Add to Calendar.');">+ Kalender</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="hr">
+
+    <h2>🟠 Offene Slots (Spieler)</h2>
+    <div class="small">Tippe auf „Buchen“ (Demo) – gleich wie im Eltern-Fitness, aber für Spieler.</div>
+
+    <div class="list" style="margin-top:10px">
+      <div class="slot">
+        <div>
+          <strong>Di • 17:00–18:00 — Privattraining</strong>
+          <small>Technik • erster Kontakt • schwacher Fuß</small>
+        </div>
+        <div class="right">
+          <span class="tag warn">Frei</span>
+          <button class="btn ok" onclick="toast('✅ <b>Gebucht</b><br>Privattraining (Demo)');">Buchen</button>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div>
+          <strong>Do • 18:30–19:30 — Kognitives Training</strong>
+          <small>Scanning • Reaktion • Timing</small>
+        </div>
+        <div class="right">
+          <span class="tag warn">Frei</span>
+          <button class="btn ok" onclick="toast('✅ <b>Gebucht</b><br>Kognition (Demo)');">Buchen</button>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div>
+          <strong>Fr • 18:00–19:00 — Matchanalyse</strong>
+          <small>Mini-Report • KPIs • Video Hinweise</small>
+        </div>
+        <div class="right">
+          <span class="tag">Optional</span>
+          <button class="btn ghost" onclick="toast('📈 <b>Analyse</b><br>Später: echte Statistiken + Videos.');">Öffnen</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="hr">
+    <div class="small">
+      ✅ Nächster Schritt: Wir machen die Spieler-Slots **wirklich buchbar** (wie Eltern-Fitness) + speichern in LocalStorage.
+    </div>
+  </div>
+</div>
       <!-- PARENT DASH -->
       <div id="parentDash" class="hidden">
 
