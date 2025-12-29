@@ -90,7 +90,7 @@ body.parent .parentFX{ opacity:1; }
 .card{
   border:1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, var(--cardA), var(--cardB));
+  background: linear-gradient(180deg, rgba(16,24,36,.78), rgba(10,14,22,.70));
   box-shadow: var(--shadow);
   overflow:hidden;
 }
@@ -139,7 +139,7 @@ h3{margin:0 0 8px 0;font-size:15px;letter-spacing:.2px}
   box-shadow: 0 0 0 6px rgba(37,208,127,.10);
 }
 
-/* BUTTONS (BIG + CLEAR) */
+/* BUTTONS */
 .btn{
   padding:13px 14px;
   border-radius:16px;
@@ -195,7 +195,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .tag.warn{background: rgba(255,176,32,.14); border-color: rgba(255,176,32,.35)}
 .tag.danger{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.35)}
 
-/* LIST / SLOTS */
+/* LIST */
 .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .slot{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -246,7 +246,7 @@ select.input{appearance:none}
   padding:16px; z-index:50;
 }
 .modal{
-  width:min(680px, 100%);
+  width:min(720px, 100%);
   background: linear-gradient(180deg, rgba(16,24,36,.94), rgba(10,14,22,.92));
   border:1px solid var(--line);
   border-radius:20px;
@@ -327,7 +327,7 @@ select.input{appearance:none}
   font-weight:1000;
 }
 
-/* Analysis Donuts */
+/* Donuts */
 .donutRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
 .donut{
   border:1px solid rgba(255,255,255,.12);
@@ -340,7 +340,40 @@ select.input{appearance:none}
 .donutTop{display:flex;justify-content:space-between;align-items:center}
 .donutTop b{font-size:13px}
 .donutVal{font-weight:1000}
-svg{display:block}
+
+/* Charts */
+.chartCard{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+  margin-top:10px;
+}
+canvas{width:100%; height:auto; display:block}
+
+/* Weekly bars */
+.weekRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.weekBox{
+  flex:1;
+  min-width:160px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+}
+.bar{
+  height:14px;
+  border-radius:999px;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  overflow:hidden;
+  margin-top:8px;
+}
+.barFill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, rgba(255,122,24,.85), rgba(255,177,74,.55));
+}
 
 /* Calendar */
 .calHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
@@ -416,7 +449,7 @@ svg{display:block}
 
     <div class="cardPad">
       <div class="small">
-        <b>SmartGen Demo:</b> Analyse (Kreis), Kalender, Slots nach Kategorien, KI Motivation+Ernährung, Eltern-Fitness Buchung mit Blockierung bei Kindertraining.
+        <b>Neu:</b> Spieler-Analyse (Sessions + Score-Chart + Anwesenheit/Woche) • Ernährung im Spieler-Modus • Eltern-Kommunikation mit Trainer-Auswahl.
       </div>
     </div>
   </div>
@@ -441,6 +474,7 @@ svg{display:block}
             <button class="tab active" id="tabP_Analyse" onclick="showTab('player','Analyse')">📊 Analyse</button>
             <button class="tab" id="tabP_Kalender" onclick="showTab('player','Kalender')">🗓️ Kalender</button>
             <button class="tab" id="tabP_Slots" onclick="showTab('player','Slots')">⏱️ Slots</button>
+            <button class="tab" id="tabP_Ernaehrung" onclick="showTab('player','Ernaehrung')">🥗 Ernährung</button>
             <button class="tab" id="tabP_Daten" onclick="showTab('player','Daten')">👤 Daten</button>
           </div>
 
@@ -457,6 +491,7 @@ svg{display:block}
               <div class="right">›</div>
             </button>
 
+            <!-- Donuts -->
             <div class="donutRow">
               <div class="donut">
                 <div class="donutTop"><b>Anwesenheit</b><span class="donutVal" id="d_att">--%</span></div>
@@ -486,25 +521,47 @@ svg{display:block}
               </div>
             </div>
 
-            <div class="hr"></div>
-
-            <h3>🎯 Fokus heute</h3>
-            <div class="list">
-              <div class="slot">
+            <!-- Score Chart + Weekly Attendance -->
+            <div class="chartCard">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
                 <div>
-                  <strong>Technik – erster Kontakt</strong>
-                  <small>Ballannahme • Richtungswechsel • Tempo</small>
+                  <h3 style="margin:0">📈 Score Verlauf</h3>
+                  <div class="small">Letzte 10 Sessions (Score 0–100)</div>
                 </div>
-                <div class="right"><span class="tag ok">Start</span></div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                  <button class="btn ghost" onclick="markToday(true)">Heute anwesend ✅</button>
+                  <button class="btn ghost" onclick="markToday(false)">Heute gefehlt ❌</button>
+                </div>
               </div>
-              <div class="slot">
-                <div>
-                  <strong>Kognition – Entscheidung</strong>
-                  <small>Scanning • Timing • Blickfeld</small>
-                </div>
-                <div class="right"><span class="tag warn">Offen</span></div>
+              <canvas id="scoreChart" width="900" height="260"></canvas>
+            </div>
+
+            <div class="weekRow">
+              <div class="weekBox">
+                <b>📅 Anwesenheit Woche A</b>
+                <div class="small">letzte 7 Tage (Demo)</div>
+                <div class="bar"><div class="barFill" id="wkA"></div></div>
+              </div>
+              <div class="weekBox">
+                <b>📅 Anwesenheit Woche B</b>
+                <div class="small">Woche davor (Demo)</div>
+                <div class="bar"><div class="barFill" id="wkB"></div></div>
+              </div>
+              <div class="weekBox">
+                <b>📅 Anwesenheit Woche C</b>
+                <div class="small">Woche davor (Demo)</div>
+                <div class="bar"><div class="barFill" id="wkC"></div></div>
               </div>
             </div>
+
+            <!-- Session list -->
+            <div class="hr"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0">🧾 Session-Liste</h3>
+              <button class="btn primary" onclick="addRandomSession()">＋ Demo Session</button>
+            </div>
+            <div class="list" id="sessionList"></div>
+
           </div>
 
           <!-- Player: Kalender -->
@@ -523,13 +580,54 @@ svg{display:block}
           <div id="player_Slots" class="hidden">
             <h3>🎛️ Training auswählen</h3>
             <div style="display:flex; gap:10px; flex-wrap:wrap">
-              <button class="btn" onclick="setCategory('player','Technik')">⚽ Technik</button>
-              <button class="btn" onclick="setCategory('player','Athletik')">🏃 Athletik</button>
-              <button class="btn" onclick="setCategory('player','Kognition')">🧠 Kognition</button>
+              <button class="btn" onclick="setCategory('Technik')">⚽ Technik</button>
+              <button class="btn" onclick="setCategory('Athletik')">🏃 Athletik</button>
+              <button class="btn" onclick="setCategory('Kognition')">🧠 Kognition</button>
             </div>
             <div class="small" style="margin-top:10px">Kategorie: <b id="playerCat">Technik</b></div>
-
             <div class="list" id="playerSlots"></div>
+          </div>
+
+          <!-- Player: Ernährung (moved here) -->
+          <div id="player_Ernaehrung" class="hidden">
+            <h3>🥗 Ernährung (Spieler)</h3>
+            <div class="small">Einfacher Tagesplan + Snack + Wasser. (Demo, lokal)</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
+              <select class="input" id="p_nutri_style">
+                <option value="sport">Sport-Performance</option>
+                <option value="familie">Familien-Style (einfach)</option>
+                <option value="low">Leicht & gesund</option>
+              </select>
+              <select class="input" id="p_nutri_allergy">
+                <option value="none">Keine Allergie</option>
+                <option value="laktose">Laktosefrei</option>
+                <option value="nuesse">Ohne Nüsse</option>
+                <option value="gluten">Glutenfrei</option>
+              </select>
+            </div>
+
+            <button class="btn primary" style="width:100%; margin-top:10px" onclick="genPlayerNutrition()">🍽️ Plan erstellen</button>
+
+            <div class="slot" style="margin-top:10px">
+              <div>
+                <strong>Plan</strong>
+                <small id="p_nutri_plan">Frühstück • Mittag • Abend • Snack • Wasser</small>
+              </div>
+              <div class="right"><span class="tag warn">KI</span></div>
+            </div>
+
+            <div class="hr"></div>
+            <h3>🧠 Mini Motivation (Spieler)</h3>
+            <div class="small">Kurzer Satz vor Training.</div>
+            <button class="btn ghost" style="width:100%;margin-top:10px" onclick="genPlayerMotivation()">🔥 Motivation</button>
+            <div class="slot" style="margin-top:10px">
+              <div>
+                <strong>Heute</strong>
+                <small id="p_motivation">„Heute bist du schneller als gestern.“</small>
+              </div>
+              <div class="right"><span class="tag ok">KI</span></div>
+            </div>
           </div>
 
           <!-- Player: Daten -->
@@ -537,42 +635,29 @@ svg{display:block}
             <h3>👤 Persönliche Daten</h3>
             <div class="list">
               <div class="slot">
-                <div>
-                  <strong>Name</strong>
-                  <small id="pd_name">Amine B.</small>
-                </div>
+                <div><strong>Name</strong><small id="pd_name">Amine B.</small></div>
                 <div class="right"><span class="tag ok">Mitglied</span></div>
               </div>
               <div class="slot">
-                <div>
-                  <strong>Geburtsjahr</strong>
-                  <small id="pd_year">2012</small>
-                </div>
+                <div><strong>Geburtsjahr</strong><small id="pd_year">2012</small></div>
                 <div class="right"><span class="tag">U15</span></div>
               </div>
               <div class="slot">
-                <div>
-                  <strong>Vertrag</strong>
-                  <small id="pd_contract">Premium • Laufend</small>
-                </div>
+                <div><strong>Vertrag</strong><small id="pd_contract">Premium • Laufend</small></div>
                 <div class="right"><span class="tag warn">Abo</span></div>
               </div>
               <div class="slot">
-                <div>
-                  <strong>Notfall Kontakt</strong>
-                  <small id="pd_emg">Parent One • +49 …</small>
-                </div>
+                <div><strong>Notfall Kontakt</strong><small id="pd_emg">Parent One • +49 …</small></div>
                 <div class="right"><span class="tag">Info</span></div>
               </div>
             </div>
-
             <div class="hr"></div>
-            <button class="btn primary" style="width:100%" onclick="toast('✅ <b>Daten gespeichert</b><br>(Demo)');">Speichern (Demo)</button>
+            <button class="btn primary" style="width:100%" onclick="toast('✅ <b>Daten gespeichert</b><br>(Demo)')">Speichern (Demo)</button>
           </div>
         </div>
       </div>
 
-      <!-- PARENT DASH -->
+      <!-- PARENT DASH (unchanged design, only communication upgraded) -->
       <div id="parentDash" class="hidden">
         <div class="card">
           <div class="cardPad">
@@ -581,7 +666,7 @@ svg{display:block}
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
               <span class="tag ok">Kind: Amine B.</span>
               <span class="tag ok">Vertrag: Premium</span>
-              <span class="tag warn">Trainer: Salem</span>
+              <span class="tag warn" id="parentTrainerTag">Trainer: Salem</span>
             </div>
 
             <div class="tabs">
@@ -591,7 +676,7 @@ svg{display:block}
               <button class="tab" id="tabE_Daten" onclick="showTab('parent','Daten')">👤 Daten</button>
             </div>
 
-            <!-- Parent: KI -->
+            <!-- Parent: KI (nutrition removed here) -->
             <div id="parent_KI">
               <button class="walletBtn" onclick="openWallet('parent')">
                 <div class="left">
@@ -633,33 +718,7 @@ svg{display:block}
               </div>
 
               <div class="hr"></div>
-
-              <h3>🥗 KI Ernährung (einfach)</h3>
-              <div class="small">Erstellt Tagesplan + Snack + Hydration (Demo).</div>
-
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
-                <select class="input" id="nutri_style">
-                  <option value="familie">Familien-Style (einfach)</option>
-                  <option value="sport">Sport-Performance</option>
-                  <option value="low">Leicht & gesund</option>
-                </select>
-                <select class="input" id="nutri_allergy">
-                  <option value="none">Keine Allergie</option>
-                  <option value="laktose">Laktosefrei</option>
-                  <option value="nuesse">Ohne Nüsse</option>
-                  <option value="gluten">Glutenfrei</option>
-                </select>
-              </div>
-
-              <button class="btn primary" style="width:100%; margin-top:10px" onclick="genNutrition()">🍽️ Plan erstellen</button>
-
-              <div class="slot" style="margin-top:10px">
-                <div>
-                  <strong>Plan</strong>
-                  <small id="nutri_plan">Frühstück • Mittag • Abend • Snack • Wasser</small>
-                </div>
-                <div class="right"><span class="tag warn">KI</span></div>
-              </div>
+              <div class="small"><b>Hinweis:</b> Ernährung ist jetzt im Spieler-Dashboard.</div>
             </div>
 
             <!-- Parent: Kalender -->
@@ -685,7 +744,7 @@ svg{display:block}
               <button class="btn ghost" style="width:100%;margin-top:10px" onclick="resetParentBookings()">Reset (Demo)</button>
             </div>
 
-            <!-- Parent: Daten -->
+            <!-- Parent: Daten + Kommunikation upgraded -->
             <div id="parent_Daten" class="hidden">
               <h3>👤 Eltern Infos</h3>
               <div class="list">
@@ -697,15 +756,19 @@ svg{display:block}
                   <div><strong>Vertrag</strong><small>Premium • Laufend</small></div>
                   <div class="right"><span class="tag warn">Abo</span></div>
                 </div>
-                <div class="slot">
-                  <div><strong>Kommunikation</strong><small>Nachrichten an Trainer (Demo)</small></div>
-                  <div class="right"><span class="tag">Chat</span></div>
-                </div>
               </div>
 
               <div class="hr"></div>
-              <h3>💬 Nachricht an Trainer</h3>
-              <input class="input" id="msgTrainer" placeholder="Nachricht schreiben…" />
+              <h3>💬 Kommunikation mit Trainer</h3>
+              <div class="small">Wähle Trainer, dann Nachricht senden (Demo).</div>
+
+              <select class="input" id="parentTrainerSelect" style="margin-top:10px" onchange="parentSelectTrainer()">
+                <option value="Salem">Salem</option>
+                <option value="Güni">Güni</option>
+                <option value="Tobi">Tobi</option>
+              </select>
+
+              <input class="input" id="msgTrainer" style="margin-top:10px" placeholder="Nachricht schreiben…" />
               <button class="btn primary" style="margin-top:10px;width:100%" onclick="sendMsg()">Senden</button>
             </div>
 
@@ -715,15 +778,14 @@ svg{display:block}
 
     </div>
 
-    <!-- RIGHT: Quick + Info -->
+    <!-- RIGHT -->
     <div>
       <div class="card">
         <div class="cardPad">
           <h2>🚀 SmartGen Quick</h2>
           <div class="small">
-            - Spieler: Analyse (Kreis), Kalender, Slots nach Technik/Athletik/Kognition<br>
-            - Eltern: KI Motivation + Ernährung, Kalender, Eltern-Fitness Buchung (mit Sperre)<br>
-            - Alles lokal gespeichert (Demo)
+            - Spieler: Analyse (Kreis), Score-Chart, Sessions, Anwesenheit/Woche, Slots, Ernährung<br>
+            - Eltern: KI Motivation, Kalender, Fitness Buchung (mit Sperre), Kommunikation + Trainerwahl
           </div>
 
           <div class="hr"></div>
@@ -732,23 +794,8 @@ svg{display:block}
           <button class="btn" style="width:100%; margin-top:10px" onclick="switchTrainer()">👥 Trainer wechseln</button>
 
           <div class="hr"></div>
-
-          <h3>📌 Hinweis</h3>
           <div class="small">
-            Eltern-Modus ist PIN-geschützt (Demo-PIN: <b>1234</b>).<br>
-            Später können wir hier: <b>Videos, Übungen, Push-Notifications, Social-Export</b> ergänzen.
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:14px">
-        <div class="cardPad">
-          <h2>🧩 Nächste Module (wenn du willst)</h2>
-          <div class="small">
-            1) KI Übungen mit Bild/Video (Eltern Fitness) ✅<br>
-            2) Spieler-Statistik mit echten Charts (Canvas) ✅<br>
-            3) Mitgliedsvertrag PDF anzeigen ✅<br>
-            4) Kalender Sync Platzhalter (Google/Apple) ✅
+            Eltern PIN: <b>1234</b>
           </div>
         </div>
       </div>
@@ -893,18 +940,21 @@ const member = {
 const trainers = ["Salem","Güni","Tobi"];
 let currentTrainerIdx = 0;
 
-let mode = "player";               // player | parent
-let bookingContext = null;         // { kind:'parent'|'player', slotId }
+let mode = "player";
+let bookingContext = null;
 let walletMode = "player";
 let playerCategory = "Technik";
+
+let parentSelectedTrainer = "Salem";
 
 const KEY_PARENT_BOOK = "sg_parent_bookings_v3";
 const KEY_PLAYER_BOOK = "sg_player_bookings_v2";
 const KEY_EVENTS_PLAYER = "sg_events_player_v1";
 const KEY_EVENTS_PARENT = "sg_events_parent_v1";
-const KEY_ANALYTICS = "sg_analytics_v1";
+const KEY_ANALYTICS = "sg_analytics_v2";
+const KEY_SESSIONS = "sg_sessions_v1";
 
-/* Kid training blocks (affects ONLY Parent-Fitness) */
+/* Kid training blocks */
 const kidTrainings = [
   { day: 3, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
   { day: 5, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
@@ -925,15 +975,12 @@ const fitnessSlotsCatalog = [
 
 /* Player slots by categories */
 const playerSlotsCatalog = [
-  // Technik
   { id:"tue_1700_tech", cat:"Technik", day:2, start:"17:00", end:"18:00", title:"Privattraining", desc:"Erster Kontakt • Ballführung" },
   { id:"thu_1800_tech", cat:"Technik", day:4, start:"18:00", end:"19:00", title:"Technik Session", desc:"Passen • Ballkontrolle" },
 
-  // Athletik
   { id:"wed_1700_ath", cat:"Athletik", day:3, start:"17:00", end:"18:00", title:"Athletik", desc:"Schnelligkeit • Core" },
   { id:"sat_1200_ath", cat:"Athletik", day:6, start:"12:00", end:"13:00", title:"Athletik+", desc:"Stabilität • Sprint" },
 
-  // Kognition
   { id:"thu_1830_kog", cat:"Kognition", day:4, start:"18:30", end:"19:30", title:"Kognitives Training", desc:"Scanning • Reaktion" },
   { id:"fri_1800_kog", cat:"Kognition", day:5, start:"18:00", end:"19:00", title:"Matchanalyse", desc:"KPIs • Video Hinweise" },
 ];
@@ -973,17 +1020,23 @@ function loadJSON(key, fallback){
 function saveJSON(key, value){
   localStorage.setItem(key, JSON.stringify(value));
 }
+function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
 function loadBookings(key){ return loadJSON(key, []); }
 function saveBookings(key, list){ saveJSON(key, list); }
 function isBooked(key, slotId){ return loadBookings(key).some(b => b.slotId === slotId); }
+
+function todayISO(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
 
 /* =========================
    TABS
 ========================= */
 function showTab(scope, name){
   const tabs = scope==="player"
-    ? ["Analyse","Kalender","Slots","Daten"]
+    ? ["Analyse","Kalender","Slots","Ernaehrung","Daten"]
     : ["KI","Kalender","Fitness","Daten"];
 
   tabs.forEach(t=>{
@@ -997,6 +1050,7 @@ function showTab(scope, name){
   if(scope==="parent" && name==="Kalender") renderCalendar("parent");
   if(scope==="player" && name==="Slots") renderPlayerSlots();
   if(scope==="parent" && name==="Fitness") renderFitness();
+  if(scope==="player" && name==="Analyse") renderPlayerAnalysis();
 }
 
 /* =========================
@@ -1010,7 +1064,6 @@ function setMode(next){
   $("playerDash").classList.toggle("hidden", mode !== "player");
   $("parentDash").classList.toggle("hidden", mode !== "parent");
 
-  // default tabs
   if(mode==="player") showTab("player","Analyse");
   if(mode==="parent") showTab("parent","KI");
 
@@ -1037,7 +1090,7 @@ function checkPin(){
 }
 
 /* =========================
-   BOOKINGS
+   BOOKING
 ========================= */
 function isBlockedByKidTraining(slot){
   const sA = toMin(slot.start), sB = toMin(slot.end);
@@ -1095,8 +1148,7 @@ function renderFitness(){
   }
 }
 
-function setCategory(scope, cat){
-  if(scope!=="player") return;
+function setCategory(cat){
   playerCategory = cat;
   $("playerCat").textContent = cat;
   renderPlayerSlots();
@@ -1250,7 +1302,7 @@ function openWallet(kind){
     $("walletGrid").innerHTML = `
       <div class="kv"><b>Spieler</b><span>${member.name}</span></div>
       <div class="kv"><b>Team</b><span>U15</span></div>
-      <div class="kv"><b>Level</b><span>Fortgeschritten</span></div>
+      <div class="kv"><b>Trainer</b><span>${member.trainer}</span></div>
       <div class="kv"><b>Status</b><span>${member.status}</span></div>
     `;
   } else {
@@ -1308,11 +1360,9 @@ function renderCalendar(scope){
   const key = scope==="player" ? KEY_EVENTS_PLAYER : KEY_EVENTS_PARENT;
   const customEvents = loadJSON(key, []);
 
-  // baseline events
   const base = [];
   kidTrainings.forEach(k=> base.push({day:k.day, title:k.label, type:"orange"}));
 
-  // parent: show booked fitness as events
   if(scope==="parent"){
     const b = loadBookings(KEY_PARENT_BOOK);
     b.forEach(x=>{
@@ -1320,8 +1370,6 @@ function renderCalendar(scope){
       if(s) base.push({day:s.day, title:`Eltern Fitness ${s.start}`, type:"orange"});
     });
   }
-
-  // player: show booked player slots
   if(scope==="player"){
     const b = loadBookings(KEY_PLAYER_BOOK);
     b.forEach(x=>{
@@ -1333,7 +1381,7 @@ function renderCalendar(scope){
   const all = [...base, ...customEvents];
 
   for(let day=1; day<=7; day++){
-    const d = day%7; // 1..6 + 0
+    const d = day%7;
     const box = document.createElement("div");
     box.className = "dayBox";
     box.innerHTML = `<div class="dayName">${dayName(d)}</div>`;
@@ -1359,7 +1407,309 @@ function renderCalendar(scope){
 }
 
 /* =========================
-   KI
+   PARENT COMMUNICATION UPGRADE
+========================= */
+function parentSelectTrainer(){
+  parentSelectedTrainer = $("parentTrainerSelect").value;
+  $("parentTrainerTag").textContent = "Trainer: " + parentSelectedTrainer;
+  toast(`✅ Trainer gewählt: <b>${parentSelectedTrainer}</b>`);
+}
+function sendMsg(){
+  const txt = $("msgTrainer").value.trim();
+  if(!txt){ toast("⚠️ Bitte Nachricht schreiben."); return; }
+  $("msgTrainer").value = "";
+  bumpAnalytics("calendar");
+  toast(`📨 <b>Gesendet</b><br>An: <b>${parentSelectedTrainer}</b> (Demo)`);
+}
+
+/* =========================
+   PLAYER NUTRITION + MOTIVATION
+========================= */
+function genPlayerNutrition(){
+  const style = $("p_nutri_style").value;
+  const allergy = $("p_nutri_allergy").value;
+
+  const base = {
+    familie: {
+      fr: "Haferflocken + Banane (oder Brot + Ei)",
+      mi: "Reis/Pasta + Hähnchen/Thunfisch + Gemüse",
+      ab: "Kartoffeln + Quark/Joghurt + Salat",
+      sn: "Apfel + Skyr",
+      wa: "1.5–2L Wasser"
+    },
+    sport: {
+      fr: "Oats + Beeren + Protein (oder Omelett)",
+      mi: "Reis + Chicken + Gemüse + Olivenöl",
+      ab: "Lachs/Thunfisch + Kartoffeln + Salat",
+      sn: "Banane + Skyr",
+      wa: "2L Wasser + Elektrolyte"
+    },
+    low: {
+      fr: "Joghurt + Obst + Honig",
+      mi: "Salat Bowl + Protein + Brot",
+      ab: "Gemüsepfanne + Ei/Fisch",
+      sn: "Obst + Tee",
+      wa: "1.5–2L Wasser"
+    }
+  };
+  let plan = base[style] || base.familie;
+
+  const allergyNote = (a)=>{
+    if(a==="laktose") return " (laktosefrei)";
+    if(a==="nuesse") return " (ohne Nüsse)";
+    if(a==="gluten") return " (glutenfrei)";
+    return "";
+  };
+  const note = allergyNote(allergy);
+
+  $("p_nutri_plan").textContent =
+    `Frühstück: ${plan.fr}${note} • Mittag: ${plan.mi}${note} • Abend: ${plan.ab}${note} • Snack: ${plan.sn}${note} • Wasser: ${plan.wa}`;
+
+  toast("✅ <b>Ernährungsplan erstellt</b>");
+}
+function genPlayerMotivation(){
+  const arr = [
+    "Heute bist du schneller als gestern.",
+    "Fokus. Erste Berührung. Kopf hoch.",
+    "Du trainierst smart – das ist dein Vorteil.",
+    "Mach’s einfach: Kontrolle, Tempo, Entscheidung."
+  ];
+  $("p_motivation").textContent = "🔥 " + arr[Math.floor(Math.random()*arr.length)];
+  toast("✅ <b>Motivation bereit</b>");
+}
+
+/* =========================
+   ANALYTICS (Donuts + Sessions)
+========================= */
+function defaultAnalytics(){
+  return { attendance: 78, progress: 52, performance: 74 };
+}
+function getAnalytics(){ return loadJSON(KEY_ANALYTICS, defaultAnalytics()); }
+function setAnalytics(a){ saveJSON(KEY_ANALYTICS, a); }
+
+function bumpAnalytics(type){
+  const a = getAnalytics();
+  if(type==="checkin") a.attendance = clamp(a.attendance + 1, 0, 100);
+  if(type==="playerSlot") a.progress = clamp(a.progress + 1, 0, 100);
+  if(type==="parentFitness") a.performance = clamp(a.performance + 1, 0, 100);
+  if(type==="calendar") a.progress = clamp(a.progress + 1, 0, 100);
+  setAnalytics(a);
+  renderDonuts();
+}
+
+function setArc(pathEl, percent){
+  const total = 157;
+  const filled = Math.round((percent/100)*total);
+  pathEl.setAttribute("stroke-dasharray", `${filled} ${total}`);
+}
+function renderDonuts(){
+  const a = getAnalytics();
+  $("d_att").textContent = `${a.attendance}%`;
+  $("d_prog").textContent = `${a.progress}%`;
+  $("d_perf").textContent = `${a.performance}/100`;
+  setArc($("arc_att"), a.attendance);
+  setArc($("arc_prog"), a.progress);
+  setArc($("arc_perf"), a.performance);
+}
+
+/* Sessions model */
+function seedSessions(){
+  const existing = loadJSON(KEY_SESSIONS, null);
+  if(existing) return;
+
+  const base = [];
+  const types = ["Technik","Athletik","Kognition","Matchanalyse"];
+  let dayBack = 1;
+  for(let i=0;i<10;i++){
+    const d = new Date();
+    d.setDate(d.getDate()-dayBack);
+    dayBack += 2;
+
+    const present = Math.random() > 0.15;
+    const score = present ? Math.floor(65 + Math.random()*25) : 0;
+
+    base.unshift({
+      date: d.toISOString().slice(0,10),
+      type: types[Math.floor(Math.random()*types.length)],
+      present,
+      score
+    });
+  }
+  saveJSON(KEY_SESSIONS, base);
+}
+
+function sessions(){ return loadJSON(KEY_SESSIONS, []); }
+function saveSessions(list){ saveJSON(KEY_SESSIONS, list); }
+
+function addRandomSession(){
+  const list = sessions();
+  const types = ["Technik","Athletik","Kognition","Matchanalyse"];
+  const present = Math.random() > 0.10;
+  const score = present ? Math.floor(65 + Math.random()*25) : 0;
+  const d = new Date();
+  d.setDate(d.getDate() - Math.floor(Math.random()*6));
+  list.push({
+    date: d.toISOString().slice(0,10),
+    type: types[Math.floor(Math.random()*types.length)],
+    present,
+    score
+  });
+  list.sort((a,b)=> a.date.localeCompare(b.date));
+  saveSessions(list);
+  renderPlayerAnalysis();
+  toast("✅ <b>Demo Session hinzugefügt</b>");
+}
+
+function markToday(present){
+  const list = sessions();
+  const t = todayISO();
+  const idx = list.findIndex(s=>s.date===t);
+  const score = present ? Math.floor(65 + Math.random()*25) : 0;
+  const type = present ? "Technik" : "—";
+  if(idx>=0){
+    list[idx] = {date:t, type, present, score};
+  }else{
+    list.push({date:t, type, present, score});
+  }
+  list.sort((a,b)=> a.date.localeCompare(b.date));
+  saveSessions(list);
+
+  // update analytics quick
+  const a = getAnalytics();
+  a.attendance = clamp(a.attendance + (present?1:-1), 0, 100);
+  a.performance = clamp(a.performance + (present?1:-1), 0, 100);
+  setAnalytics(a);
+
+  renderPlayerAnalysis();
+  toast(present ? "✅ <b>Heute: anwesend</b>" : "❌ <b>Heute: gefehlt</b>");
+}
+
+function renderSessionList(){
+  const listEl = $("sessionList");
+  if(!listEl) return;
+  listEl.innerHTML = "";
+
+  const list = sessions().slice(-14).reverse(); // newest first
+  list.forEach(s=>{
+    const div = document.createElement("div");
+    div.className = "slot";
+    const tag = s.present ? `<span class="tag ok">Anwesend</span>` : `<span class="tag danger">Gefehlt</span>`;
+    div.innerHTML = `
+      <div>
+        <strong>${s.date} • ${s.type}</strong>
+        <small>Score: <b>${s.present ? s.score : 0}</b>/100</small>
+      </div>
+      <div class="right">${tag}</div>
+    `;
+    listEl.appendChild(div);
+  });
+
+  if(!list.length){
+    listEl.innerHTML = `<div class="small">Keine Sessions vorhanden.</div>`;
+  }
+}
+
+function drawScoreChart(){
+  const c = $("scoreChart");
+  if(!c) return;
+  const ctx = c.getContext("2d");
+
+  const list = sessions().slice(-10);
+  const w = c.width, h = c.height;
+  ctx.clearRect(0,0,w,h);
+
+  // grid
+  ctx.globalAlpha = 0.20;
+  ctx.strokeStyle = "#ffffff";
+  for(let y=30;y<h;y+=50){
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  const pad = 46;
+  const chartW = w - pad*2;
+  const chartH = h - pad*2;
+
+  // axis
+  ctx.globalAlpha = 0.35;
+  ctx.beginPath();
+  ctx.moveTo(pad, pad);
+  ctx.lineTo(pad, pad+chartH);
+  ctx.lineTo(pad+chartW, pad+chartH);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  if(list.length < 2){
+    ctx.globalAlpha = 0.8;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Noch keine Daten.", pad, pad+30);
+    ctx.globalAlpha = 1;
+    return;
+  }
+
+  // line
+  const step = chartW/(list.length-1);
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "#ff7a18";
+  ctx.beginPath();
+  list.forEach((s,i)=>{
+    const x = pad + step*i;
+    const v = s.present ? s.score : 0;
+    const y = pad + chartH - (v/100)*chartH;
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // points
+  list.forEach((s,i)=>{
+    const x = pad + step*i;
+    const v = s.present ? s.score : 0;
+    const y = pad + chartH - (v/100)*chartH;
+
+    ctx.globalAlpha = s.present ? 0.95 : 0.35;
+    ctx.fillStyle = "#ff7a18";
+    ctx.beginPath();
+    ctx.arc(x,y,7,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // labels
+    ctx.globalAlpha = 0.8;
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "12px system-ui";
+    ctx.fillText(String(v), x-8, y-12);
+    ctx.globalAlpha = 1;
+  });
+}
+
+function renderWeeklyAttendance(){
+  const list = sessions();
+  // demo: split into 3 blocks of 7 days by time order
+  const sorted = [...list].sort((a,b)=> a.date.localeCompare(b.date));
+  const last21 = sorted.slice(-21);
+
+  const blocks = [ last21.slice(-7), last21.slice(-14,-7), last21.slice(-21,-14) ];
+  const ids = ["wkA","wkB","wkC"];
+
+  blocks.forEach((b,idx)=>{
+    const total = b.length || 1;
+    const present = b.filter(x=>x.present).length;
+    const pct = Math.round((present/total)*100);
+    const el = $(ids[idx]);
+    if(el) el.style.width = pct + "%";
+  });
+}
+
+function renderPlayerAnalysis(){
+  renderDonuts();
+  renderSessionList();
+  drawScoreChart();
+  renderWeeklyAttendance();
+}
+
+/* =========================
+   PARENT KI MOTIVATION (unchanged)
 ========================= */
 function genMotivation(){
   const goal = $("ki_goal").value;
@@ -1398,98 +1748,7 @@ function genMotivation(){
   const pick = arr[Math.floor(Math.random()*arr.length)];
   $("ki_motivation").textContent = style(pick);
 
-  bumpAnalytics("ki");
   toast("✅ <b>Motivation erstellt</b>");
-}
-
-function genNutrition(){
-  const style = $("nutri_style").value;
-  const allergy = $("nutri_allergy").value;
-
-  const base = {
-    familie: {
-      fr: "Haferflocken + Banane (oder Brot + Ei)",
-      mi: "Reis / Pasta + Hähnchen / Thunfisch + Gemüse",
-      ab: "Kartoffeln + Joghurt / Quark + Salat",
-      sn: "Apfel + Joghurt / Skyr",
-      wa: "1.5–2L Wasser"
-    },
-    sport: {
-      fr: "Oats + Beeren + Protein (oder Omelett)",
-      mi: "Reis + Chicken + Gemüse + Olivenöl",
-      ab: "Lachs / Thunfisch + Kartoffeln + Salat",
-      sn: "Nüsse / Banane + Skyr",
-      wa: "2L Wasser + Elektrolyte"
-    },
-    low: {
-      fr: "Joghurt + Obst + Honig (leicht)",
-      mi: "Salat Bowl + Protein + Brot",
-      ab: "Gemüsepfanne + Ei / Fisch",
-      sn: "Obst + Tee",
-      wa: "1.5–2L Wasser"
-    }
-  };
-
-  let plan = base[style] || base.familie;
-
-  const allergyNote = (a)=>{
-    if(a==="laktose") return " (laktosefrei wählen)";
-    if(a==="nuesse") return " (ohne Nüsse)";
-    if(a==="gluten") return " (glutenfrei wählen)";
-    return "";
-  };
-
-  const note = allergyNote(allergy);
-
-  $("nutri_plan").textContent =
-    `Frühstück: ${plan.fr}${note} • Mittag: ${plan.mi}${note} • Abend: ${plan.ab}${note} • Snack: ${plan.sn}${note} • Wasser: ${plan.wa}`;
-
-  bumpAnalytics("ki");
-  toast("✅ <b>Ernährungsplan erstellt</b>");
-}
-
-/* =========================
-   ANALYTICS (Donut / demo)
-========================= */
-function defaultAnalytics(){
-  return { attendance: 78, progress: 52, performance: 74 };
-}
-function getAnalytics(){
-  return loadJSON(KEY_ANALYTICS, defaultAnalytics());
-}
-function setAnalytics(a){
-  saveJSON(KEY_ANALYTICS, a);
-}
-function bumpAnalytics(type){
-  const a = getAnalytics();
-  // small demo changes
-  if(type==="checkin") a.attendance = clamp(a.attendance + 1, 0, 100);
-  if(type==="playerSlot") a.progress = clamp(a.progress + 1, 0, 100);
-  if(type==="parentFitness") a.performance = clamp(a.performance + 1, 0, 100);
-  if(type==="calendar") a.progress = clamp(a.progress + 1, 0, 100);
-  if(type==="ki") a.performance = clamp(a.performance + 1, 0, 100);
-
-  setAnalytics(a);
-  renderDonuts();
-}
-function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-
-function setArc(pathEl, percent){
-  // arc length approx for this SVG path: we can use 157 as stable value
-  const total = 157;
-  const filled = Math.round((percent/100)*total);
-  pathEl.setAttribute("stroke-dasharray", `${filled} ${total}`);
-}
-function renderDonuts(){
-  const a = getAnalytics();
-
-  $("d_att").textContent = `${a.attendance}%`;
-  $("d_prog").textContent = `${a.progress}%`;
-  $("d_perf").textContent = `${a.performance}/100`;
-
-  setArc($("arc_att"), a.attendance);
-  setArc($("arc_prog"), a.progress);
-  setArc($("arc_perf"), a.performance);
 }
 
 /* =========================
@@ -1505,6 +1764,10 @@ function syncHeaderTags(){
   $("pd_year").textContent = member.year;
   $("pd_contract").textContent = member.contract;
   $("pd_emg").textContent = member.emergency;
+
+  $("parentTrainerTag").textContent = "Trainer: " + parentSelectedTrainer;
+  const sel = $("parentTrainerSelect");
+  if(sel) sel.value = parentSelectedTrainer;
 }
 
 function toggleStatus(){
@@ -1522,28 +1785,46 @@ function switchTrainer(){
   toast(`👥 Trainer: <b>${member.trainer}</b>`);
 }
 
-function sendMsg(){
-  const txt = $("msgTrainer").value.trim();
-  if(!txt){ toast("⚠️ Bitte Nachricht schreiben."); return; }
-  $("msgTrainer").value = "";
-  bumpAnalytics("calendar");
-  toast("📨 <b>Gesendet</b><br>(Demo)");
-}
+/* =========================
+   MODALS: EVENT / BOOK / WALLET (same)
+========================= */
+function closeWallet(){ $("walletModal").style.display="none"; }
+
+/* Event modal handlers already defined above */
 
 /* =========================
    INIT
 ========================= */
 function renderAll(){
   syncHeaderTags();
-  renderDonuts();
   renderPlayerSlots();
   renderFitness();
   renderCalendar("player");
   renderCalendar("parent");
+  renderPlayerAnalysis();
 }
 
+seedSessions();
 setMode("player");
 renderAll();
+
+/* =========================
+   Missing functions: closeEventModal, closeBook, closeWallet are above.
+   (already defined)
+========================= */
+
+/* Re-define closeEventModal & closeBook in case load order */
+function closeEventModal(){ $("eventModal").style.display = "none"; }
+function closeBook(){ $("bookModal").style.display = "none"; bookingContext=null; }
+function closeWallet(){ $("walletModal").style.display="none"; }
+
+/* Wallet simulate NFC */
+function simulateNFC(){
+  bumpAnalytics("checkin");
+  toast(`📶 <b>NFC Tap OK</b><br>${walletMode==="player" ? "Spieler" : "Eltern"} Check-in registriert (Demo).`);
+}
+
+/* Booking close (already) */
 </script>
 </body>
 </html>
