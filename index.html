@@ -80,7 +80,6 @@ body{
     radial-gradient(900px 500px at 18% 0%, rgba(255,122,24,.22), transparent 62%),
     radial-gradient(900px 500px at 90% 20%, rgba(255,122,24,.14), transparent 62%),
     radial-gradient(900px 500px at 50% 120%, rgba(255,177,74,.10), transparent 65%);
-  filter: blur(.2px);
 }
 body.parent .parentFX{ opacity:1; }
 
@@ -100,7 +99,6 @@ body.parent .parentFX{ opacity:1; }
 
 h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
 .small{color:var(--muted);font-size:13px;line-height:1.45}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0}
 .hr{border:none;border-top:1px solid var(--line); margin:12px 0}
 
 /* TOP */
@@ -116,14 +114,13 @@ h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
 }
 .brand{display:flex; align-items:center; gap:12px;}
 .logoDot{
-  width:44px; height:44px; border-radius:16px;
+  width:46px; height:46px; border-radius:18px;
   background:
     radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
     linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.45));
   box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 55px rgba(255,122,24,.18);
 }
 .brandTitle{font-weight:1000; letter-spacing:.2px}
-
 .pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 .pill{
   display:inline-flex; align-items:center; gap:10px;
@@ -133,24 +130,24 @@ h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
   background: rgba(0,0,0,.22);
   box-shadow: var(--shadow2);
   font-weight:1000;
-  font-size:13px;
+  font-size:14px;
 }
 .dot{
-  width:10px;height:10px;border-radius:50%;
+  width:11px;height:11px;border-radius:50%;
   background: var(--ok);
-  box-shadow: 0 0 0 5px rgba(37,208,127,.10);
+  box-shadow: 0 0 0 6px rgba(37,208,127,.10);
 }
 
-/* BUTTONS */
+/* BUTTONS (BIG + CLEAR) */
 .btn{
-  padding:12px 14px;
+  padding:13px 14px;
   border-radius:16px;
   border:1px solid var(--line);
   background: rgba(0,0,0,.22);
   color: var(--text);
   font-weight:1000;
   cursor:pointer;
-  font-size:14px;
+  font-size:15px;
 }
 .btn:active{transform:translateY(1px)}
 .btn.primary{
@@ -163,18 +160,14 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   border-color: rgba(37,208,127,.55);
   background: rgba(37,208,127,.12);
 }
-.btn.warn{
-  border-color: rgba(255,176,32,.55);
-  background: rgba(255,176,32,.12);
-}
 .btn.ghost{background: rgba(255,255,255,.06)}
 .btn:disabled{opacity:.45; cursor:not-allowed}
 
 /* TAGS */
 .tag{
-  padding:7px 12px;
+  padding:8px 12px;
   border-radius:999px;
-  font-size:12px;
+  font-size:13px;
   font-weight:1000;
   background: rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.10);
@@ -184,23 +177,11 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .tag.warn{background: rgba(255,176,32,.14); border-color: rgba(255,176,32,.35)}
 .tag.danger{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.35)}
 
-/* INPUTS */
-.input{
-  padding:13px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background: rgba(0,0,0,.22);
-  color: var(--text);
-  width:100%;
-  font-size:14px;
-  outline:none;
-}
-
 /* LIST / SLOTS */
 .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .slot{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:12px;
+  padding:13px;
   border-radius:18px;
   border:1px solid rgba(255,255,255,.12);
   background: rgba(0,0,0,.18);
@@ -209,59 +190,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .slot small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
 .slot .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 
-/* Coach / Video Demo */
-.coachGrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
-.coachCard{
-  border:1px solid rgba(255,122,24,.25);
-  background: linear-gradient(180deg, rgba(255,122,24,.10), rgba(0,0,0,.18));
-  border-radius:18px;
-  padding:14px;
-}
-body.parent .coachCard{ box-shadow: var(--pGlow); }
-.coachTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.coachTitle{display:flex;align-items:center;gap:10px;font-weight:1000}
-.coachTitle .ai{font-size:22px}
-.videoDemo{
-  margin-top:10px;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.20);
-  position:relative;
-  height:170px;
-}
-.videoDemo::before{
-  content:"";
-  position:absolute; inset:-30px;
-  background:
-    radial-gradient(120px 120px at 25% 30%, rgba(255,122,24,.25), transparent 60%),
-    radial-gradient(160px 160px at 70% 55%, rgba(255,177,74,.12), transparent 62%),
-    linear-gradient(135deg, rgba(255,255,255,.05), rgba(0,0,0,.25));
-  transform: rotate(8deg);
-  animation: floaty 5.2s ease-in-out infinite;
-}
-@keyframes floaty{
-  0%,100%{transform:translateY(0) rotate(8deg)}
-  50%{transform:translateY(-10px) rotate(8deg)}
-}
-.videoOverlay{
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  gap:10px;
-  color:rgba(255,255,255,.92);
-  font-weight:1000;
-  text-shadow: 0 10px 30px rgba(0,0,0,.7);
-}
-.play{
-  width:56px;height:56px;border-radius:20px;
-  border:1px solid rgba(255,122,24,.55);
-  background: rgba(255,122,24,.16);
-  display:grid;place-items:center;
-  box-shadow: var(--pGlow);
-  font-size:22px;
-}
-
-/* Wallet / NFC Card */
+/* Wallet / NFC Card Button */
 .walletBtn{
   width:100%;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -274,76 +203,8 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
 }
 .walletBtn:hover{border-color: rgba(255,122,24,.55)}
 .walletBtn .left{display:flex;align-items:center;gap:12px}
-.walletBtn .ic{font-size:24px}
-.walletBtn .right{opacity:.9}
-
-/* AI Motivation + Nutrition */
-.aiPanel{
-  border:1px solid rgba(255,122,24,.28);
-  border-radius:18px;
-  padding:14px;
-  background: linear-gradient(180deg, rgba(255,122,24,.08), rgba(0,0,0,.18));
-}
-body.parent .aiPanel{ box-shadow: var(--pGlow); }
-.aiHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.aiHeader b{font-size:14px}
-.aiChoice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-@media(max-width:420px){.aiChoice{grid-template-columns:1fr}}
-.cardMini{
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  border-radius:18px;
-  padding:12px;
-}
-.cardMini .ttl{font-weight:1000}
-.cardMini .sub{color:var(--muted);font-size:13px;margin-top:4px}
-
-.kpiRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.kpi{
-  flex:1; min-width:160px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  border-radius:18px;
-  padding:12px;
-}
-.kpi b{display:block;font-size:12px;color:var(--muted)}
-.kpi span{display:block;font-size:18px;font-weight:1000;margin-top:4px}
-
-.progressBar{
-  height:12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  overflow:hidden;margin-top:10px;
-}
-.progressFill{
-  height:100%;
-  width:0%;
-  background: linear-gradient(90deg, rgba(255,122,24,.25), rgba(255,177,74,.22));
-  box-shadow: var(--pGlow);
-}
-
-.planGrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
-.planItem{
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  border-radius:18px;
-  padding:12px;
-}
-.planItem .head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.planItem .head b{font-size:14px}
-.planItem ul{margin:10px 0 0 16px;color:rgba(255,255,255,.86)}
-.planItem li{margin:5px 0}
-
-.shopList{
-  border:1px dashed rgba(255,122,24,.45);
-  background: rgba(255,122,24,.06);
-  border-radius:18px;
-  padding:12px;
-  margin-top:10px;
-}
-.shopList b{display:block;margin-bottom:8px}
-.shopList .item{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,.10)}
-.shopList .item:first-of-type{border-top:none}
-.chk{accent-color: var(--accent); transform: scale(1.2);}
+.walletBtn .ic{font-size:28px}
+.walletBtn .right{opacity:.9; font-size:18px}
 
 /* MODALS */
 .modalWrap{
@@ -369,20 +230,32 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
     radial-gradient(700px 220px at 15% 0%, rgba(255,122,24,.18), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,.04), transparent);
 }
-.modalHead b{font-size:14px; letter-spacing:.2px}
+.modalHead b{font-size:15px}
 .x{
-  width:44px;height:44px;border-radius:16px;
+  width:46px;height:46px;border-radius:16px;
   border:1px solid var(--line);
   background: rgba(0,0,0,.22);
   color:white;
   cursor:pointer;
   font-weight:1000;
+  font-size:16px;
 }
 .modalBody{padding:16px}
 .modalActions{
   padding:14px 16px;
   border-top:1px solid var(--line);
   display:flex; gap:10px; justify-content:flex-end;
+}
+
+.input{
+  padding:14px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  width:100%;
+  font-size:15px;
+  outline:none;
 }
 
 .idCard{
@@ -442,7 +315,7 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
   padding:12px 14px;
   display:none;
   z-index:60;
-  font-size:13px;
+  font-size:14px;
   color:var(--muted);
   box-shadow: 0 18px 60px rgba(0,0,0,.55);
 }
@@ -479,277 +352,113 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
 
     <div class="cardPad">
       <div class="small">
-        <b>Regel:</b> Eltern-Fitness ist <b>gesperrt</b>, wenn Kindertraining läuft. Freie Slots sind buchbar und werden gespeichert.
+        <b>Eltern-Fitness Regel:</b> Während Kindertraining ist Eltern-Fitness <b>gesperrt</b>.
+        Buchungen/Storno werden lokal gespeichert (Demo).
       </div>
     </div>
   </div>
 
   <div class="grid">
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT -->
     <div>
 
-     <!-- PLAYER DASH -->
-<div id="playerDash" class="card">
-  <div class="cardPad">
-    <h2>⚽ Spieler Dashboard</h2>
+      <!-- PLAYER (minimal but solid) -->
+      <div id="playerDash" class="card">
+        <div class="cardPad">
+          <h2>⚽ Spieler Dashboard</h2>
 
-    <div class="row">
-      <b>Spieler</b><span id="pName">Amine B.</span>
-    </div>
-    <div class="row">
-      <b>Profil</b><span class="tag ok">U15 • Technik & Kognition</span>
-    </div>
-    <div class="row">
-      <b>Status</b><span class="tag ok" id="pStatus">Aktiv</span>
-    </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
+            <span class="tag ok">U15 • Technik & Kognition</span>
+            <span class="tag ok" id="pStatusTag">Aktiv</span>
+          </div>
 
-    <hr class="hr">
+          <button class="walletBtn" onclick="openWallet('player')">
+            <div class="left">
+              <span class="ic">⚽</span>
+              <div>
+                <div style="font-weight:1000">SmartGen Spieler-ID (Wallet/NFC)</div>
+                <div class="small">Tap & Check-in • QR • Zugang</div>
+              </div>
+            </div>
+            <div class="right">›</div>
+          </button>
 
-    <button class="walletBtn" onclick="toast('🪪 <b>Spieler-ID</b><br>Wallet/NFC Demo kommt als nächstes.');">
-      <div class="left">
-        <span class="ic">🪪</span>
-        <div>
-          <div style="font-weight:1000">SmartGen Spieler-ID (Wallet/NFC)</div>
-          <div class="small">Tap & Check-in • QR • Zugang</div>
-        </div>
-      </div>
-      <div class="right">›</div>
-    </button>
+          <hr class="hr">
 
-    <div class="kpiRow" style="margin-top:12px">
-      <div class="kpi"><b>Anwesenheit</b><span>84%</span></div>
-      <div class="kpi"><b>Streak</b><span>6</span></div>
-      <div class="kpi"><b>Score</b><span>78</span></div>
-    </div>
+          <h2>🟠 Spieler Slots (Demo)</h2>
+          <div class="small">Extra Slots außerhalb Training (Demo – getrennt von Eltern-Fitness).</div>
+          <div class="list" id="playerSlots"></div>
 
-    <div class="progressBar" title="Progress (Demo)">
-      <div class="progressFill" style="width:62%"></div>
-    </div>
-    <div class="small" style="margin-top:8px">Progress Level: <b>62%</b> (Demo)</div>
-
-    <hr class="hr">
-
-    <h2>📅 Nächste Termine</h2>
-    <div class="list">
-      <div class="slot">
-        <div>
-          <strong>Mi • 18:00–19:30 — Kindertraining</strong>
-          <small>Technik • Kognition • Ballkontrolle</small>
-        </div>
-        <div class="right">
-          <span class="tag ok">Fix</span>
-          <button class="btn primary" onclick="toast('📅 <b>Kalender</b><br>Später: Add to Calendar.');">+ Kalender</button>
+          <hr class="hr">
+          <button class="btn primary" onclick="toast('✅ <b>Spieler Bereich</b><br>Später: Stats, Videos, Matchanalyse.');" style="width:100%">📈 Analyse (Demo)</button>
         </div>
       </div>
 
-      <div class="slot">
-        <div>
-          <strong>Sa • 10:00–11:30 — Kindertraining</strong>
-          <small>Matchnah • 1v1 • Decision Making</small>
-        </div>
-        <div class="right">
-          <span class="tag ok">Fix</span>
-          <button class="btn primary" onclick="toast('📅 <b>Kalender</b><br>Später: Add to Calendar.');">+ Kalender</button>
-        </div>
-      </div>
-    </div>
-
-    <hr class="hr">
-
-    <h2>🟠 Offene Slots (Spieler)</h2>
-    <div class="small">Tippe auf „Buchen“ (Demo) – gleich wie im Eltern-Fitness, aber für Spieler.</div>
-
-    <div class="list" style="margin-top:10px">
-      <div class="slot">
-        <div>
-          <strong>Di • 17:00–18:00 — Privattraining</strong>
-          <small>Technik • erster Kontakt • schwacher Fuß</small>
-        </div>
-        <div class="right">
-          <span class="tag warn">Frei</span>
-          <button class="btn ok" onclick="toast('✅ <b>Gebucht</b><br>Privattraining (Demo)');">Buchen</button>
-        </div>
-      </div>
-
-      <div class="slot">
-        <div>
-          <strong>Do • 18:30–19:30 — Kognitives Training</strong>
-          <small>Scanning • Reaktion • Timing</small>
-        </div>
-        <div class="right">
-          <span class="tag warn">Frei</span>
-          <button class="btn ok" onclick="toast('✅ <b>Gebucht</b><br>Kognition (Demo)');">Buchen</button>
-        </div>
-      </div>
-
-      <div class="slot">
-        <div>
-          <strong>Fr • 18:00–19:00 — Matchanalyse</strong>
-          <small>Mini-Report • KPIs • Video Hinweise</small>
-        </div>
-        <div class="right">
-          <span class="tag">Optional</span>
-          <button class="btn ghost" onclick="toast('📈 <b>Analyse</b><br>Später: echte Statistiken + Videos.');">Öffnen</button>
-        </div>
-      </div>
-    </div>
-
-    <hr class="hr">
-    <div class="small">
-      ✅ Nächster Schritt: Wir machen die Spieler-Slots **wirklich buchbar** (wie Eltern-Fitness) + speichern in LocalStorage.
-    </div>
-  </div>
-</div>
       <!-- PARENT DASH -->
       <div id="parentDash" class="hidden">
 
         <div class="card">
           <div class="cardPad">
             <h2>👨‍👩‍👦 Eltern Dashboard</h2>
-            <div class="row"><b>Kind</b><span>Amine B.</span></div>
-            <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
-            <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
-            <div class="row"><b>Anwesenheit</b><span>84%</span></div>
 
-            <hr class="hr">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
+              <span class="tag ok">Kind: Amine B.</span>
+              <span class="tag ok">Vertrag: Premium</span>
+            </div>
 
-            <button class="walletBtn" onclick="openWallet()">
+            <button class="walletBtn" onclick="openWallet('parent')">
               <div class="left">
                 <span class="ic">🧡</span>
                 <div>
-                  <div style="font-weight:1000">SmartGen NFC / Wallet Karte</div>
-                  <div class="small">Tap & Check-in • QR • Orange Edition</div>
+                  <div style="font-weight:1000">Eltern NFC / Wallet Karte</div>
+                  <div class="small">Orange Edition • Tap & Check-in</div>
                 </div>
               </div>
               <div class="right">›</div>
             </button>
 
-            <div class="small" style="margin-top:10px">
-              Tipp: Das ist später Apple Wallet / Google Wallet. Jetzt ist es als Demo in der App.
-            </div>
-          </div>
-        </div>
+            <hr class="hr">
 
-        <div class="card">
-          <div class="cardPad">
-            <h2>💬 Kommunikation</h2>
-            <div class="row"><b>Trainer</b><span>Salem</span></div>
+            <h2>💬 Kommunikation (Demo)</h2>
             <input class="input" placeholder="Nachricht an Trainer schreiben…" />
-            <button class="btn primary" style="margin-top:10px;width:100%">📨 Senden</button>
-            <div class="small" style="margin-top:10px">
-              (Demo) Später: Chat-Verlauf + Schnellbuttons: „Termin verschieben“, „Frage“, „Feedback“.
-            </div>
-          </div>
-        </div>
+            <button class="btn primary" style="margin-top:10px;width:100%" onclick="toast('📨 <b>Gesendet</b><br>(Demo)');">Senden</button>
 
-        <!-- AI Motivation + Nutrition -->
-        <div class="card">
-          <div class="cardPad">
-            <h2>🤖 KI Motivation + Ernährung (Eltern)</h2>
-
-            <div class="aiPanel">
-              <div class="aiHeader">
-                <b>Wähle dein Ziel</b>
-                <span class="tag warn" id="aiGoalTag">Noch nicht gewählt</span>
-              </div>
-
-              <div class="aiChoice">
-                <div class="cardMini">
-                  <div class="ttl">🔥 Abnehmen / Energie</div>
-                  <div class="sub">Kalorien smart • weniger Zucker • mehr Energie</div>
-                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('cut')">Ziel wählen</button>
-                </div>
-                <div class="cardMini">
-                  <div class="ttl">💪 Fit & Stark (Kraft)</div>
-                  <div class="sub">Protein • Routine • einfache Pläne</div>
-                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('strength')">Ziel wählen</button>
-                </div>
-                <div class="cardMini">
-                  <div class="ttl">🧘 Rücken / Mobility</div>
-                  <div class="sub">Entlastung • Dehnen • weniger Schmerzen</div>
-                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('mobility')">Ziel wählen</button>
-                </div>
-                <div class="cardMini">
-                  <div class="ttl">🥗 Gesund & Alltag</div>
-                  <div class="sub">Besser essen ohne Stress • Familie kompatibel</div>
-                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('healthy')">Ziel wählen</button>
-                </div>
-              </div>
-
-              <hr class="hr">
-
-              <div class="kpiRow">
-                <div class="kpi"><b>Wasser heute</b><span id="waterNow">0/6</span></div>
-                <div class="kpi"><b>Motivation heute</b><span id="motNow">—</span></div>
-              </div>
-
-              <div class="progressBar" title="Wochen-Fokus (Demo)">
-                <div class="progressFill" id="weekFill"></div>
-              </div>
-              <div class="small" style="margin-top:8px">
-                Wochen-Fokus: <b id="weekLabel">0%</b> (Demo – steigt, wenn du Plan nutzt)
-              </div>
-
-              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-                <button class="btn ok" onclick="waterPlus()">💧 Wasser +1</button>
-                <button class="btn ghost" onclick="newMotivation()">✨ Neue Motivation</button>
-                <button class="btn warn" onclick="generateDayPlan()">🍽️ Tagesplan erstellen</button>
-              </div>
-
-              <div class="planGrid" id="planGrid"></div>
-              <div class="shopList" id="shopList" style="display:none"></div>
-            </div>
-
-            <div class="small" style="margin-top:10px">
-              Hinweis: Später kann die KI echte Videos/Übungen zeigen und Ernährung an Ziele, Allergien, Ramadan etc. anpassen.
-            </div>
+            <hr class="hr">
+            <h2>🧠 Eltern KI (Demo)</h2>
+            <button class="btn primary" style="width:100%" onclick="toast('🤖 <b>KI</b><br>Als nächstes: Motivation + Ernährung.');">Motivation + Ernährung (next)</button>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- RIGHT COLUMN -->
+    <!-- RIGHT -->
     <div>
-
-      <!-- FITNESS -->
       <div id="fitnessCard" class="card hidden">
         <div class="cardPad">
-          <h2>🏋️ Eltern-Fitness buchen</h2>
-
-          <div class="row" style="margin-top:12px">
-            <div><b>Heute</b> <span class="small" id="todayLabel"></span></div>
-            <button class="btn ghost" onclick="resetBookings()">Reset (Demo)</button>
-          </div>
+          <h2>🏋️ Eltern-Fitness (echt buchbar)</h2>
+          <div class="small">Buchen / Stornieren wird gespeichert. Blockierung bei Kindertraining aktiv.</div>
 
           <div class="list" id="fitnessSlots"></div>
 
           <hr class="hr">
-          <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s) • Du kannst auch stornieren.</div>
-
-          <hr class="hr">
-          <h2>🧠 KI Fitness Coach (Eltern)</h2>
-
-          <div class="coachGrid" id="coachGrid"></div>
-
-          <div class="small" style="margin-top:10px">
-            Idee: Später echte Videos + personalisierte Pläne (Rücken, Cardio, Kraft) je nach Ziel.
-          </div>
+          <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s)</div>
+          <button class="btn ghost" style="width:100%;margin-top:10px" onclick="resetParentBookings()">Reset (Demo)</button>
         </div>
       </div>
 
-      <!-- NOT OPENED YET -->
       <div id="parentHint" class="card">
         <div class="cardPad">
           <h2>👨‍👩‍👦 Eltern Bereich</h2>
           <div class="small">
-            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung + KI Coach + Motivation + Ernährung.
+            Klicke oben auf <b>Eltern</b> und gib den PIN ein.
+            Dann erscheint hier die Eltern-Fitness Buchung (mit Blockierung).
           </div>
         </div>
       </div>
-
     </div>
+
   </div>
 </div>
 
@@ -763,7 +472,7 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
     <div class="modalBody">
       <div class="small">Demo-PIN: <b>1234</b></div>
       <div style="margin-top:10px">
-        <input id="pinInput" class="input" placeholder="PIN eingeben">
+        <input id="pinInput" class="input" placeholder="PIN eingeben" inputmode="numeric">
       </div>
     </div>
     <div class="modalActions">
@@ -773,7 +482,7 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
   </div>
 </div>
 
-<!-- BOOK MODAL -->
+<!-- BOOK MODAL (Parent + Player) -->
 <div id="bookModal" class="modalWrap">
   <div class="modal">
     <div class="modalHead">
@@ -782,20 +491,13 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
     </div>
     <div class="modalBody">
       <div class="small" id="bookInfo"></div>
-
       <div style="margin-top:12px">
-        <label class="small"><b>Trainingstyp</b></label>
-        <select id="bookType" class="input" style="margin-top:6px">
-          <option>Eltern Fitness – Kraft</option>
-          <option>Eltern Fitness – Cardio</option>
-          <option>Mobility / Rücken</option>
-          <option>Regeneration / Stretching</option>
-        </select>
+        <label class="small"><b>Typ</b></label>
+        <select id="bookType" class="input" style="margin-top:6px"></select>
       </div>
-
       <div style="margin-top:12px">
-        <label class="small"><b>Notiz (optional)</b></label>
-        <input id="bookNote" class="input" style="margin-top:6px" placeholder="z.B. Fokus: Rücken / Kondition">
+        <label class="small"><b>Notiz</b></label>
+        <input id="bookNote" class="input" style="margin-top:6px" placeholder="Optional…">
       </div>
     </div>
     <div class="modalActions">
@@ -809,31 +511,26 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
 <div id="walletModal" class="modalWrap">
   <div class="modal">
     <div class="modalHead">
-      <b>🧡 SmartGen NFC / Wallet Karte</b>
+      <b id="walletTitle">🧡 SmartGen Wallet</b>
       <button class="x" onclick="closeWallet()">✕</button>
     </div>
     <div class="modalBody">
       <div class="idCard">
         <div class="idTop">
           <div>
-            <div class="idName">Eltern-ID • SmartGen</div>
-            <div class="idSub">Orange NFC Edition • Demo</div>
+            <div class="idName" id="walletName">SmartGen</div>
+            <div class="idSub" id="walletSub">Wallet/NFC • Demo</div>
           </div>
           <div class="nfcPill">📶 NFC aktiv</div>
         </div>
 
-        <div class="idGrid">
-          <div class="kv"><b>Elternteil</b><span>Parent One</span></div>
-          <div class="kv"><b>Kind</b><span>Amine B.</span></div>
-          <div class="kv"><b>Vertrag</b><span>Premium</span></div>
-          <div class="kv"><b>Status</b><span>Aktiv</span></div>
-        </div>
+        <div class="idGrid" id="walletGrid"></div>
 
         <div class="qr">
           <div class="qrBox" title="QR Demo"></div>
           <div style="flex:1;min-width:200px">
             <div style="font-weight:1000">Check-in / Zugang</div>
-            <div class="small">QR scannen oder NFC tap am Eingang (Demo Logik).</div>
+            <div class="small">QR scannen oder NFC tap (Demo).</div>
             <button class="btn primary" style="margin-top:10px" onclick="simulateNFC()">📶 NFC Tap simulieren</button>
           </div>
         </div>
@@ -853,12 +550,14 @@ body.parent .aiPanel{ box-shadow: var(--pGlow); }
 ========================= */
 const PARENT_PIN = "1234";
 
+/* Kid training blocks (affects ONLY Parent-Fitness) */
 const kidTrainings = [
   { day: 3, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
   { day: 5, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
   { day: 6, start: "10:00", end: "11:30", label: "Kindertraining (Sa 10:00–11:30)" },
 ];
 
+/* Parent fitness slots */
 const fitnessSlotsCatalog = [
   { id:"mon_0900", day:1, start:"09:00", end:"10:00", title:"Eltern Fitness", desc:"Kraft • Core" },
   { id:"mon_1100", day:1, start:"11:00", end:"12:00", title:"Eltern Fitness", desc:"Cardio • Intervall" },
@@ -870,72 +569,61 @@ const fitnessSlotsCatalog = [
   { id:"sat_1830", day:6, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Abend Slot" },
 ];
 
-const KEY_BOOK = "sg_parent_bookings_v1";
-
-/* Fitness Coach Demo */
-const COACH = [
-  { title:"Rücken & Core (10 Min)", steps:["Cat-Cow (45s)","Plank (3×20s)","Glute Bridge (3×10)","Stretch (2 Min)"], tip:"Perfekt nach der Arbeit. Fokus: Rücken entlasten." },
-  { title:"Cardio Quick (12 Min)", steps:["Warm-up (2 Min)","6× (30s schnell / 30s locker)","Cooldown (2 Min)"], tip:"Wenn du wenig Zeit hast – aber schnell Energie willst." },
-  { title:"Mobility Beine (8 Min)", steps:["Hüftöffner (60s)","Kniebeugen langsam (2×8)","Wadenmobilität (60s)","Dehnen (2 Min)"], tip:"Sehr gut, wenn du viel sitzt oder Kniespannung hast." }
+/* Player slots (separate, bookable) */
+const playerSlotsCatalog = [
+  { id:"p_tue_1700", day:2, start:"17:00", end:"18:00", title:"Privattraining", desc:"Technik • erster Kontakt" },
+  { id:"p_thu_1830", day:4, start:"18:30", end:"19:30", title:"Kognitives Training", desc:"Scanning • Reaktion" },
+  { id:"p_fri_1800", day:5, start:"18:00", end:"19:00", title:"Matchanalyse", desc:"KPIs • Video Hinweise" },
+  { id:"p_sat_1200", day:6, start:"12:00", end:"13:00", title:"Athletik", desc:"Schnelligkeit • Core" },
 ];
 
-/* KI Motivation + Ernährung */
-const KEY_AI = "sg_parent_ai_v1";
-const MOTIVATION = [
-  "Heute zählt nur eins: <b>du bleibst dran</b>.",
-  "Kleine Schritte = <b>große Veränderung</b>.",
-  "Du brauchst keine perfekte Woche – nur <b>Konstanz</b>.",
-  "Du bist Vorbild. <b>Dein Kind sieht alles</b>.",
-  "Wenn du heute 1% besser wirst, bist du in 100 Tagen <b>100% besser</b>.",
-  "Disziplin schlägt Motivation – aber heute bekommst du beides 😄",
-  "Stark ist, wer anfängt. <b>Noch stärker</b> ist, wer weitermacht."
-];
+const KEY_PARENT_BOOK = "sg_parent_bookings_v2";
+const KEY_PLAYER_BOOK = "sg_player_bookings_v1";
 
 let mode = "player";
-let selectedSlotId = null;
+let bookingContext = null; // { kind:'parent'|'player', slotId }
+let walletMode = "player";
 
 /* =========================
    HELPERS
 ========================= */
 function $(id){ return document.getElementById(id); }
-
 function toast(msg){
   const t = $("toast");
   t.innerHTML = msg;
   t.style.display = "block";
   clearTimeout(window.__to);
-  window.__to = setTimeout(()=> t.style.display="none", 2800);
+  window.__to = setTimeout(()=> t.style.display="none", 2600);
 }
-
 function dayName(d){ return ["So","Mo","Di","Mi","Do","Fr","Sa"][d]; }
-function now(){ return new Date(); }
 function toMin(hhmm){ const [h,m]=hhmm.split(":").map(Number); return h*60+m; }
 function overlaps(aStart,aEnd,bStart,bEnd){ return Math.max(aStart,bStart) < Math.min(aEnd,bEnd); }
 
-function isBlockedByKidTraining(slot){
-  const sA = toMin(slot.start), sB = toMin(slot.end);
-  const blocks = kidTrainings.filter(k=>k.day === slot.day);
-  for(const k of blocks){
-    const kA = toMin(k.start), kB = toMin(k.end);
-    if(overlaps(sA,sB,kA,kB)) return {blocked:true, reason:k.label};
-  }
-  return {blocked:false, reason:""};
-}
-
-/* =========================
-   STATUS / MODE
-========================= */
 function setStatusUI(text){
   $("statusText").textContent = text;
   const dot = $("statusDot");
   dot.style.background = (text==="Aktiv") ? "var(--ok)" : (text==="Pause") ? "var(--warn)" : "var(--danger)";
   dot.style.boxShadow = (text==="Aktiv")
-    ? "0 0 0 5px rgba(37,208,127,.10)"
+    ? "0 0 0 6px rgba(37,208,127,.10)"
     : (text==="Pause")
-      ? "0 0 0 5px rgba(255,176,32,.10)"
-      : "0 0 0 5px rgba(255,77,77,.10)";
+      ? "0 0 0 6px rgba(255,176,32,.10)"
+      : "0 0 0 6px rgba(255,77,77,.10)";
 }
 
+function loadBookings(key){
+  const raw = localStorage.getItem(key);
+  return raw ? JSON.parse(raw) : [];
+}
+function saveBookings(key, list){
+  localStorage.setItem(key, JSON.stringify(list));
+}
+function isBooked(key, slotId){
+  return loadBookings(key).some(b => b.slotId === slotId);
+}
+
+/* =========================
+   MODE
+========================= */
 function setMode(next){
   mode = next;
   document.body.classList.toggle("parent", mode==="parent");
@@ -948,12 +636,11 @@ function setMode(next){
 
   if(mode === "parent"){
     renderFitness();
-    renderCoach();
-    loadAI();
-    setStatusUI("Aktiv");
+    $("pStatusTag").textContent = "Aktiv";
   }else{
-    setStatusUI("Aktiv");
+    renderPlayerSlots();
   }
+  setStatusUI("Aktiv");
 }
 
 /* =========================
@@ -970,42 +657,30 @@ function checkPin(){
   if(pin === PARENT_PIN){
     closePin();
     setMode("parent");
-    toast("✅ <b>Eltern-Freigabe aktiv</b><br>KI Motivation + Ernährung ist jetzt drin.");
+    toast("✅ <b>Eltern-Freigabe aktiv</b>");
   } else {
     toast("❌ <b>Falscher PIN</b><br>Bitte erneut versuchen.");
   }
 }
 
 /* =========================
-   BOOKINGS
+   PARENT FITNESS (blocked by kid training)
 ========================= */
-function loadBookings(){
-  const raw = localStorage.getItem(KEY_BOOK);
-  return raw ? JSON.parse(raw) : [];
-}
-function saveBookings(list){
-  localStorage.setItem(KEY_BOOK, JSON.stringify(list));
-}
-function isBooked(slotId){
-  return loadBookings().some(b => b.slotId === slotId);
-}
-function resetBookings(){
-  localStorage.removeItem(KEY_BOOK);
-  renderFitness();
-  toast("🧹 <b>Reset</b><br>Alle Demo-Buchungen gelöscht.");
+function isBlockedByKidTraining(slot){
+  const sA = toMin(slot.start), sB = toMin(slot.end);
+  const blocks = kidTrainings.filter(k=>k.day === slot.day);
+  for(const k of blocks){
+    const kA = toMin(k.start), kB = toMin(k.end);
+    if(overlaps(sA,sB,kA,kB)) return {blocked:true, reason:k.label};
+  }
+  return {blocked:false, reason:""};
 }
 
-/* =========================
-   FITNESS UI
-========================= */
 function renderFitness(){
-  const d = now();
-  $("todayLabel").textContent = `(${dayName(d.getDay())} • ${d.toLocaleDateString()})`;
-
   const list = $("fitnessSlots");
   list.innerHTML = "";
 
-  const bookings = loadBookings();
+  const bookings = loadBookings(KEY_PARENT_BOOK);
   $("bookCount").textContent = bookings.length;
 
   const sorted = [...fitnessSlotsCatalog].sort((a,b)=>{
@@ -1015,7 +690,7 @@ function renderFitness(){
 
   for(const slot of sorted){
     const blockInfo = isBlockedByKidTraining(slot);
-    const booked = isBooked(slot.id);
+    const booked = isBooked(KEY_PARENT_BOOK, slot.id);
 
     const div = document.createElement("div");
     div.className = "slot";
@@ -1027,10 +702,10 @@ function renderFitness(){
         : `<span class="tag warn">Frei</span>`;
 
     const actionBtn = blockInfo.blocked
-      ? `<button class="btn" disabled>⛔ Nicht möglich</button>`
+      ? `<button class="btn" disabled>⛔</button>`
       : booked
-        ? `<button class="btn ghost" onclick="cancelBooking('${slot.id}')">Stornieren</button>`
-        : `<button class="btn ok" onclick="openBook('${slot.id}')">Buchen</button>`;
+        ? `<button class="btn ghost" onclick="cancelBooking('parent','${slot.id}')">Storno</button>`
+        : `<button class="btn ok" onclick="openBook('parent','${slot.id}')">Buchen</button>`;
 
     div.innerHTML = `
       <div>
@@ -1047,308 +722,180 @@ function renderFitness(){
 }
 
 /* =========================
-   COACH UI
+   PLAYER SLOTS (bookable)
 ========================= */
-function renderCoach(){
-  const grid = $("coachGrid");
-  grid.innerHTML = "";
+function renderPlayerSlots(){
+  const list = $("playerSlots");
+  list.innerHTML = "";
 
-  COACH.forEach((c,idx)=>{
-    const card = document.createElement("div");
-    card.className = "coachCard";
-    card.innerHTML = `
-      <div class="coachTop">
-        <div class="coachTitle"><span class="ai">🤖</span> <span>${c.title}</span></div>
-        <button class="btn primary" onclick="toast('🤖 <b>Coach gestartet</b><br>${c.title}')">Plan starten</button>
+  const sorted = [...playerSlotsCatalog].sort((a,b)=>{
+    if(a.day !== b.day) return a.day - b.day;
+    return toMin(a.start) - toMin(b.start);
+  });
+
+  for(const slot of sorted){
+    const booked = isBooked(KEY_PLAYER_BOOK, slot.id);
+
+    const div = document.createElement("div");
+    div.className = "slot";
+
+    const statusTag = booked ? `<span class="tag ok">Gebucht</span>` : `<span class="tag warn">Frei</span>`;
+    const actionBtn = booked
+      ? `<button class="btn ghost" onclick="cancelBooking('player','${slot.id}')">Storno</button>`
+      : `<button class="btn ok" onclick="openBook('player','${slot.id}')">Buchen</button>`;
+
+    div.innerHTML = `
+      <div>
+        <strong>${dayName(slot.day)} • ${slot.start}–${slot.end} — ${slot.title}</strong>
+        <small>${slot.desc}</small>
       </div>
-
-      <div class="videoDemo" title="Mini Video Demo (Placeholder)">
-        <div class="videoOverlay">
-          <div class="play">▶</div>
-          <div>
-            <div style="font-weight:1000">Mini-Video Demo</div>
-            <div class="small">So trainierst du (Demo)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="small" style="margin-top:10px">
-        <b>Übungen:</b><br>
-        ${c.steps.map(s=>`• ${s}`).join("<br>")}
-        <div style="margin-top:8px"><b>Tipp:</b> ${c.tip}</div>
+      <div class="right">
+        ${statusTag}
+        ${actionBtn}
       </div>
     `;
-    grid.appendChild(card);
-  });
+    list.appendChild(div);
+  }
 }
 
 /* =========================
-   KI Motivation + Ernährung
+   BOOK MODAL (shared)
 ========================= */
-function loadAIState(){
-  const raw = localStorage.getItem(KEY_AI);
-  if(raw) return JSON.parse(raw);
-  return {
-    goal: null,        // cut | strength | mobility | healthy
-    water: 0,          // 0..6
-    week: 10,          // 0..100 demo
-    motivation: null,
-    plan: null,        // generated plan object
-    shop: []           // shopping list
-  };
-}
-function saveAIState(s){ localStorage.setItem(KEY_AI, JSON.stringify(s)); }
+function openBook(kind, slotId){
+  bookingContext = { kind, slotId };
 
-function goalLabel(g){
-  if(g==="cut") return "🔥 Abnehmen / Energie";
-  if(g==="strength") return "💪 Fit & Stark";
-  if(g==="mobility") return "🧘 Rücken / Mobility";
-  if(g==="healthy") return "🥗 Gesund & Alltag";
-  return "Noch nicht gewählt";
-}
-
-function loadAI(){
-  const s = loadAIState();
-  $("aiGoalTag").textContent = goalLabel(s.goal);
-  $("aiGoalTag").className = "tag " + (s.goal ? "ok" : "warn");
-
-  $("waterNow").textContent = `${Math.min(6,s.water)}/6`;
-  if(!s.motivation) s.motivation = randomMotivation();
-  $("motNow").innerHTML = s.motivation;
-
-  const week = Math.max(0, Math.min(100, s.week||0));
-  $("weekFill").style.width = week + "%";
-  $("weekLabel").textContent = week + "%";
-
-  renderPlan(s);
-  saveAIState(s);
-}
-
-function randomMotivation(){
-  return MOTIVATION[Math.floor(Math.random()*MOTIVATION.length)];
-}
-
-function setGoal(goal){
-  const s = loadAIState();
-  s.goal = goal;
-  s.week = Math.min(100, (s.week||10) + 8);
-  s.motivation = randomMotivation();
-  saveAIState(s);
-  loadAI();
-  toast("✅ <b>Ziel gespeichert</b><br>"+goalLabel(goal));
-}
-
-function waterPlus(){
-  const s = loadAIState();
-  s.water = Math.min(6, (s.water||0) + 1);
-  s.week = Math.min(100, (s.week||10) + 2);
-  saveAIState(s);
-  loadAI();
-  toast("💧 <b>Wasser getrunken</b><br>Sehr gut! Weiter so.");
-}
-
-function newMotivation(){
-  const s = loadAIState();
-  s.motivation = randomMotivation();
-  s.week = Math.min(100, (s.week||10) + 1);
-  saveAIState(s);
-  loadAI();
-  toast("✨ <b>Neue Motivation</b><br>Gib Gas!");
-}
-
-function generateDayPlan(){
-  const s = loadAIState();
-
-  if(!s.goal){
-    toast("⚠️ <b>Bitte zuerst Ziel wählen</b><br>Dann kann die KI deinen Tagesplan erzeugen.");
-    return;
-  }
-
-  const plan = buildPlanForGoal(s.goal);
-  s.plan = plan;
-  s.shop = plan.shop;
-  s.week = Math.min(100, (s.week||10) + 12);
-
-  saveAIState(s);
-  loadAI();
-  toast("🍽️ <b>Tagesplan erstellt</b><br>"+goalLabel(s.goal));
-}
-
-function buildPlanForGoal(goal){
-  // Demo: einfache, familienfreundliche Pläne (keine medizinische Beratung)
-  const base = {
-    breakfast: ["Haferflocken + Joghurt", "1 Banane", "Wasser oder ungesüßter Tee"],
-    lunch: ["Reis oder Kartoffeln", "Hähnchen/Tofu", "Gemüse (Brokkoli/Salat)"],
-    snack: ["Nüsse (kleine Hand)", "1 Apfel"],
-    dinner: ["Omelette oder Thunfisch-Salat", "Vollkornbrot klein", "Gemüse"]
-  };
-
-  let title = "Ausgewogener Tagesplan";
-  let tip = "Einfach, schnell, effektiv.";
-  let shop = ["Haferflocken", "Joghurt", "Bananen", "Reis/Kartoffeln", "Hähnchen oder Tofu", "Gemüse", "Nüsse", "Äpfel", "Eier", "Vollkornbrot"];
-
-  if(goal === "cut"){
-    title = "Abnehmen / Energie – Tagesplan";
-    tip = "Mehr Protein, weniger Zucker. Portionsgröße im Blick.";
-    base.snack = ["Skyr oder Quark", "Beeren"];
-    base.dinner = ["Großer Salat + Protein (Hähnchen/Thunfisch)", "Olivenöl 1 TL"];
-    shop = ["Skyr/Quark", "Beeren", "Salatmix", "Thunfisch/Hähnchen", "Olivenöl", ...shop];
-  }
-
-  if(goal === "strength"){
-    title = "Fit & Stark – Tagesplan";
-    tip = "Protein hoch + regelmäßige Mahlzeiten. Nach Training 1 Protein-Snack.";
-    base.breakfast = ["Eier + Vollkornbrot", "Joghurt", "1 Obst"];
-    base.snack = ["Protein Snack (z.B. Joghurt/Skyr)", "Nüsse"];
-    shop = ["Eier", "Vollkornbrot", "Skyr", "Hähnchen/Tofu", "Reis", "Nüsse", "Gemüse", "Obst"];
-  }
-
-  if(goal === "mobility"){
-    title = "Rücken / Mobility – Tagesplan";
-    tip = "Entzündungsarm: viel Gemüse, Wasser, weniger Fast Food.";
-    base.breakfast = ["Haferflocken", "Nüsse", "Wasser"];
-    base.lunch = ["Fisch oder Tofu", "Gemüse", "Kartoffeln"];
-    base.dinner = ["Gemüsepfanne", "Eier oder Bohnen"];
-    shop = ["Fisch (optional)", "Tofu", "Kartoffeln", "Gemüse (viel)", "Bohnen", "Nüsse", "Haferflocken"];
-  }
-
-  if(goal === "healthy"){
-    title = "Gesund & Alltag – Tagesplan";
-    tip = "Familien-kompatibel: gleiche Basis, nur Portionen anpassen.";
-    base.snack = ["Karotten/Gurke", "Hummus"];
-    shop = ["Karotten", "Gurke", "Hummus", ...shop];
-  }
-
-  return {
-    title,
-    tip,
-    meals: [
-      { name:"Frühstück", items: base.breakfast },
-      { name:"Mittag", items: base.lunch },
-      { name:"Snack", items: base.snack },
-      { name:"Abend", items: base.dinner },
-    ],
-    shop: [...new Set(shop)]
-  };
-}
-
-function renderPlan(s){
-  const grid = $("planGrid");
-  const shop = $("shopList");
-
-  grid.innerHTML = "";
-  shop.style.display = "none";
-  shop.innerHTML = "";
-
-  if(!s.plan) return;
-
-  const p = s.plan;
-
-  const planBox = document.createElement("div");
-  planBox.className = "planItem";
-  planBox.innerHTML = `
-    <div class="head">
-      <b>🍽️ ${p.title}</b>
-      <span class="tag ok">Heute</span>
-    </div>
-    <div class="small" style="margin-top:6px"><b>Tipp:</b> ${p.tip}</div>
-  `;
-  const ulWrap = document.createElement("div");
-  ulWrap.style.marginTop = "10px";
-
-  p.meals.forEach(m=>{
-    const item = document.createElement("div");
-    item.className = "planItem";
-    item.innerHTML = `
-      <div class="head"><b>${m.name}</b><span class="tag warn">einfach</span></div>
-      <ul>${m.items.map(x=>`<li>${x}</li>`).join("")}</ul>
-    `;
-    grid.appendChild(item);
-  });
-
-  grid.prepend(planBox);
-
-  // shopping list
-  shop.style.display = "block";
-  shop.innerHTML = `<b>🛒 Einkaufsliste (Demo)</b>` + p.shop.map((it,idx)=>`
-    <div class="item">
-      <label style="display:flex;gap:10px;align-items:center">
-        <input class="chk" type="checkbox" onchange="toggleShop(${idx}, this.checked)">
-        <span>${it}</span>
-      </label>
-      <span class="small">✓</span>
-    </div>
-  `).join("");
-}
-
-function toggleShop(idx, checked){
-  // Demo only (could store per item)
-  if(checked) toast("✅ <b>Zur Liste abgehakt</b><br>Top!");
-}
-
-/* =========================
-   BOOK MODAL
-========================= */
-function openBook(slotId){
-  const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
+  const isParent = kind === "parent";
+  const catalog = isParent ? fitnessSlotsCatalog : playerSlotsCatalog;
+  const slot = catalog.find(s=>s.id===slotId);
   if(!slot) return;
 
-  const blockInfo = isBlockedByKidTraining(slot);
-  if(blockInfo.blocked){
-    toast("⛔ <b>Gesperrt</b><br>Dieser Slot kollidiert mit Kindertraining.");
-    return;
-  }
-  if(isBooked(slotId)){
-    toast("✅ <b>Schon gebucht</b><br>Du kannst ihn stornieren.");
-    return;
+  if(isParent){
+    const blockInfo = isBlockedByKidTraining(slot);
+    if(blockInfo.blocked){
+      toast("⛔ <b>Gesperrt</b><br>Dieser Slot kollidiert mit Kindertraining.");
+      bookingContext = null;
+      return;
+    }
+    if(isBooked(KEY_PARENT_BOOK, slotId)){
+      toast("✅ <b>Schon gebucht</b>");
+      bookingContext = null;
+      return;
+    }
+  } else {
+    if(isBooked(KEY_PLAYER_BOOK, slotId)){
+      toast("✅ <b>Schon gebucht</b>");
+      bookingContext = null;
+      return;
+    }
   }
 
-  selectedSlotId = slotId;
-  $("bookTitle").textContent = `Slot buchen: ${dayName(slot.day)} ${slot.start}–${slot.end}`;
-  $("bookInfo").innerHTML = `<b>${slot.title}</b> – ${slot.desc}<br>Regel: keine Buchung während Kindertraining.`;
-  $("bookType").value = "Eltern Fitness – Kraft";
+  $("bookTitle").textContent = `${isParent ? "Eltern" : "Spieler"} Slot buchen: ${dayName(slot.day)} ${slot.start}–${slot.end}`;
+  $("bookInfo").innerHTML = `<b>${slot.title}</b> – ${slot.desc}`;
+
+  const sel = $("bookType");
+  sel.innerHTML = "";
+  const options = isParent
+    ? ["Eltern Fitness – Kraft","Eltern Fitness – Cardio","Mobility / Rücken","Regeneration / Stretching"]
+    : ["Privattraining (Technik)","Kognitives Training","Athletik","Matchanalyse"];
+  options.forEach(o=>{
+    const opt = document.createElement("option");
+    opt.textContent = o;
+    sel.appendChild(opt);
+  });
+
   $("bookNote").value = "";
   $("bookModal").style.display = "flex";
 }
 function closeBook(){
   $("bookModal").style.display = "none";
-  selectedSlotId = null;
+  bookingContext = null;
 }
 function confirmBooking(){
-  if(!selectedSlotId) return;
-
-  const slot = fitnessSlotsCatalog.find(s=>s.id===selectedSlotId);
+  if(!bookingContext) return;
+  const { kind, slotId } = bookingContext;
+  const isParent = kind === "parent";
+  const catalog = isParent ? fitnessSlotsCatalog : playerSlotsCatalog;
+  const slot = catalog.find(s=>s.id===slotId);
   if(!slot) return;
 
   const type = $("bookType").value;
   const note = $("bookNote").value.trim();
 
-  const bookings = loadBookings();
-  bookings.push({ slotId:selectedSlotId, createdAt:new Date().toISOString(), type, note });
-  saveBookings(bookings);
+  const key = isParent ? KEY_PARENT_BOOK : KEY_PLAYER_BOOK;
+  const bookings = loadBookings(key);
+  bookings.push({ slotId, createdAt:new Date().toISOString(), type, note });
+  saveBookings(key, bookings);
 
   closeBook();
-  renderFitness();
+
+  if(isParent) renderFitness();
+  else renderPlayerSlots();
+
   toast(`✅ <b>Buchung bestätigt</b><br>${dayName(slot.day)} ${slot.start}–${slot.end} • ${type}${note? "<br><span class='small'>Notiz: "+note+"</span>":""}`);
 }
-function cancelBooking(slotId){
-  const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
-  const bookings = loadBookings().filter(b => b.slotId !== slotId);
-  saveBookings(bookings);
-  renderFitness();
-  toast(`🗑️ <b>Storniert</b><br>${slot ? (dayName(slot.day)+" "+slot.start+"–"+slot.end) : "Slot"} wurde entfernt.`);
+
+function cancelBooking(kind, slotId){
+  const isParent = kind === "parent";
+  const key = isParent ? KEY_PARENT_BOOK : KEY_PLAYER_BOOK;
+  const catalog = isParent ? fitnessSlotsCatalog : playerSlotsCatalog;
+  const slot = catalog.find(s=>s.id===slotId);
+
+  const bookings = loadBookings(key).filter(b => b.slotId !== slotId);
+  saveBookings(key, bookings);
+
+  if(isParent) renderFitness();
+  else renderPlayerSlots();
+
+  toast(`🗑️ <b>Storniert</b><br>${slot ? (dayName(slot.day)+" "+slot.start+"–"+slot.end) : "Slot"} entfernt.`);
 }
 
 /* =========================
-   WALLET / NFC DEMO
+   RESET PARENT
 ========================= */
-function openWallet(){ $("walletModal").style.display="flex"; }
+function resetParentBookings(){
+  localStorage.removeItem(KEY_PARENT_BOOK);
+  renderFitness();
+  toast("🧹 <b>Reset</b><br>Alle Eltern-Buchungen gelöscht.");
+}
+
+/* =========================
+   WALLET / NFC
+========================= */
+function openWallet(kind){
+  walletMode = kind;
+  $("walletModal").style.display="flex";
+
+  if(kind === "player"){
+    $("walletTitle").textContent = "⚽ Spieler Wallet / NFC";
+    $("walletName").textContent = "Spieler-ID • SmartGen";
+    $("walletSub").textContent = "Orange NFC • Check-in (Demo)";
+    $("walletGrid").innerHTML = `
+      <div class="kv"><b>Spieler</b><span>Amine B.</span></div>
+      <div class="kv"><b>Team</b><span>U15</span></div>
+      <div class="kv"><b>Level</b><span>Fortgeschritten</span></div>
+      <div class="kv"><b>Status</b><span>Aktiv</span></div>
+    `;
+  } else {
+    $("walletTitle").textContent = "🧡 Eltern Wallet / NFC";
+    $("walletName").textContent = "Eltern-ID • SmartGen";
+    $("walletSub").textContent = "Orange Neon Edition (Demo)";
+    $("walletGrid").innerHTML = `
+      <div class="kv"><b>Elternteil</b><span>Parent One</span></div>
+      <div class="kv"><b>Kind</b><span>Amine B.</span></div>
+      <div class="kv"><b>Vertrag</b><span>Premium</span></div>
+      <div class="kv"><b>Status</b><span>Aktiv</span></div>
+    `;
+  }
+}
 function closeWallet(){ $("walletModal").style.display="none"; }
-function simulateNFC(){ toast("📶 <b>NFC Tap OK</b><br>Zugang/Check-in registriert (Demo)."); }
+function simulateNFC(){
+  toast(`📶 <b>NFC Tap OK</b><br>${walletMode==="player" ? "Spieler" : "Eltern"} Check-in registriert (Demo).`);
+}
 
 /* init */
 setStatusUI("Aktiv");
 setMode("player");
+renderPlayerSlots();
 </script>
 </body>
 </html>
