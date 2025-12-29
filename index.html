@@ -1,1254 +1,160 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SmartGen Fussball Akademie – App Prototype</title>
-  <meta name="theme-color" content="#070a10" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartGen – Spieler & Eltern Dashboard</title>
 
-  <style>
-    :root{
-      --bg:#070a10;
-      --panel:#0b1220;
-      --panel2:#0a0f1a;
-      --text:#eaf2ff;
-      --muted:#98a8c4;
-      --line:rgba(255,255,255,.10);
-
-      --ok:#25d07f;
-      --warn:#ffb020;
-      --danger:#ff4d4d;
-
-      --accent:#ff7a18;
-      --accent2:#ffb14a;
-
-      --radius:18px;
-      --shadow: 0 22px 70px rgba(0,0,0,.55);
-      --shadow2: 0 10px 30px rgba(0,0,0,.45);
-      --glow: 0 0 0 1px rgba(255,122,24,.18), 0 0 40px rgba(255,122,24,.10);
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 10% -10%, rgba(255,122,24,.10), transparent 60%),
-        radial-gradient(900px 520px at 100% 10%, rgba(255,122,24,.06), transparent 62%),
-        radial-gradient(900px 520px at 50% 120%, rgba(255,255,255,.05), transparent 60%),
-        linear-gradient(180deg, #070a0f 0%, var(--bg) 50%, #070a0f 100%);
-      position:relative;
-      overflow-x:hidden;
-    }
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.06) 0 6px, transparent 6px 12px),
-        linear-gradient(225deg, rgba(255,255,255,.04) 0 6px, transparent 6px 12px);
-      background-size: 18px 18px;
-      opacity:.22;
-      mix-blend-mode: overlay;
-      pointer-events:none;
-      filter: blur(.2px);
-    }
-    body::after{
-      content:"";
-      position:fixed; inset:-40px;
-      background: radial-gradient(900px 420px at 50% 20%, transparent 40%, rgba(0,0,0,.55) 100%);
-      pointer-events:none;
-      opacity:.6;
-    }
-
-    .wrap{max-width:1100px; margin:0 auto; padding:22px 16px 70px; position:relative; z-index:1;}
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom:14px;
-      flex-wrap:wrap;
-    }
-    .brand{display:flex; align-items:center; gap:12px;}
-    .logoDot{
-      width:44px; height:44px; border-radius:16px;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
-        linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.55));
-      box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 18px 55px rgba(255,122,24,.14);
-    }
-    .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
-    .brand p{margin:2px 0 0; color:var(--muted); font-size:12px}
-
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      border:1px solid var(--line);
-      padding:10px 12px; border-radius:999px;
-      background: rgba(16,24,36,.55);
-      box-shadow: 0 8px 28px rgba(0,0,0,.25);
-      font-size:12px; color:var(--muted);
-    }
-    .pill b{color:var(--text); font-weight:800}
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:var(--ok);
-      box-shadow: 0 0 0 5px rgba(37,208,127,.12);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    .card{
-      background: linear-gradient(180deg, rgba(16,24,36,.82), rgba(10,14,20,.68));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    /* ===== Header / Spieler ===== */
-    .idHeader{
-      position:relative;
-      padding:16px;
-      background:
-        radial-gradient(700px 260px at 10% 0%, rgba(255,122,24,.14), transparent 62%),
-        radial-gradient(700px 260px at 90% 20%, rgba(255,177,74,.08), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
-      border-bottom:1px solid var(--line);
-    }
-    .idHeader::after{
-      content:"";
-      position:absolute; inset:-4px;
-      pointer-events:none;
-      background: radial-gradient(520px 240px at 16% 14%, rgba(255,122,24,.18), transparent 62%);
-      opacity:.8;
-      filter: blur(10px);
-    }
-    .idRow{position:relative; display:flex; gap:14px; align-items:flex-start; z-index:1;}
-    .avatar{
-      width:82px;height:82px;border-radius:20px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.16);
-      display:grid; place-items:center;
-      box-shadow: 0 14px 40px rgba(0,0,0,.45);
-      flex:0 0 auto;
-      position:relative;
-      overflow:hidden;
-    }
-    .avatar::before{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(120px 90px at 30% 20%, rgba(255,255,255,.10), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .avatar svg{width:54px; height:54px; opacity:.95; filter: drop-shadow(0 12px 18px rgba(0,0,0,.35));}
-
-    .idInfo{flex:1; min-width:220px}
-    .nameLine{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;}
-    .name{font-size:18px; margin:0; letter-spacing:.4px;}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px; border-radius:999px;
-      border:1px solid rgba(255,122,24,.24);
-      background: rgba(255,122,24,.08);
-      color:#ffd9b0; font-size:12px;
-      box-shadow: 0 10px 30px rgba(255,122,24,.10);
-      white-space:nowrap;
-      font-weight:1000;
-    }
-    .muted{color:var(--muted); font-size:12px; line-height:1.45}
-
-    .miniChip{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
-    .chip{
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(16,24,36,.55);
-      color:var(--muted);
-      font-size:12px;
-    }
-    .chip b{color:var(--text); font-weight:1000}
-
-    /* große Buttons (Kids) */
-    .idControls{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
-    .btn{
-      border:1px solid var(--line);
-      background: rgba(16,24,36,.70);
-      color: var(--text);
-      padding:12px 14px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:1000;
-      font-size:13px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,122,24,.35)}
-    .btn:active{transform: translateY(0px) scale(.99)}
-    .btn.primary{
-      border-color: rgba(255,122,24,.42);
-      background: linear-gradient(135deg, rgba(255,122,24,.20), rgba(255,177,74,.08));
-      box-shadow: 0 16px 40px rgba(255,122,24,.12);
-    }
-    .btn .emoji{font-size:18px; line-height:1}
-
-    /* ===== Sections ===== */
-    .section{padding:16px;}
-    .section h2{
-      margin:0 0 10px 0;
-      font-size:14px;
-      letter-spacing:.4px;
-      color:#dfe9ff;
-    }
-
-    .list{display:flex; flex-direction:column; gap:10px;}
-    .row{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background: rgba(16,24,36,.40);
-    }
-    .row .left{display:flex; gap:12px; align-items:center}
-    .icon{
-      width:44px;height:44px;border-radius:16px;
-      display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color:#ffd9b0;
-      font-size:22px; /* groß */
-      font-weight:1000;
-    }
-    .rowTitle{margin:0; font-weight:1000; font-size:13px}
-    .rowSub{margin:2px 0 0; color:var(--muted); font-size:12px}
-
-    .tag{
-      font-size:12px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: var(--muted);
-      white-space:nowrap;
-      font-weight:1000;
-    }
-    .tag.ok{border-color: rgba(37,208,127,.35); color:#bff4de; background: rgba(37,208,127,.10)}
-    .tag.warn{border-color: rgba(255,176,32,.35); color:#ffe2b8; background: rgba(255,176,32,.10)}
-    .tag.danger{border-color: rgba(255,77,77,.35); color:#ffd0d0; background: rgba(255,77,77,.10)}
-
-    /* ===== Slots ===== */
-    .slotsGrid{display:grid; grid-template-columns:1fr; gap:10px;}
-    .slot{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background: rgba(16,24,36,.40);
-    }
-    .slot strong{font-size:13px; font-weight:1000}
-    .slot small{display:block; color:var(--muted); margin-top:4px; font-size:12px}
-    .slot .right{display:flex; align-items:center; gap:10px}
-
-    .slotBtn{
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,122,24,.40);
-      background: rgba(255,122,24,.10);
-      color:#ffd9b0;
-      cursor:pointer;
-      font-weight:1000;
-      font-size:13px;
-      display:inline-flex; align-items:center; gap:8px;
-      box-shadow: 0 14px 34px rgba(0,0,0,.25);
-    }
-    .slotBtn:disabled{
-      opacity:.45;
-      cursor:not-allowed;
-      border-color: rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-      box-shadow:none;
-    }
-
-    /* ===== Modal ===== */
-    .overlay{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.58);
-      display:none;
-      align-items:center; justify-content:center;
-      padding:16px;
-      z-index:99;
-    }
-    .modal{
-      width:min(680px, 100%);
-      border-radius:18px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(16,24,36,.94), rgba(10,14,20,.92));
-      box-shadow: 0 30px 90px rgba(0,0,0,.60);
-      overflow:hidden;
-      position:relative;
-    }
-    .modalHead{
-      padding:14px 16px;
-      border-bottom:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .modalHead b{letter-spacing:.3px; font-weight:1000}
-    .x{
-      width:42px;height:42px;border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.15);
-      color:var(--text);
-      cursor:pointer;
-      font-size:18px;
-      font-weight:1000;
-    }
-    .modalBody{padding:16px}
-    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
-    .field label{font-size:12px; color:var(--muted); font-weight:1000}
-    input, select, textarea{
-      background: rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.14);
-      color: var(--text);
-      padding:12px 12px;
-      border-radius:14px;
-      outline:none;
-      font-weight:800;
-    }
-    textarea{min-height:110px; resize:vertical}
-    .modalActions{
-      display:flex; gap:10px; justify-content:flex-end;
-      padding:14px 16px;
-      border-top:1px solid var(--line);
-      flex-wrap:wrap;
-    }
-
-    /* ===== SmartGen ID (NFC) ===== */
-    .idCard{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(620px 240px at 20% 10%, rgba(255,122,24,.14), transparent 60%),
-        radial-gradient(520px 220px at 90% 20%, rgba(255,177,74,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.08));
-      padding:14px;
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .idCard::before{
-      content:"";
-      position:absolute; inset:-60px;
-      background:
-        radial-gradient(circle, rgba(255,255,255,.08) 2px, transparent 3px) 0 0/18px 18px;
-      opacity:.12;
-      pointer-events:none;
-      transform: rotate(8deg);
-    }
-    .idCardTop{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      position:relative;
-    }
-    .idCardTop .title{font-weight:1100; letter-spacing:.4px;}
-    .nfcPill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,122,24,.34);
-      background: rgba(255,122,24,.10);
-      box-shadow: var(--glow);
-      font-weight:1000;
-      font-size:12px;
-      color:#ffd9b0;
-      user-select:none;
-    }
-    .nfcIcon{
-      width:12px; height:12px; border-radius:50%;
-      background: rgba(255,122,24,.95);
-      box-shadow: 0 0 0 5px rgba(255,122,24,.14);
-      animation: pulse 1.5s infinite ease-in-out;
-    }
-    @keyframes pulse{
-      0%{transform:scale(.9); opacity:.7}
-      50%{transform:scale(1.05); opacity:1}
-      100%{transform:scale(.9); opacity:.7}
-    }
-    .idCardMid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: 1fr 120px;
-      gap:12px;
-      position:relative;
-    }
-    .idKV{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    .kv{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.12);
-      border-radius:14px;
-      padding:10px;
-    }
-    .kv .k{color:var(--muted); font-size:11px; font-weight:1000}
-    .kv .v{margin-top:4px; font-weight:1100; font-size:13px}
-    .qr{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius:14px;
-      padding:10px;
-      display:grid; place-items:center;
-    }
-    .qrBox{
-      width:92px; height:92px;
-      border-radius:10px;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px) 0 0/10px 10px,
-        linear-gradient(0deg, rgba(255,255,255,.12) 1px, transparent 1px) 0 0/10px 10px;
-      position:relative;
-      overflow:hidden;
-    }
-    .qrBox::after{
-      content:"SG";
-      position:absolute; inset:0;
-      display:grid; place-items:center;
-      font-weight:1200;
-      color: rgba(255,122,24,.85);
-      letter-spacing:.6px;
-      text-shadow: 0 14px 30px rgba(0,0,0,.45);
-    }
-    .idCardBottom{
-      margin-top:12px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      position:relative;
-    }
-    .miniBtn{
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-      font-weight:1100;
-      cursor:pointer;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .miniBtn.primary{
-      border-color: rgba(255,122,24,.42);
-      background: rgba(255,122,24,.10);
-      color:#ffd9b0;
-      box-shadow: var(--glow);
-    }
-    .miniBtn .emoji{font-size:18px}
-
-    /* ===== KI Coach ===== */
-    .aiBox{
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      background: rgba(0,0,0,.16);
-      padding:12px;
-    }
-    .aiHeader{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:10px;
-      flex-wrap:wrap;
-    }
-    .aiTitle{
-      display:flex; align-items:center; gap:10px;
-      font-weight:1200;
-      letter-spacing:.3px;
-    }
-    .aiPill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,122,24,.28);
-      background: rgba(255,122,24,.08);
-      color:#ffd9b0;
-      font-weight:1100;
-      font-size:12px;
-    }
-    .aiMsg{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(16,24,36,.40);
-      line-height:1.45;
-      font-weight:850;
-    }
-    .aiMsg .small{display:block; color:var(--muted); font-weight:800; margin-top:6px; font-size:12px}
-    .split{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media (max-width: 720px){
-      .split{grid-template-columns:1fr}
-    }
-
-    /* Toast */
-    .toast{
-      position: fixed;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(16,24,36,.92);
-      border: 1px solid var(--line);
-      padding: 12px 14px;
-      border-radius: 14px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      display:none;
-      z-index:120;
-      font-size:12px;
-      color: var(--muted);
-      max-width: 92vw;
-    }
-    .toast b{color:var(--text)}
-
-    .note{
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-  </style>
+<style>
+:root{
+ --bg:#070a10; --panel:#0c1220; --text:#eaf2ff; --muted:#9fb0c8;
+ --line:rgba(255,255,255,.12);
+ --accent:#ff7a18;
+ --ok:#25d07f;
+ --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:system-ui;color:var(--text);
+ background:linear-gradient(180deg,#070a10,#0b1220);
+}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+.card{
+ background:rgba(16,24,36,.75);
+ border:1px solid var(--line);
+ border-radius:var(--radius);
+ padding:16px;
+ margin-bottom:16px;
+}
+h2{margin:0 0 10px 0;font-size:16px}
+.btn{
+ padding:12px 14px;border-radius:14px;
+ border:1px solid var(--line);
+ background:rgba(0,0,0,.25);
+ color:white;font-weight:800;
+ cursor:pointer;
+}
+.btn.primary{
+ background:rgba(255,122,24,.15);
+ border-color:var(--accent);
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.hidden{display:none}
+.input{
+ padding:12px;border-radius:12px;
+ border:1px solid var(--line);
+ background:rgba(0,0,0,.25);
+ color:white;width:100%;
+}
+.icon{font-size:22px;margin-right:6px}
+.row{display:flex;align-items:center;justify-content:space-between;margin:8px 0}
+.tag{
+ padding:6px 12px;border-radius:999px;
+ background:rgba(255,255,255,.08);
+ font-size:12px;font-weight:700;
+}
+.ok{background:rgba(37,208,127,.15)}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logoDot"></div>
-        <div>
-          <h1>SmartGen Fussball Akademie</h1>
-          <p>Prototype • Spieler Dashboard • Slots • SmartGen ID • KI Coach</p>
-        </div>
-      </div>
+<div class="wrap">
 
-      <div class="pill" title="Live-Status">
-        <span class="dot" id="statusDot"></span>
-        Status: <b id="statusLabel">Aktiv</b>
-      </div>
-    </div>
-
-    <div class="grid">
-      <!-- LEFT -->
-      <div class="card">
-        <div class="idHeader">
-          <div class="idRow">
-            <div class="avatar" title="Fußball Avatar">
-              <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-                <path d="M32 59c14.91 0 27-12.09 27-27S46.91 5 32 5 5 17.09 5 32s12.09 27 27 27Z" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
-                <path d="M32 19l8 5-3 9H27l-3-9 8-5Z" fill="rgba(255,122,24,.95)"/>
-                <path d="M24 24l-6 4 2 9 7-4m18-9 6 4-2 9-7-4M27 33l-7 4 4 7 8-3m5-8 7 4-4 7-8-3" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-
-            <div class="idInfo">
-              <div class="nameLine">
-                <h2 class="name">Spieler: <span id="memberName">Amine B.</span></h2>
-                <span class="badge">SMARTGEN</span>
-              </div>
-
-              <div class="muted">
-                <span id="memberMeta">U15 • Technik & Kognition</span> •
-                Trainer: <b id="trainerLabel">Salem</b>
-              </div>
-
-              <div class="miniChip">
-                <div class="chip"><b>Level:</b> <span id="sportLevel">Fortgeschritten</span></div>
-                <div class="chip"><b>Abo:</b> <span id="subStatus">Aktiv</span></div>
-                <div class="chip"><b>Nächster Termin:</b> <span id="nextSession">Mi 18:00</span></div>
-              </div>
-
-              <div class="idControls">
-                <button class="btn primary" id="btnSmartID"><span class="emoji">🪪</span> ID SmartGen</button>
-                <button class="btn" id="btnAI"><span class="emoji">🤖</span> KI Coach</button>
-                <button class="btn" id="btnBook"><span class="emoji">📅</span> Slot</button>
-                <button class="btn" id="btnStatus"><span class="emoji">⚡</span> Status</button>
-                <button class="btn" id="btnSwapTrainer"><span class="emoji">👨‍🏫</span> Trainer</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Heute Fokus</h2>
-          <div class="list">
-            <div class="row">
-              <div class="left">
-                <div class="icon">⚽️</div>
-                <div>
-                  <p class="rowTitle">Technik</p>
-                  <p class="rowSub">Erster Kontakt • Dribbling • Tempo</p>
-                </div>
-              </div>
-              <span class="tag ok">Ready</span>
-            </div>
-
-            <div class="row">
-              <div class="left">
-                <div class="icon">🧠</div>
-                <div>
-                  <p class="rowTitle">Kognition</p>
-                  <p class="rowSub">Scanning • Entscheidung • Reaktion</p>
-                </div>
-              </div>
-              <span class="tag warn">Slots frei</span>
-            </div>
-
-            <div class="row">
-              <div class="left">
-                <div class="icon">📈</div>
-                <div>
-                  <p class="rowTitle">Progress</p>
-                  <p class="rowSub">Anwesenheit + Score (Demo)</p>
-                </div>
-              </div>
-              <span class="tag" id="progressTag">Score: 82</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT -->
-      <div class="card">
-        <div class="section">
-          <h2>Offene Slots</h2>
-          <p class="muted" style="margin-top:-2px">Tippe auf <b>Jetzt buchen</b>.</p>
-          <div class="slotsGrid" id="slotsGrid"></div>
-        </div>
-
-        <div class="section" style="border-top:1px solid var(--line)">
-          <h2>KI Coach (Preview)</h2>
-
-          <div class="aiBox">
-            <div class="aiHeader">
-              <div class="aiTitle">
-                <span style="font-size:22px">🤖</span>
-                <span>SmartGen Coach</span>
-              </div>
-              <span class="aiPill" id="aiMoodPill">Modus: Fokus</span>
-            </div>
-
-            <div class="aiMsg" id="aiMessage">
-              Lade KI Coach…
-              <span class="small">Tipp: Öffne “KI Coach” für Ernährungsplan.</span>
-            </div>
-
-            <div class="split" style="margin-top:10px">
-              <button class="btn primary" id="btnAIOpen"><span class="emoji">🍽️</span> Ernährung</button>
-              <button class="btn" id="btnAIMotivate"><span class="emoji">🔥</span> Motivation</button>
-            </div>
-
-            <div class="note">
-              Hinweis: Demo-„KI“ (Logik im Browser). Keine medizinische Beratung.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- MODE TOGGLE -->
+<div class="card">
+ <div class="row">
+  <div><b>Ansicht wechseln</b></div>
+  <div>
+   <button class="btn primary" onclick="setMode('player')">⚽ Spieler</button>
+   <button class="btn" onclick="openPin()">👨‍👩‍👦 Eltern</button>
   </div>
+ </div>
+</div>
 
-  <!-- Modal: Booking -->
-  <div class="overlay" id="bookingOverlay">
-    <div class="modal">
-      <div class="modalHead">
-        <b id="bookingTitle">Slot buchen</b>
-        <button class="x" id="bookingClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <p class="muted" id="bookingInfo" style="margin:0 0 10px 0"></p>
+<!-- SPIELER DASHBOARD -->
+<div id="playerDash" class="card">
+ <h2>⚽ Spieler Dashboard</h2>
+ <div class="row"><b>Name</b><span>Amine B.</span></div>
+ <div class="row"><b>Alter</b><span>13 Jahre</span></div>
+ <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
+ <div class="row"><b>Nächster Termin</b><span>Mi 18:00</span></div>
+ <div class="row"><b>Status</b><span class="tag ok">Aktiv</span></div>
+</div>
 
-        <div class="field">
-          <label>Trainingstyp</label>
-          <select id="bookType">
-            <option>Privattraining (Technik)</option>
-            <option>Kognitives Training</option>
-            <option>Athletik (Schnelligkeit)</option>
-            <option>Matchanalyse</option>
-          </select>
-        </div>
+<!-- ELTERN DASHBOARD -->
+<div id="parentDash" class="hidden">
 
-        <div class="field">
-          <label>Notiz (optional)</label>
-          <input id="bookNote" placeholder="z.B. Fokus: erster Kontakt / schwacher Fuß" />
-        </div>
-      </div>
-      <div class="modalActions">
-        <button class="btn" id="btnCancelBook"><span class="emoji">↩️</span> Zurück</button>
-        <button class="btn primary" id="btnConfirmBook"><span class="emoji">✅</span> Bestätigen</button>
-      </div>
-    </div>
+ <!-- KIND INFO -->
+ <div class="card">
+  <h2>👦 Kind – Übersicht</h2>
+  <div class="row"><b>Name</b><span>Amine B.</span></div>
+  <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
+  <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
+  <div class="row"><b>Anwesenheit</b><span>84 %</span></div>
+ </div>
+
+ <!-- KOMMUNIKATION -->
+ <div class="card">
+  <h2>💬 Kommunikation mit Trainer</h2>
+  <div class="row"><b>Trainer</b><span>Salem</span></div>
+  <input class="input" placeholder="Nachricht an Trainer schreiben…" />
+  <button class="btn primary" style="margin-top:8px">📨 Senden</button>
+ </div>
+
+ <!-- ELTERN FITNESS -->
+ <div class="card">
+  <h2>🏋️ Eltern-Fitness (außer Kinderzeiten)</h2>
+  <div class="row">
+   <span>Mo–Fr 09:00–14:00</span>
+   <button class="btn">Buchen</button>
   </div>
-
-  <!-- Modal: SmartGen ID (NFC) -->
-  <div class="overlay" id="idOverlay">
-    <div class="modal">
-      <div class="modalHead">
-        <b>SmartGen ID</b>
-        <button class="x" id="idClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="idCard">
-          <div class="idCardTop">
-            <div class="title">Mitgliedskarte • <span id="idMemberName">Amine B.</span></div>
-            <div class="nfcPill" id="nfcTap">
-              <span class="nfcIcon"></span> NFC bereit
-            </div>
-          </div>
-
-          <div class="idCardMid">
-            <div class="idKV">
-              <div class="kv">
-                <div class="k">Mitglied-ID</div>
-                <div class="v" id="idNumber">SG-U15-2048</div>
-              </div>
-              <div class="kv">
-                <div class="k">Status</div>
-                <div class="v" id="idStatus">Aktiv</div>
-              </div>
-              <div class="kv">
-                <div class="k">Trainer</div>
-                <div class="v" id="idTrainer">Salem</div>
-              </div>
-              <div class="kv">
-                <div class="k">Check-in</div>
-                <div class="v">NFC / QR</div>
-              </div>
-            </div>
-
-            <div class="qr" title="QR (Demo)">
-              <div class="qrBox"></div>
-              <div class="muted" style="margin-top:8px; font-size:11px; font-weight:1000;">QR Demo</div>
-            </div>
-          </div>
-
-          <div class="idCardBottom">
-            <button class="miniBtn primary" id="btnTapNFC"><span class="emoji">📳</span> NFC Check-in</button>
-            <button class="miniBtn" id="btnAddWallet"><span class="emoji">➕</span> Wallet (Demo)</button>
-          </div>
-        </div>
-
-        <p class="muted" style="margin:12px 0 0">
-          Demo: In echt würde hier Apple Wallet / Google Wallet Pass erzeugt werden.
-        </p>
-      </div>
-    </div>
+  <div class="row">
+   <span>Sa 18:30–20:00</span>
+   <button class="btn">Buchen</button>
   </div>
-
-  <!-- Modal: KI Coach -->
-  <div class="overlay" id="aiOverlay">
-    <div class="modal">
-      <div class="modalHead">
-        <b>KI Coach – Motivation & Ernährung</b>
-        <button class="x" id="aiClose">✕</button>
-      </div>
-
-      <div class="modalBody">
-        <div class="aiBox" style="margin-bottom:12px">
-          <div class="aiHeader">
-            <div class="aiTitle">
-              <span style="font-size:22px">🔥</span>
-              <span>Motivation & Mental</span>
-            </div>
-            <span class="aiPill" id="aiMoodPill2">Modus: Fokus</span>
-          </div>
-
-          <div class="aiMsg" id="aiMessageBig">…</div>
-
-          <div class="split" style="margin-top:10px">
-            <button class="btn primary" id="btnNewMotivation"><span class="emoji">🔁</span> Neuer Satz</button>
-            <button class="btn" id="btnBreath"><span class="emoji">🫁</span> 20s Fokus</button>
-          </div>
-
-          <div class="note">
-            Mental-Tipp: 4 Sekunden einatmen • 4 halten • 4 ausatmen • 4 halten (4 Runden).
-          </div>
-        </div>
-
-        <div class="aiBox">
-          <div class="aiHeader">
-            <div class="aiTitle">
-              <span style="font-size:22px">🍽️</span>
-              <span>Ernährungsplan Generator</span>
-            </div>
-            <span class="aiPill">Smart Plan</span>
-          </div>
-
-          <div class="split">
-            <div class="field">
-              <label>Alter</label>
-              <select id="nutAge">
-                <option value="8-12">8–12 Jahre</option>
-                <option value="13-16" selected>13–16 Jahre</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Ziel</label>
-              <select id="nutGoal">
-                <option value="energie" selected>Mehr Energie</option>
-                <option value="leistung">Leistung & Fokus</option>
-                <option value="regeneration">Regeneration</option>
-                <option value="leicht">Leicht & gesund</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Tag</label>
-              <select id="nutDay">
-                <option value="training" selected>Trainingstag</option>
-                <option value="match">Spieltag</option>
-                <option value="rest">Ruhetag</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Hinweis (optional)</label>
-              <input id="nutNote" placeholder="z.B. keine Nüsse / Laktose / vegetarisch" />
-            </div>
-          </div>
-
-          <div class="split" style="margin-top:10px">
-            <button class="btn primary" id="btnMakePlan"><span class="emoji">⚡</span> Plan erstellen</button>
-            <button class="btn" id="btnCopyPlan"><span class="emoji">📋</span> Kopieren</button>
-          </div>
-
-          <div class="field" style="margin-top:10px">
-            <label>Plan (Demo)</label>
-            <textarea id="nutPlan" readonly></textarea>
-          </div>
-
-          <div class="note">
-            Hinweis: Allgemeine Empfehlungen. Bei Allergien/Erkrankungen bitte Eltern/Arzt/Ernährungsberatung.
-          </div>
-        </div>
-      </div>
-
-      <div class="modalActions">
-        <button class="btn" id="aiClose2"><span class="emoji">✅</span> Fertig</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"></div>
-
-  <script>
-    // ===== Data =====
-    const member = {
-      name: "Amine B.",
-      meta: "U15 • Technik & Kognition",
-      sportLevel: "Fortgeschritten",
-      subStatus: "Aktiv",
-      nextSession: "Mi 18:00",
-      trainer: "Salem",
-      status: "Aktiv",     // Aktiv | Pause | Verletzung
-      score: 82,           // 0-100
-      attendance: 84       // % Demo
-    };
-    const trainers = ["Salem", "Güni", "Tobi"];
-
-    const slots = [
-      { id: 1, day: "Di", time: "17:00", title: "Privattraining", desc: "Technik • Ballgefühl", open: true },
-      { id: 2, day: "Mi", time: "19:00", title: "Kognitives Training", desc: "Reaktion • Entscheidung", open: true },
-      { id: 3, day: "Do", time: "18:30", title: "Athletik", desc: "Schnelligkeit • Stabilität", open: false },
-      { id: 4, day: "Sa", time: "10:30", title: "Matchanalyse", desc: "Mini-Report • KPI", open: true }
-    ];
-
-    // ===== Helpers =====
-    const $ = (id) => document.getElementById(id);
-
-    function toast(msg){
-      const el = $("toast");
-      el.innerHTML = msg;
-      el.style.display = "block";
-      clearTimeout(window.__t);
-      window.__t = setTimeout(()=> el.style.display="none", 2600);
-    }
-
-    function setStatusUI(status){
-      $("statusLabel").textContent = status;
-      const dot = $("statusDot");
-
-      dot.style.background = status === "Aktiv" ? "var(--ok)" : (status === "Pause" ? "var(--warn)" : "var(--danger)");
-      dot.style.boxShadow = status === "Aktiv"
-        ? "0 0 0 5px rgba(37,208,127,.12)"
-        : status === "Pause"
-          ? "0 0 0 5px rgba(255,176,32,.12)"
-          : "0 0 0 5px rgba(255,77,77,.12)";
-    }
-
-    // ===== Render =====
-    function renderMember(){
-      $("memberName").textContent = member.name;
-      $("memberMeta").textContent = member.meta;
-      $("sportLevel").textContent = member.sportLevel;
-      $("subStatus").textContent = member.subStatus;
-      $("nextSession").textContent = member.nextSession;
-      $("trainerLabel").textContent = member.trainer;
-      $("progressTag").textContent = "Score: " + member.score;
-
-      // ID modal
-      $("idMemberName").textContent = member.name;
-      $("idTrainer").textContent = member.trainer;
-      $("idStatus").textContent = member.status;
-
-      setStatusUI(member.status);
-
-      // Update KI preview
-      updateAIMessage();
-    }
-
-    function renderSlots(){
-      const grid = $("slotsGrid");
-      grid.innerHTML = "";
-
-      slots.forEach(s => {
-        const div = document.createElement("div");
-        div.className = "slot";
-        div.innerHTML = `
-          <div>
-            <strong>${s.day} • ${s.time} — ${s.title}</strong>
-            <small>${s.desc}</small>
-          </div>
-          <div class="right">
-            <span class="tag ${s.open ? "warn" : ""}">${s.open ? "frei" : "belegt"}</span>
-            <button class="slotBtn" ${s.open ? "" : "disabled"} data-id="${s.id}">
-              <span>🚀</span> Jetzt buchen
-            </button>
-          </div>
-        `;
-        grid.appendChild(div);
-      });
-
-      grid.querySelectorAll(".slotBtn").forEach(btn=>{
-        btn.addEventListener("click", () => openBooking(parseInt(btn.dataset.id,10)));
-      });
-    }
-
-    // ===== Booking Modal =====
-    let selectedSlot = null;
-
-    function openBooking(slotId){
-      selectedSlot = slots.find(s=>s.id===slotId);
-      if(!selectedSlot) return;
-
-      $("bookingTitle").textContent = `Slot buchen: ${selectedSlot.day} ${selectedSlot.time}`;
-      $("bookingInfo").innerHTML = `
-        <b>${selectedSlot.title}</b> – ${selectedSlot.desc}<br/>
-        Trainer: <b>${member.trainer}</b> • Status: <b>${member.status}</b>
-      `;
-      $("bookingOverlay").style.display = "flex";
-    }
-
-    function closeBooking(){
-      $("bookingOverlay").style.display = "none";
-      $("bookNote").value = "";
-      selectedSlot = null;
-    }
-
-    $("bookingClose").addEventListener("click", closeBooking);
-    $("btnCancelBook").addEventListener("click", closeBooking);
-
-    $("btnConfirmBook").addEventListener("click", () => {
-      if(!selectedSlot) return;
-
-      const type = $("bookType").value;
-      const note = $("bookNote").value.trim();
-
-      selectedSlot.open = false;
-      renderSlots();
-      closeBooking();
-
-      toast(`✅ <b>Slot bestätigt</b><br>${type} • ${selectedSlot.day} ${selectedSlot.time}${note ? "<br>📝 " + note : ""}`);
-    });
-
-    // ===== SmartGen ID Modal =====
-    function openID(){
-      $("idOverlay").style.display = "flex";
-      toast(`🪪 <b>ID geöffnet</b> • NFC bereit`);
-    }
-    function closeID(){ $("idOverlay").style.display = "none"; }
-
-    $("btnSmartID").addEventListener("click", openID);
-    $("idClose").addEventListener("click", closeID);
-
-    $("btnTapNFC").addEventListener("click", () => {
-      toast(`📳 <b>NFC Check-in</b><br>✅ Anwesenheit registriert (Demo)`);
-      // Demo: Score + Attendance leicht erhöhen
-      member.score = Math.min(100, member.score + 1);
-      member.attendance = Math.min(100, member.attendance + 1);
-      renderMember();
-    });
-
-    $("btnAddWallet").addEventListener("click", () => {
-      toast(`➕ <b>Wallet</b><br>Apple/Google Wallet Pass (Demo – später echtes Pass-File)`);
-    });
-
-    // ===== Top Buttons =====
-    $("btnBook").addEventListener("click", () => {
-      const firstOpen = slots.find(s=>s.open);
-      if(!firstOpen){ toast("⚠️ Keine freien Slots aktuell."); return; }
-      openBooking(firstOpen.id);
-    });
-
-    $("btnStatus").addEventListener("click", () => {
-      const order = ["Aktiv","Pause","Verletzung"];
-      const idx = order.indexOf(member.status);
-      member.status = order[(idx+1) % order.length];
-      renderMember();
-      toast(`⚡ Status: <b>${member.status}</b>`);
-    });
-
-    $("btnSwapTrainer").addEventListener("click", () => {
-      const idx = trainers.indexOf(member.trainer);
-      member.trainer = trainers[(idx+1) % trainers.length];
-      renderMember();
-      toast(`👨‍🏫 Trainer: <b>${member.trainer}</b>`);
-    });
-
-    // ===== KI Coach Logic =====
-    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-    function getAIMode(){
-      if(member.status === "Verletzung") return "Regeneration";
-      if(member.status === "Pause") return "Reset";
-      if(member.score >= 88 && member.attendance >= 85) return "Flow";
-      if(member.score < 75) return "Basics";
-      if(member.attendance < 75) return "Disziplin";
-      return "Fokus";
-    }
-
-    function buildMotivation(){
-      const mode = getAIMode();
-
-      const base = {
-        "Flow": [
-          `🔥 Du bist im Flow, ${member.name.split(" ")[0]}! Heute: sauber + schnell.`,
-          `🏆 Top-Form! Kleine Details entscheiden: erster Kontakt → direkt nach vorne.`,
-          `⚡ Stark! 1% besser: Kopf hoch, 2 Scans vor Ballannahme.`
-        ],
-        "Fokus": [
-          `🎯 Fokus-Mode: 3 einfache Ziele heute – Kontrolle, Tempo, Entscheidung.`,
-          `🧠 SmartGen Mindset: erst schauen, dann handeln. Ruhig bleiben.`,
-          `✅ Heute zählt Qualität: lieber sauber als hektisch.`
-        ],
-        "Basics": [
-          `🧱 Basics gewinnen Spiele: erster Kontakt + Ball nah am Fuß.`,
-          `⚽ Mini-Ziel: 20 saubere Annahmen hintereinander. Dann Tempo!`,
-          `💪 Step-by-step: erst Technik, dann Speed. Du packst das.`
-        ],
-        "Disziplin": [
-          `📅 Konstanz macht Champions: 2 Trainings diese Woche fix einplanen.`,
-          `✅ Jede Anwesenheit ist ein Upgrade. Heute ist dein Comeback.`,
-          `🔥 Kleiner Plan: Schlaf + Wasser + Training – dann kommt der Score.`
-        ],
-        "Reset": [
-          `🌙 Reset-Mode: heute ruhig, sauber, ohne Stress. Qualität vor Quantität.`,
-          `🧘 Fokus: Atmung 4-4-4-4 und dann 10 Minuten Technik locker.`,
-          `✅ Pause heißt nicht schlecht: du kommst stärker zurück.`
-        ],
-        "Regeneration": [
-          `🩹 Regeneration-Mode: leicht bewegen, Mobility, keine Schmerzen provozieren.`,
-          `🧠 Mental stark: Geduld ist ein Skill. Heute gewinnt dein Kopf.`,
-          `✅ Ziel: sauberer Rhythmus – Schlaf, Wasser, leichtes Training.`
-        ],
-      };
-
-      const mentalTip = {
-        "Flow": "Mental: Stell dir 3 perfekte Aktionen vor (Visualisierung).",
-        "Fokus": "Mental: 1 Aufgabe pro Drill – nicht alles gleichzeitig.",
-        "Basics": "Mental: Fehler = Feedback. Weiter machen, nicht ärgern.",
-        "Disziplin": "Mental: Kalender blocken wie Schule. Dann läuft’s.",
-        "Reset": "Mental: Druck raus. Du trainierst, um besser zu werden.",
-        "Regeneration": "Mental: Heilung ist Training. Slow = smart."
-      };
-
-      const s = pick(base[mode] || base["Fokus"]);
-      return `${s}<span class="small">${mentalTip[mode] || mentalTip["Fokus"]}</span>`;
-    }
-
-    function updateAIMessage(){
-      const mode = getAIMode();
-      $("aiMoodPill").textContent = "Modus: " + mode;
-      $("aiMoodPill2").textContent = "Modus: " + mode;
-
-      const msg = buildMotivation();
-      $("aiMessage").innerHTML = msg;
-      $("aiMessageBig").innerHTML = msg;
-    }
-
-    // ===== KI Modal =====
-    function openAI(){
-      $("aiOverlay").style.display = "flex";
-      updateAIMessage();
-      toast(`🤖 <b>KI Coach</b> geöffnet`);
-    }
-    function closeAI(){ $("aiOverlay").style.display = "none"; }
-
-    $("btnAI").addEventListener("click", openAI);
-    $("btnAIOpen").addEventListener("click", openAI);
-    $("aiClose").addEventListener("click", closeAI);
-    $("aiClose2").addEventListener("click", closeAI);
-
-    $("btnAIMotivate").addEventListener("click", ()=> {
-      updateAIMessage();
-      toast(`🔥 Neuer Motivationssatz`);
-    });
-    $("btnNewMotivation").addEventListener("click", ()=> {
-      updateAIMessage();
-      toast(`🔁 Motivation aktualisiert`);
-    });
-
-    $("btnBreath").addEventListener("click", ()=> {
-      toast(`🫁 20 Sekunden Fokus: 4 ein • 4 halten • 4 aus • 4 halten`);
-    });
-
-    // ===== Nutrition Plan Generator =====
-    function planFor(age, goal, day){
-      const isYoung = age === "8-12";
-
-      const water = isYoung ? "1.2–1.6L Wasser/Tag" : "1.6–2.2L Wasser/Tag";
-      const sleep = isYoung ? "9–10h Schlaf" : "8–9h Schlaf";
-
-      const templates = {
-        energie: {
-          training: [
-            "Frühstück: Haferflocken + Banane + Joghurt",
-            "Snack: Apfel + paar Nüsse (oder Alternative)",
-            "Mittag: Reis/Nudeln + Hähnchen/Tofu + Gemüse",
-            "Vor Training (60–90min): Toast + Honig oder Banane",
-            "Nach Training: Milch/Joghurt + Obst oder Sandwich"
-          ],
-          match: [
-            "Frühstück: Hafer + Beeren + Wasser",
-            "3h vor Spiel: Pasta/Reis + leichte Sauce + Gemüse",
-            "60min vor Spiel: Banane oder kleiner Müsliriegel",
-            "Nach Spiel: Sandwich + Obst + Wasser"
-          ],
-          rest: [
-            "Frühstück: Vollkornbrot + Käse/Ei + Obst",
-            "Mittag: Kartoffeln/Reis + Fisch/Tofu + Gemüse",
-            "Snack: Joghurt/Quark + Beeren",
-            "Abend: Suppe + Brot oder Salat + Protein"
-          ]
-        },
-        leistung: {
-          training: [
-            "Frühstück: Eier + Vollkornbrot + Obst",
-            "Snack: Joghurt/Quark + Honig",
-            "Mittag: Reis + Lachs/Hähnchen/Tofu + Gemüse",
-            "Vor Training: Banane + Wasser",
-            "Nach Training: Protein + Kohlenhydrate (z.B. Wrap)"
-          ],
-          match: [
-            "Frühstück: Porridge + Banane",
-            "3h vor Spiel: Reis/Pasta + mageres Protein",
-            "Snack: kleine Banane / Datteln",
-            "Nach Spiel: Reis + Protein + Wasser"
-          ],
-          rest: [
-            "Frühstück: Skyr/Quark + Obst",
-            "Mittag: Bowl (Reis/Quinoa + Protein + Gemüse)",
-            "Snack: Nüsse/Obst (oder Alternative)",
-            "Abend: Omelette/Tofu + Salat"
-          ]
-        },
-        regeneration: {
-          training: [
-            "Frühstück: Joghurt/Skyr + Beeren + Hafer",
-            "Snack: Orange/Kiwi (Vitamin C)",
-            "Mittag: Kartoffeln + Fisch/Tofu + Gemüse",
-            "Nach Training: Kakao/Milch + Banane",
-            "Abend: Suppe + Vollkornbrot"
-          ],
-          match: [
-            "Frühstück: Hafer + Beeren",
-            "Nach Spiel: Wasser + Salz/Elektrolyte + Sandwich",
-            "Abend: Reis + Protein + Gemüse"
-          ],
-          rest: [
-            "Frühstück: Vollkorn + Obst",
-            "Mittag: Gemüse + Protein + gute Fette (Olivenöl)",
-            "Snack: Joghurt/Quark",
-            "Abend: leicht: Salat + Protein"
-          ]
-        },
-        leicht: {
-          training: [
-            "Frühstück: Vollkornbrot + Käse/Ei + Obst",
-            "Snack: Obst",
-            "Mittag: Gemüsepfanne + Reis + Protein",
-            "Vor Training: Banane",
-            "Nach Training: Joghurt + Obst"
-          ],
-          match: [
-            "Frühstück: Porridge",
-            "3h vor Spiel: Pasta/Reis + Gemüse + Protein",
-            "Snack: Banane",
-            "Nach Spiel: Wasser + Sandwich"
-          ],
-          rest: [
-            "Frühstück: Obst + Joghurt",
-            "Mittag: Salat + Protein + Brot",
-            "Snack: Obst",
-            "Abend: Suppe + Brot"
-          ]
-        }
-      };
-
-      const lines = templates[goal]?.[day] || templates.energie.training;
-
-      return [
-        `SMARTGEN ERNÄHRUNGSPLAN (Demo)`,
-        `Spieler: ${member.name} • ${age} • Ziel: ${goal} • Tag: ${day}`,
-        `----------------------------------------`,
-        ...lines.map((x)=>`• ${x}`),
-        `----------------------------------------`,
-        `Hydration: ${water}`,
-        `Schlaf: ${sleep}`,
-        `Tipp: 1 Stunde vor Training keine schweren/fettigen Sachen.`,
-      ].join("\n");
-    }
-
-    function generatePlan(){
-      const age = $("nutAge").value;
-      const goal = $("nutGoal").value;
-      const day = $("nutDay").value;
-      const note = ($("nutNote").value || "").trim();
-
-      const p = planFor(age, goal, day);
-      $("nutPlan").value = note ? (p + `\n\nHinweis: ${note}`) : p;
-      toast(`🍽️ <b>Plan erstellt</b>`);
-    }
-
-    $("btnMakePlan").addEventListener("click", generatePlan);
-
-    $("btnCopyPlan").addEventListener("click", async () => {
-      const text = $("nutPlan").value.trim();
-      if(!text){ toast("⚠️ Erst Plan erstellen."); return; }
-      try{
-        await navigator.clipboard.writeText(text);
-        toast("📋 <b>Kopiert</b> (Clipboard)");
-      }catch(e){
-        // fallback
-        $("nutPlan").focus();
-        $("nutPlan").select();
-        toast("📋 Markiert – Cmd+C zum Kopieren");
-      }
-    });
-
-    // ===== Init =====
-    renderMember();
-    renderSlots();
-    updateAIMessage();
-    generatePlan(); // default plan sofort anzeigen
-  </script>
+ </div>
+
+ <!-- ZUSATZ OPTION -->
+ <div class="card">
+  <h2>⭐ Zusatzoptionen</h2>
+  <div class="row"><span>📊 Extra Analyse</span><span class="tag">Optional</span></div>
+  <div class="row"><span>🎥 Video-Highlights</span><span class="tag">Coming</span></div>
+ </div>
+</div>
+
+<!-- PIN MODAL -->
+<div id="pinModal" class="hidden">
+ <div class="card">
+  <h2>🔐 Eltern-PIN</h2>
+  <input id="pinInput" class="input" placeholder="PIN eingeben">
+  <button class="btn primary" style="margin-top:10px" onclick="checkPin()">Freigeben</button>
+ </div>
+</div>
+
+</div>
+
+<script>
+const PARENT_PIN = "1234";
+
+function setMode(mode){
+ document.getElementById("playerDash").classList.toggle("hidden",mode!=="player");
+ document.getElementById("parentDash").classList.toggle("hidden",mode!=="parent");
+}
+
+function openPin(){
+ document.getElementById("pinModal").classList.remove("hidden");
+}
+
+function checkPin(){
+ const pin=document.getElementById("pinInput").value;
+ if(pin===PARENT_PIN){
+  document.getElementById("pinModal").classList.add("hidden");
+  setMode("parent");
+ }else{
+  alert("Falscher PIN");
+ }
+}
+</script>
 </body>
 </html>
