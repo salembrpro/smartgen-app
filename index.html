@@ -83,9 +83,9 @@ body{
 }
 body.parent .parentFX{ opacity:1; }
 
-.wrap{max-width:1120px;margin:auto;padding:18px 14px 26px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.wrap{max-width:1140px;margin:auto;padding:18px 14px 26px}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
 
 .card{
   border:1px solid var(--line);
@@ -98,6 +98,7 @@ body.parent .parentFX{ opacity:1; }
 .hidden{display:none}
 
 h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
+h3{margin:0 0 8px 0;font-size:15px;letter-spacing:.2px}
 .small{color:var(--muted);font-size:13px;line-height:1.45}
 .hr{border:none;border-top:1px solid var(--line); margin:12px 0}
 
@@ -121,7 +122,7 @@ h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
   box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 55px rgba(255,122,24,.18);
 }
 .brandTitle{font-weight:1000; letter-spacing:.2px}
-.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center}
 .pill{
   display:inline-flex; align-items:center; gap:10px;
   padding:10px 12px;
@@ -162,6 +163,23 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 }
 .btn.ghost{background: rgba(255,255,255,.06)}
 .btn:disabled{opacity:.45; cursor:not-allowed}
+
+/* Tabs */
+.tabs{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.tab{
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  cursor:pointer;
+  font-weight:1000;
+  font-size:14px;
+}
+.tab.active{
+  border-color: rgba(255,122,24,.60);
+  background: rgba(255,122,24,.12);
+  box-shadow: 0 14px 40px rgba(255,122,24,.10);
+}
 
 /* TAGS */
 .tag{
@@ -206,6 +224,19 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .walletBtn .ic{font-size:28px}
 .walletBtn .right{opacity:.9; font-size:18px}
 
+/* Inputs */
+.input{
+  padding:14px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  width:100%;
+  font-size:15px;
+  outline:none;
+}
+select.input{appearance:none}
+
 /* MODALS */
 .modalWrap{
   position:fixed; inset:0;
@@ -215,7 +246,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   padding:16px; z-index:50;
 }
 .modal{
-  width:min(640px, 100%);
+  width:min(680px, 100%);
   background: linear-gradient(180deg, rgba(16,24,36,.94), rgba(10,14,22,.92));
   border:1px solid var(--line);
   border-radius:20px;
@@ -247,17 +278,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   display:flex; gap:10px; justify-content:flex-end;
 }
 
-.input{
-  padding:14px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background: rgba(0,0,0,.22);
-  color: var(--text);
-  width:100%;
-  font-size:15px;
-  outline:none;
-}
-
+/* Wallet card */
 .idCard{
   border-radius:22px;
   border:1px solid rgba(255,122,24,.40);
@@ -284,7 +305,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   padding:10px;
 }
 .kv b{display:block;font-size:12px}
-.kv span{color:rgba(255,255,255,.85);font-weight:900}
+.kv span{color:rgba(255,255,255,.90);font-weight:1000}
 .qr{
   margin-top:12px;
   display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
@@ -304,6 +325,49 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   border:1px solid rgba(255,122,24,.45);
   background: rgba(255,122,24,.12);
   font-weight:1000;
+}
+
+/* Analysis Donuts */
+.donutRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+.donut{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+  min-width:160px;
+  flex:1;
+}
+.donutTop{display:flex;justify-content:space-between;align-items:center}
+.donutTop b{font-size:13px}
+.donutVal{font-weight:1000}
+svg{display:block}
+
+/* Calendar */
+.calHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.calGrid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:8px;
+}
+.dayBox{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:16px;
+  padding:10px;
+  min-height:110px;
+}
+.dayName{font-weight:1000; font-size:13px}
+.event{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  font-size:12px;
+}
+.event.orange{
+  border-color: rgba(255,122,24,.30);
+  background: rgba(255,122,24,.10);
 }
 
 /* TOAST */
@@ -352,8 +416,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 
     <div class="cardPad">
       <div class="small">
-        <b>Eltern-Fitness Regel:</b> Während Kindertraining ist Eltern-Fitness <b>gesperrt</b>.
-        Buchungen/Storno werden lokal gespeichert (Demo).
+        <b>SmartGen Demo:</b> Analyse (Kreis), Kalender, Slots nach Kategorien, KI Motivation+Ernährung, Eltern-Fitness Buchung mit Blockierung bei Kindertraining.
       </div>
     </div>
   </div>
@@ -363,41 +426,154 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
     <!-- LEFT -->
     <div>
 
-      <!-- PLAYER (minimal but solid) -->
+      <!-- PLAYER -->
       <div id="playerDash" class="card">
         <div class="cardPad">
           <h2>⚽ Spieler Dashboard</h2>
 
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
-            <span class="tag ok">U15 • Technik & Kognition</span>
+            <span class="tag ok" id="pMetaTag">U15 • Technik & Kognition</span>
             <span class="tag ok" id="pStatusTag">Aktiv</span>
+            <span class="tag warn" id="pTrainerTag">Trainer: Salem</span>
           </div>
 
-          <button class="walletBtn" onclick="openWallet('player')">
-            <div class="left">
-              <span class="ic">⚽</span>
-              <div>
-                <div style="font-weight:1000">SmartGen Spieler-ID (Wallet/NFC)</div>
-                <div class="small">Tap & Check-in • QR • Zugang</div>
+          <div class="tabs">
+            <button class="tab active" id="tabP_Analyse" onclick="showTab('player','Analyse')">📊 Analyse</button>
+            <button class="tab" id="tabP_Kalender" onclick="showTab('player','Kalender')">🗓️ Kalender</button>
+            <button class="tab" id="tabP_Slots" onclick="showTab('player','Slots')">⏱️ Slots</button>
+            <button class="tab" id="tabP_Daten" onclick="showTab('player','Daten')">👤 Daten</button>
+          </div>
+
+          <!-- Player: Analyse -->
+          <div id="player_Analyse">
+            <button class="walletBtn" onclick="openWallet('player')">
+              <div class="left">
+                <span class="ic">⚽</span>
+                <div>
+                  <div style="font-weight:1000">SmartGen Spieler-ID (Wallet/NFC)</div>
+                  <div class="small">Tap & Check-in • QR • Zugang</div>
+                </div>
+              </div>
+              <div class="right">›</div>
+            </button>
+
+            <div class="donutRow">
+              <div class="donut">
+                <div class="donutTop"><b>Anwesenheit</b><span class="donutVal" id="d_att">--%</span></div>
+                <svg width="140" height="90" viewBox="0 0 140 90">
+                  <path d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="12" stroke-linecap="round"></path>
+                  <path id="arc_att" d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 999"></path>
+                </svg>
+                <div class="small">letzte 30 Tage</div>
+              </div>
+
+              <div class="donut">
+                <div class="donutTop"><b>Progress</b><span class="donutVal" id="d_prog">--%</span></div>
+                <svg width="140" height="90" viewBox="0 0 140 90">
+                  <path d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="12" stroke-linecap="round"></path>
+                  <path id="arc_prog" d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 999"></path>
+                </svg>
+                <div class="small">Skill-Level</div>
+              </div>
+
+              <div class="donut">
+                <div class="donutTop"><b>Performance</b><span class="donutVal" id="d_perf">--/100</span></div>
+                <svg width="140" height="90" viewBox="0 0 140 90">
+                  <path d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="12" stroke-linecap="round"></path>
+                  <path id="arc_perf" d="M20,70 A50,50 0 1 1 120,70" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 999"></path>
+                </svg>
+                <div class="small">Score (Demo)</div>
               </div>
             </div>
-            <div class="right">›</div>
-          </button>
 
-          <hr class="hr">
+            <div class="hr"></div>
 
-          <h2>🟠 Spieler Slots (Demo)</h2>
-          <div class="small">Extra Slots außerhalb Training (Demo – getrennt von Eltern-Fitness).</div>
-          <div class="list" id="playerSlots"></div>
+            <h3>🎯 Fokus heute</h3>
+            <div class="list">
+              <div class="slot">
+                <div>
+                  <strong>Technik – erster Kontakt</strong>
+                  <small>Ballannahme • Richtungswechsel • Tempo</small>
+                </div>
+                <div class="right"><span class="tag ok">Start</span></div>
+              </div>
+              <div class="slot">
+                <div>
+                  <strong>Kognition – Entscheidung</strong>
+                  <small>Scanning • Timing • Blickfeld</small>
+                </div>
+                <div class="right"><span class="tag warn">Offen</span></div>
+              </div>
+            </div>
+          </div>
 
-          <hr class="hr">
-          <button class="btn primary" onclick="toast('✅ <b>Spieler Bereich</b><br>Später: Stats, Videos, Matchanalyse.');" style="width:100%">📈 Analyse (Demo)</button>
+          <!-- Player: Kalender -->
+          <div id="player_Kalender" class="hidden">
+            <div class="calHead">
+              <div>
+                <h3 style="margin:0">🗓️ Kalender (Woche)</h3>
+                <div class="small">Events sind Demo – speichern lokal.</div>
+              </div>
+              <button class="btn primary" onclick="openEventModal('player')">＋ Event</button>
+            </div>
+            <div class="calGrid" id="calPlayer"></div>
+          </div>
+
+          <!-- Player: Slots -->
+          <div id="player_Slots" class="hidden">
+            <h3>🎛️ Training auswählen</h3>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <button class="btn" onclick="setCategory('player','Technik')">⚽ Technik</button>
+              <button class="btn" onclick="setCategory('player','Athletik')">🏃 Athletik</button>
+              <button class="btn" onclick="setCategory('player','Kognition')">🧠 Kognition</button>
+            </div>
+            <div class="small" style="margin-top:10px">Kategorie: <b id="playerCat">Technik</b></div>
+
+            <div class="list" id="playerSlots"></div>
+          </div>
+
+          <!-- Player: Daten -->
+          <div id="player_Daten" class="hidden">
+            <h3>👤 Persönliche Daten</h3>
+            <div class="list">
+              <div class="slot">
+                <div>
+                  <strong>Name</strong>
+                  <small id="pd_name">Amine B.</small>
+                </div>
+                <div class="right"><span class="tag ok">Mitglied</span></div>
+              </div>
+              <div class="slot">
+                <div>
+                  <strong>Geburtsjahr</strong>
+                  <small id="pd_year">2012</small>
+                </div>
+                <div class="right"><span class="tag">U15</span></div>
+              </div>
+              <div class="slot">
+                <div>
+                  <strong>Vertrag</strong>
+                  <small id="pd_contract">Premium • Laufend</small>
+                </div>
+                <div class="right"><span class="tag warn">Abo</span></div>
+              </div>
+              <div class="slot">
+                <div>
+                  <strong>Notfall Kontakt</strong>
+                  <small id="pd_emg">Parent One • +49 …</small>
+                </div>
+                <div class="right"><span class="tag">Info</span></div>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+            <button class="btn primary" style="width:100%" onclick="toast('✅ <b>Daten gespeichert</b><br>(Demo)');">Speichern (Demo)</button>
+          </div>
         </div>
       </div>
 
       <!-- PARENT DASH -->
       <div id="parentDash" class="hidden">
-
         <div class="card">
           <div class="cardPad">
             <h2>👨‍👩‍👦 Eltern Dashboard</h2>
@@ -405,55 +581,174 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
               <span class="tag ok">Kind: Amine B.</span>
               <span class="tag ok">Vertrag: Premium</span>
+              <span class="tag warn">Trainer: Salem</span>
             </div>
 
-            <button class="walletBtn" onclick="openWallet('parent')">
-              <div class="left">
-                <span class="ic">🧡</span>
+            <div class="tabs">
+              <button class="tab active" id="tabE_KI" onclick="showTab('parent','KI')">🤖 KI</button>
+              <button class="tab" id="tabE_Kalender" onclick="showTab('parent','Kalender')">🗓️ Kalender</button>
+              <button class="tab" id="tabE_Fitness" onclick="showTab('parent','Fitness')">🏋️ Fitness</button>
+              <button class="tab" id="tabE_Daten" onclick="showTab('parent','Daten')">👤 Daten</button>
+            </div>
+
+            <!-- Parent: KI -->
+            <div id="parent_KI">
+              <button class="walletBtn" onclick="openWallet('parent')">
+                <div class="left">
+                  <span class="ic">🧡</span>
+                  <div>
+                    <div style="font-weight:1000">Eltern NFC / Wallet Karte</div>
+                    <div class="small">Orange Edition • Tap & Check-in</div>
+                  </div>
+                </div>
+                <div class="right">›</div>
+              </button>
+
+              <div class="hr"></div>
+
+              <h3>🧠 KI Motivation</h3>
+              <div class="small">Wähle Ziel + Mood — SmartGen KI erstellt Satz (Demo).</div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
+                <select class="input" id="ki_goal">
+                  <option value="energie">Mehr Energie & Gesundheit</option>
+                  <option value="kraft">Kraft & Muskelaufbau</option>
+                  <option value="abnehmen">Fett reduzieren</option>
+                  <option value="stress">Stress reduzieren</option>
+                </select>
+                <select class="input" id="ki_mood">
+                  <option value="kurz">Kurz & stark</option>
+                  <option value="coach">Coach-Style</option>
+                  <option value="freundlich">Freundlich</option>
+                </select>
+              </div>
+
+              <button class="btn primary" style="width:100%; margin-top:10px" onclick="genMotivation()">⚡ Motivation generieren</button>
+              <div class="slot" style="margin-top:10px">
                 <div>
-                  <div style="font-weight:1000">Eltern NFC / Wallet Karte</div>
-                  <div class="small">Orange Edition • Tap & Check-in</div>
+                  <strong>Heute</strong>
+                  <small id="ki_motivation">„Bereit? Wir machen das smart.“</small>
+                </div>
+                <div class="right"><span class="tag ok">KI</span></div>
+              </div>
+
+              <div class="hr"></div>
+
+              <h3>🥗 KI Ernährung (einfach)</h3>
+              <div class="small">Erstellt Tagesplan + Snack + Hydration (Demo).</div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
+                <select class="input" id="nutri_style">
+                  <option value="familie">Familien-Style (einfach)</option>
+                  <option value="sport">Sport-Performance</option>
+                  <option value="low">Leicht & gesund</option>
+                </select>
+                <select class="input" id="nutri_allergy">
+                  <option value="none">Keine Allergie</option>
+                  <option value="laktose">Laktosefrei</option>
+                  <option value="nuesse">Ohne Nüsse</option>
+                  <option value="gluten">Glutenfrei</option>
+                </select>
+              </div>
+
+              <button class="btn primary" style="width:100%; margin-top:10px" onclick="genNutrition()">🍽️ Plan erstellen</button>
+
+              <div class="slot" style="margin-top:10px">
+                <div>
+                  <strong>Plan</strong>
+                  <small id="nutri_plan">Frühstück • Mittag • Abend • Snack • Wasser</small>
+                </div>
+                <div class="right"><span class="tag warn">KI</span></div>
+              </div>
+            </div>
+
+            <!-- Parent: Kalender -->
+            <div id="parent_Kalender" class="hidden">
+              <div class="calHead">
+                <div>
+                  <h3 style="margin:0">🗓️ Eltern Kalender</h3>
+                  <div class="small">Kindertraining + Eltern-Fitness Events sichtbar.</div>
+                </div>
+                <button class="btn primary" onclick="openEventModal('parent')">＋ Event</button>
+              </div>
+              <div class="calGrid" id="calParent"></div>
+            </div>
+
+            <!-- Parent: Fitness -->
+            <div id="parent_Fitness" class="hidden">
+              <h3>🏋️ Eltern-Fitness echt buchbar</h3>
+              <div class="small">Während Kindertraining automatisch gesperrt.</div>
+              <div class="list" id="fitnessSlots"></div>
+
+              <div class="hr"></div>
+              <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s)</div>
+              <button class="btn ghost" style="width:100%;margin-top:10px" onclick="resetParentBookings()">Reset (Demo)</button>
+            </div>
+
+            <!-- Parent: Daten -->
+            <div id="parent_Daten" class="hidden">
+              <h3>👤 Eltern Infos</h3>
+              <div class="list">
+                <div class="slot">
+                  <div><strong>Elternteil</strong><small>Parent One</small></div>
+                  <div class="right"><span class="tag ok">Aktiv</span></div>
+                </div>
+                <div class="slot">
+                  <div><strong>Vertrag</strong><small>Premium • Laufend</small></div>
+                  <div class="right"><span class="tag warn">Abo</span></div>
+                </div>
+                <div class="slot">
+                  <div><strong>Kommunikation</strong><small>Nachrichten an Trainer (Demo)</small></div>
+                  <div class="right"><span class="tag">Chat</span></div>
                 </div>
               </div>
-              <div class="right">›</div>
-            </button>
 
-            <hr class="hr">
+              <div class="hr"></div>
+              <h3>💬 Nachricht an Trainer</h3>
+              <input class="input" id="msgTrainer" placeholder="Nachricht schreiben…" />
+              <button class="btn primary" style="margin-top:10px;width:100%" onclick="sendMsg()">Senden</button>
+            </div>
 
-            <h2>💬 Kommunikation (Demo)</h2>
-            <input class="input" placeholder="Nachricht an Trainer schreiben…" />
-            <button class="btn primary" style="margin-top:10px;width:100%" onclick="toast('📨 <b>Gesendet</b><br>(Demo)');">Senden</button>
-
-            <hr class="hr">
-            <h2>🧠 Eltern KI (Demo)</h2>
-            <button class="btn primary" style="width:100%" onclick="toast('🤖 <b>KI</b><br>Als nächstes: Motivation + Ernährung.');">Motivation + Ernährung (next)</button>
           </div>
         </div>
-
       </div>
+
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT: Quick + Info -->
     <div>
-      <div id="fitnessCard" class="card hidden">
+      <div class="card">
         <div class="cardPad">
-          <h2>🏋️ Eltern-Fitness (echt buchbar)</h2>
-          <div class="small">Buchen / Stornieren wird gespeichert. Blockierung bei Kindertraining aktiv.</div>
+          <h2>🚀 SmartGen Quick</h2>
+          <div class="small">
+            - Spieler: Analyse (Kreis), Kalender, Slots nach Technik/Athletik/Kognition<br>
+            - Eltern: KI Motivation + Ernährung, Kalender, Eltern-Fitness Buchung (mit Sperre)<br>
+            - Alles lokal gespeichert (Demo)
+          </div>
 
-          <div class="list" id="fitnessSlots"></div>
+          <div class="hr"></div>
 
-          <hr class="hr">
-          <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s)</div>
-          <button class="btn ghost" style="width:100%;margin-top:10px" onclick="resetParentBookings()">Reset (Demo)</button>
+          <button class="btn primary" style="width:100%" onclick="toggleStatus()">🔁 Status wechseln</button>
+          <button class="btn" style="width:100%; margin-top:10px" onclick="switchTrainer()">👥 Trainer wechseln</button>
+
+          <div class="hr"></div>
+
+          <h3>📌 Hinweis</h3>
+          <div class="small">
+            Eltern-Modus ist PIN-geschützt (Demo-PIN: <b>1234</b>).<br>
+            Später können wir hier: <b>Videos, Übungen, Push-Notifications, Social-Export</b> ergänzen.
+          </div>
         </div>
       </div>
 
-      <div id="parentHint" class="card">
+      <div class="card" style="margin-top:14px">
         <div class="cardPad">
-          <h2>👨‍👩‍👦 Eltern Bereich</h2>
+          <h2>🧩 Nächste Module (wenn du willst)</h2>
           <div class="small">
-            Klicke oben auf <b>Eltern</b> und gib den PIN ein.
-            Dann erscheint hier die Eltern-Fitness Buchung (mit Blockierung).
+            1) KI Übungen mit Bild/Video (Eltern Fitness) ✅<br>
+            2) Spieler-Statistik mit echten Charts (Canvas) ✅<br>
+            3) Mitgliedsvertrag PDF anzeigen ✅<br>
+            4) Kalender Sync Platzhalter (Google/Apple) ✅
           </div>
         </div>
       </div>
@@ -482,7 +777,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   </div>
 </div>
 
-<!-- BOOK MODAL (Parent + Player) -->
+<!-- BOOK MODAL -->
 <div id="bookModal" class="modalWrap">
   <div class="modal">
     <div class="modalHead">
@@ -503,6 +798,41 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
     <div class="modalActions">
       <button class="btn" onclick="closeBook()">Abbrechen</button>
       <button class="btn ok" onclick="confirmBooking()">✅ Buchen</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div id="eventModal" class="modalWrap">
+  <div class="modal">
+    <div class="modalHead">
+      <b>🗓️ Event hinzufügen</b>
+      <button class="x" onclick="closeEventModal()">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="small">Wähle Tag + Titel (Demo)</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
+        <select class="input" id="evDay">
+          <option value="1">Mo</option>
+          <option value="2">Di</option>
+          <option value="3">Mi</option>
+          <option value="4">Do</option>
+          <option value="5">Fr</option>
+          <option value="6">Sa</option>
+          <option value="0">So</option>
+        </select>
+        <input class="input" id="evTitle" placeholder="z.B. Arzt / Training / Termin">
+      </div>
+      <div style="margin-top:10px">
+        <select class="input" id="evType">
+          <option value="orange">SmartGen</option>
+          <option value="normal">Normal</option>
+        </select>
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="btn" onclick="closeEventModal()">Abbrechen</button>
+      <button class="btn primary" onclick="addEvent()">Hinzufügen</button>
     </div>
   </div>
 </div>
@@ -528,7 +858,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 
         <div class="qr">
           <div class="qrBox" title="QR Demo"></div>
-          <div style="flex:1;min-width:200px">
+          <div style="flex:1;min-width:220px">
             <div style="font-weight:1000">Check-in / Zugang</div>
             <div class="small">QR scannen oder NFC tap (Demo).</div>
             <button class="btn primary" style="margin-top:10px" onclick="simulateNFC()">📶 NFC Tap simulieren</button>
@@ -546,9 +876,33 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 
 <script>
 /* =========================
-   CONFIG
+   CONFIG / STATE
 ========================= */
 const PARENT_PIN = "1234";
+
+const member = {
+  name: "Amine B.",
+  year: 2012,
+  meta: "U15 • Technik & Kognition",
+  contract: "Premium • Laufend",
+  emergency: "Parent One • +49 …",
+  trainer: "Salem",
+  status: "Aktiv",
+};
+
+const trainers = ["Salem","Güni","Tobi"];
+let currentTrainerIdx = 0;
+
+let mode = "player";               // player | parent
+let bookingContext = null;         // { kind:'parent'|'player', slotId }
+let walletMode = "player";
+let playerCategory = "Technik";
+
+const KEY_PARENT_BOOK = "sg_parent_bookings_v3";
+const KEY_PLAYER_BOOK = "sg_player_bookings_v2";
+const KEY_EVENTS_PLAYER = "sg_events_player_v1";
+const KEY_EVENTS_PARENT = "sg_events_parent_v1";
+const KEY_ANALYTICS = "sg_analytics_v1";
 
 /* Kid training blocks (affects ONLY Parent-Fitness) */
 const kidTrainings = [
@@ -569,20 +923,20 @@ const fitnessSlotsCatalog = [
   { id:"sat_1830", day:6, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Abend Slot" },
 ];
 
-/* Player slots (separate, bookable) */
+/* Player slots by categories */
 const playerSlotsCatalog = [
-  { id:"p_tue_1700", day:2, start:"17:00", end:"18:00", title:"Privattraining", desc:"Technik • erster Kontakt" },
-  { id:"p_thu_1830", day:4, start:"18:30", end:"19:30", title:"Kognitives Training", desc:"Scanning • Reaktion" },
-  { id:"p_fri_1800", day:5, start:"18:00", end:"19:00", title:"Matchanalyse", desc:"KPIs • Video Hinweise" },
-  { id:"p_sat_1200", day:6, start:"12:00", end:"13:00", title:"Athletik", desc:"Schnelligkeit • Core" },
+  // Technik
+  { id:"tue_1700_tech", cat:"Technik", day:2, start:"17:00", end:"18:00", title:"Privattraining", desc:"Erster Kontakt • Ballführung" },
+  { id:"thu_1800_tech", cat:"Technik", day:4, start:"18:00", end:"19:00", title:"Technik Session", desc:"Passen • Ballkontrolle" },
+
+  // Athletik
+  { id:"wed_1700_ath", cat:"Athletik", day:3, start:"17:00", end:"18:00", title:"Athletik", desc:"Schnelligkeit • Core" },
+  { id:"sat_1200_ath", cat:"Athletik", day:6, start:"12:00", end:"13:00", title:"Athletik+", desc:"Stabilität • Sprint" },
+
+  // Kognition
+  { id:"thu_1830_kog", cat:"Kognition", day:4, start:"18:30", end:"19:30", title:"Kognitives Training", desc:"Scanning • Reaktion" },
+  { id:"fri_1800_kog", cat:"Kognition", day:5, start:"18:00", end:"19:00", title:"Matchanalyse", desc:"KPIs • Video Hinweise" },
 ];
-
-const KEY_PARENT_BOOK = "sg_parent_bookings_v2";
-const KEY_PLAYER_BOOK = "sg_player_bookings_v1";
-
-let mode = "player";
-let bookingContext = null; // { kind:'parent'|'player', slotId }
-let walletMode = "player";
 
 /* =========================
    HELPERS
@@ -610,19 +964,43 @@ function setStatusUI(text){
       : "0 0 0 6px rgba(255,77,77,.10)";
 }
 
-function loadBookings(key){
-  const raw = localStorage.getItem(key);
-  return raw ? JSON.parse(raw) : [];
+function loadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
 }
-function saveBookings(key, list){
-  localStorage.setItem(key, JSON.stringify(list));
+function saveJSON(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
 }
-function isBooked(key, slotId){
-  return loadBookings(key).some(b => b.slotId === slotId);
+
+function loadBookings(key){ return loadJSON(key, []); }
+function saveBookings(key, list){ saveJSON(key, list); }
+function isBooked(key, slotId){ return loadBookings(key).some(b => b.slotId === slotId); }
+
+/* =========================
+   TABS
+========================= */
+function showTab(scope, name){
+  const tabs = scope==="player"
+    ? ["Analyse","Kalender","Slots","Daten"]
+    : ["KI","Kalender","Fitness","Daten"];
+
+  tabs.forEach(t=>{
+    const el = $(scope+"_"+t);
+    const btn = $("tab"+(scope==="player"?"P":"E")+"_"+t);
+    if(el) el.classList.toggle("hidden", t!==name);
+    if(btn) btn.classList.toggle("active", t===name);
+  });
+
+  if(scope==="player" && name==="Kalender") renderCalendar("player");
+  if(scope==="parent" && name==="Kalender") renderCalendar("parent");
+  if(scope==="player" && name==="Slots") renderPlayerSlots();
+  if(scope==="parent" && name==="Fitness") renderFitness();
 }
 
 /* =========================
-   MODE
+   MODE / PIN
 ========================= */
 function setMode(next){
   mode = next;
@@ -631,21 +1009,16 @@ function setMode(next){
 
   $("playerDash").classList.toggle("hidden", mode !== "player");
   $("parentDash").classList.toggle("hidden", mode !== "parent");
-  $("fitnessCard").classList.toggle("hidden", mode !== "parent");
-  $("parentHint").classList.toggle("hidden", mode === "parent");
 
-  if(mode === "parent"){
-    renderFitness();
-    $("pStatusTag").textContent = "Aktiv";
-  }else{
-    renderPlayerSlots();
-  }
-  setStatusUI("Aktiv");
+  // default tabs
+  if(mode==="player") showTab("player","Analyse");
+  if(mode==="parent") showTab("parent","KI");
+
+  setStatusUI(member.status);
+  syncHeaderTags();
+  renderAll();
 }
 
-/* =========================
-   PIN
-========================= */
 function openPin(){
   $("pinModal").style.display = "flex";
   $("pinInput").value = "";
@@ -664,7 +1037,7 @@ function checkPin(){
 }
 
 /* =========================
-   PARENT FITNESS (blocked by kid training)
+   BOOKINGS
 ========================= */
 function isBlockedByKidTraining(slot){
   const sA = toMin(slot.start), sB = toMin(slot.end);
@@ -678,6 +1051,7 @@ function isBlockedByKidTraining(slot){
 
 function renderFitness(){
   const list = $("fitnessSlots");
+  if(!list) return;
   list.innerHTML = "";
 
   const bookings = loadBookings(KEY_PARENT_BOOK);
@@ -721,19 +1095,22 @@ function renderFitness(){
   }
 }
 
-/* =========================
-   PLAYER SLOTS (bookable)
-========================= */
+function setCategory(scope, cat){
+  if(scope!=="player") return;
+  playerCategory = cat;
+  $("playerCat").textContent = cat;
+  renderPlayerSlots();
+}
+
 function renderPlayerSlots(){
   const list = $("playerSlots");
+  if(!list) return;
   list.innerHTML = "";
 
-  const sorted = [...playerSlotsCatalog].sort((a,b)=>{
-    if(a.day !== b.day) return a.day - b.day;
-    return toMin(a.start) - toMin(b.start);
-  });
+  const filtered = playerSlotsCatalog.filter(s=>s.cat===playerCategory)
+    .sort((a,b)=> (a.day-b.day) || (toMin(a.start)-toMin(b.start)));
 
-  for(const slot of sorted){
+  for(const slot of filtered){
     const booked = isBooked(KEY_PLAYER_BOOK, slot.id);
 
     const div = document.createElement("div");
@@ -758,9 +1135,7 @@ function renderPlayerSlots(){
   }
 }
 
-/* =========================
-   BOOK MODAL (shared)
-========================= */
+/* Book Modal shared */
 function openBook(kind, slotId){
   bookingContext = { kind, slotId };
 
@@ -796,7 +1171,11 @@ function openBook(kind, slotId){
   sel.innerHTML = "";
   const options = isParent
     ? ["Eltern Fitness – Kraft","Eltern Fitness – Cardio","Mobility / Rücken","Regeneration / Stretching"]
-    : ["Privattraining (Technik)","Kognitives Training","Athletik","Matchanalyse"];
+    : (playerCategory==="Technik"
+        ? ["Technik – 1. Kontakt","Technik – Passen","Technik – Dribbling"]
+        : playerCategory==="Athletik"
+          ? ["Athletik – Speed","Athletik – Core","Athletik – Stability"]
+          : ["Kognition – Reaktion","Kognition – Scanning","Matchanalyse"]);
   options.forEach(o=>{
     const opt = document.createElement("option");
     opt.textContent = o;
@@ -831,6 +1210,8 @@ function confirmBooking(){
   if(isParent) renderFitness();
   else renderPlayerSlots();
 
+  bumpAnalytics(isParent ? "parentFitness" : "playerSlot");
+
   toast(`✅ <b>Buchung bestätigt</b><br>${dayName(slot.day)} ${slot.start}–${slot.end} • ${type}${note? "<br><span class='small'>Notiz: "+note+"</span>":""}`);
 }
 
@@ -849,9 +1230,6 @@ function cancelBooking(kind, slotId){
   toast(`🗑️ <b>Storniert</b><br>${slot ? (dayName(slot.day)+" "+slot.start+"–"+slot.end) : "Slot"} entfernt.`);
 }
 
-/* =========================
-   RESET PARENT
-========================= */
 function resetParentBookings(){
   localStorage.removeItem(KEY_PARENT_BOOK);
   renderFitness();
@@ -870,10 +1248,10 @@ function openWallet(kind){
     $("walletName").textContent = "Spieler-ID • SmartGen";
     $("walletSub").textContent = "Orange NFC • Check-in (Demo)";
     $("walletGrid").innerHTML = `
-      <div class="kv"><b>Spieler</b><span>Amine B.</span></div>
+      <div class="kv"><b>Spieler</b><span>${member.name}</span></div>
       <div class="kv"><b>Team</b><span>U15</span></div>
       <div class="kv"><b>Level</b><span>Fortgeschritten</span></div>
-      <div class="kv"><b>Status</b><span>Aktiv</span></div>
+      <div class="kv"><b>Status</b><span>${member.status}</span></div>
     `;
   } else {
     $("walletTitle").textContent = "🧡 Eltern Wallet / NFC";
@@ -881,7 +1259,7 @@ function openWallet(kind){
     $("walletSub").textContent = "Orange Neon Edition (Demo)";
     $("walletGrid").innerHTML = `
       <div class="kv"><b>Elternteil</b><span>Parent One</span></div>
-      <div class="kv"><b>Kind</b><span>Amine B.</span></div>
+      <div class="kv"><b>Kind</b><span>${member.name}</span></div>
       <div class="kv"><b>Vertrag</b><span>Premium</span></div>
       <div class="kv"><b>Status</b><span>Aktiv</span></div>
     `;
@@ -889,13 +1267,283 @@ function openWallet(kind){
 }
 function closeWallet(){ $("walletModal").style.display="none"; }
 function simulateNFC(){
+  bumpAnalytics("checkin");
   toast(`📶 <b>NFC Tap OK</b><br>${walletMode==="player" ? "Spieler" : "Eltern"} Check-in registriert (Demo).`);
 }
 
-/* init */
-setStatusUI("Aktiv");
+/* =========================
+   CALENDAR
+========================= */
+let eventScope = "player";
+
+function openEventModal(scope){
+  eventScope = scope;
+  $("eventModal").style.display = "flex";
+  $("evDay").value = "3";
+  $("evTitle").value = "";
+  $("evType").value = "orange";
+}
+function closeEventModal(){ $("eventModal").style.display = "none"; }
+function addEvent(){
+  const d = parseInt($("evDay").value,10);
+  const title = $("evTitle").value.trim() || "Event";
+  const type = $("evType").value;
+
+  const key = eventScope==="player" ? KEY_EVENTS_PLAYER : KEY_EVENTS_PARENT;
+  const events = loadJSON(key, []);
+  events.push({day:d, title, type});
+  saveJSON(key, events);
+
+  closeEventModal();
+  renderCalendar(eventScope);
+  bumpAnalytics("calendar");
+  toast("✅ <b>Event hinzugefügt</b>");
+}
+
+function renderCalendar(scope){
+  const grid = scope==="player" ? $("calPlayer") : $("calParent");
+  if(!grid) return;
+  grid.innerHTML = "";
+
+  const key = scope==="player" ? KEY_EVENTS_PLAYER : KEY_EVENTS_PARENT;
+  const customEvents = loadJSON(key, []);
+
+  // baseline events
+  const base = [];
+  kidTrainings.forEach(k=> base.push({day:k.day, title:k.label, type:"orange"}));
+
+  // parent: show booked fitness as events
+  if(scope==="parent"){
+    const b = loadBookings(KEY_PARENT_BOOK);
+    b.forEach(x=>{
+      const s = fitnessSlotsCatalog.find(z=>z.id===x.slotId);
+      if(s) base.push({day:s.day, title:`Eltern Fitness ${s.start}`, type:"orange"});
+    });
+  }
+
+  // player: show booked player slots
+  if(scope==="player"){
+    const b = loadBookings(KEY_PLAYER_BOOK);
+    b.forEach(x=>{
+      const s = playerSlotsCatalog.find(z=>z.id===x.slotId);
+      if(s) base.push({day:s.day, title:`${s.title} ${s.start}`, type:"orange"});
+    });
+  }
+
+  const all = [...base, ...customEvents];
+
+  for(let day=1; day<=7; day++){
+    const d = day%7; // 1..6 + 0
+    const box = document.createElement("div");
+    box.className = "dayBox";
+    box.innerHTML = `<div class="dayName">${dayName(d)}</div>`;
+    const items = all.filter(e=>e.day===d);
+
+    items.slice(0,4).forEach(e=>{
+      const ev = document.createElement("div");
+      ev.className = "event " + (e.type==="orange" ? "orange":"");
+      ev.textContent = e.title;
+      box.appendChild(ev);
+    });
+
+    if(items.length>4){
+      const more = document.createElement("div");
+      more.className = "small";
+      more.style.marginTop = "8px";
+      more.innerHTML = `<b>+${items.length-4}</b> mehr…`;
+      box.appendChild(more);
+    }
+
+    grid.appendChild(box);
+  }
+}
+
+/* =========================
+   KI
+========================= */
+function genMotivation(){
+  const goal = $("ki_goal").value;
+  const mood = $("ki_mood").value;
+
+  const bank = {
+    energie: [
+      "Heute: kleine Schritte, große Wirkung.",
+      "Mach’s smart: Wasser, Bewegung, fertig.",
+      "Du brauchst nicht perfekt sein — nur konstant."
+    ],
+    kraft: [
+      "Stark sein ist eine Entscheidung — heute starten.",
+      "Jede Wiederholung zählt. Fokus, sauber, smart.",
+      "Konstanz gewinnt. Nicht Stress."
+    ],
+    abnehmen: [
+      "Ein guter Tag beginnt mit einem guten Plan.",
+      "Smart essen, smart bewegen — du schaffst das.",
+      "Kleine Entscheidungen → große Resultate."
+    ],
+    stress: [
+      "Atmen. Dann handeln. Du führst den Tag.",
+      "Ruhig bleiben: 10 Minuten Bewegung reichen.",
+      "Weniger Chaos, mehr Struktur — SmartGen."
+    ]
+  };
+
+  const style = (txt)=>{
+    if(mood==="kurz") return "🔥 " + txt;
+    if(mood==="coach") return "Coach: " + txt + " Let’s go.";
+    return "🙂 " + txt;
+  };
+
+  const arr = bank[goal] || bank.energie;
+  const pick = arr[Math.floor(Math.random()*arr.length)];
+  $("ki_motivation").textContent = style(pick);
+
+  bumpAnalytics("ki");
+  toast("✅ <b>Motivation erstellt</b>");
+}
+
+function genNutrition(){
+  const style = $("nutri_style").value;
+  const allergy = $("nutri_allergy").value;
+
+  const base = {
+    familie: {
+      fr: "Haferflocken + Banane (oder Brot + Ei)",
+      mi: "Reis / Pasta + Hähnchen / Thunfisch + Gemüse",
+      ab: "Kartoffeln + Joghurt / Quark + Salat",
+      sn: "Apfel + Joghurt / Skyr",
+      wa: "1.5–2L Wasser"
+    },
+    sport: {
+      fr: "Oats + Beeren + Protein (oder Omelett)",
+      mi: "Reis + Chicken + Gemüse + Olivenöl",
+      ab: "Lachs / Thunfisch + Kartoffeln + Salat",
+      sn: "Nüsse / Banane + Skyr",
+      wa: "2L Wasser + Elektrolyte"
+    },
+    low: {
+      fr: "Joghurt + Obst + Honig (leicht)",
+      mi: "Salat Bowl + Protein + Brot",
+      ab: "Gemüsepfanne + Ei / Fisch",
+      sn: "Obst + Tee",
+      wa: "1.5–2L Wasser"
+    }
+  };
+
+  let plan = base[style] || base.familie;
+
+  const allergyNote = (a)=>{
+    if(a==="laktose") return " (laktosefrei wählen)";
+    if(a==="nuesse") return " (ohne Nüsse)";
+    if(a==="gluten") return " (glutenfrei wählen)";
+    return "";
+  };
+
+  const note = allergyNote(allergy);
+
+  $("nutri_plan").textContent =
+    `Frühstück: ${plan.fr}${note} • Mittag: ${plan.mi}${note} • Abend: ${plan.ab}${note} • Snack: ${plan.sn}${note} • Wasser: ${plan.wa}`;
+
+  bumpAnalytics("ki");
+  toast("✅ <b>Ernährungsplan erstellt</b>");
+}
+
+/* =========================
+   ANALYTICS (Donut / demo)
+========================= */
+function defaultAnalytics(){
+  return { attendance: 78, progress: 52, performance: 74 };
+}
+function getAnalytics(){
+  return loadJSON(KEY_ANALYTICS, defaultAnalytics());
+}
+function setAnalytics(a){
+  saveJSON(KEY_ANALYTICS, a);
+}
+function bumpAnalytics(type){
+  const a = getAnalytics();
+  // small demo changes
+  if(type==="checkin") a.attendance = clamp(a.attendance + 1, 0, 100);
+  if(type==="playerSlot") a.progress = clamp(a.progress + 1, 0, 100);
+  if(type==="parentFitness") a.performance = clamp(a.performance + 1, 0, 100);
+  if(type==="calendar") a.progress = clamp(a.progress + 1, 0, 100);
+  if(type==="ki") a.performance = clamp(a.performance + 1, 0, 100);
+
+  setAnalytics(a);
+  renderDonuts();
+}
+function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+
+function setArc(pathEl, percent){
+  // arc length approx for this SVG path: we can use 157 as stable value
+  const total = 157;
+  const filled = Math.round((percent/100)*total);
+  pathEl.setAttribute("stroke-dasharray", `${filled} ${total}`);
+}
+function renderDonuts(){
+  const a = getAnalytics();
+
+  $("d_att").textContent = `${a.attendance}%`;
+  $("d_prog").textContent = `${a.progress}%`;
+  $("d_perf").textContent = `${a.performance}/100`;
+
+  setArc($("arc_att"), a.attendance);
+  setArc($("arc_prog"), a.progress);
+  setArc($("arc_perf"), a.performance);
+}
+
+/* =========================
+   HEADER TAGS / ACTIONS
+========================= */
+function syncHeaderTags(){
+  $("pMetaTag").textContent = member.meta;
+  $("pTrainerTag").textContent = "Trainer: " + member.trainer;
+  $("pStatusTag").textContent = member.status;
+  setStatusUI(member.status);
+
+  $("pd_name").textContent = member.name;
+  $("pd_year").textContent = member.year;
+  $("pd_contract").textContent = member.contract;
+  $("pd_emg").textContent = member.emergency;
+}
+
+function toggleStatus(){
+  const order = ["Aktiv","Pause","Verletzung"];
+  const idx = order.indexOf(member.status);
+  member.status = order[(idx+1)%order.length];
+  syncHeaderTags();
+  toast(`🔁 Status: <b>${member.status}</b>`);
+}
+
+function switchTrainer(){
+  currentTrainerIdx = (currentTrainerIdx+1) % trainers.length;
+  member.trainer = trainers[currentTrainerIdx];
+  syncHeaderTags();
+  toast(`👥 Trainer: <b>${member.trainer}</b>`);
+}
+
+function sendMsg(){
+  const txt = $("msgTrainer").value.trim();
+  if(!txt){ toast("⚠️ Bitte Nachricht schreiben."); return; }
+  $("msgTrainer").value = "";
+  bumpAnalytics("calendar");
+  toast("📨 <b>Gesendet</b><br>(Demo)");
+}
+
+/* =========================
+   INIT
+========================= */
+function renderAll(){
+  syncHeaderTags();
+  renderDonuts();
+  renderPlayerSlots();
+  renderFitness();
+  renderCalendar("player");
+  renderCalendar("parent");
+}
+
 setMode("player");
-renderPlayerSlots();
+renderAll();
 </script>
 </body>
 </html>
