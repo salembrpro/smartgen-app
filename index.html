@@ -7,219 +7,385 @@
 
 <style>
 :root{
-  --bg:#070a10; --panel:#0c1220; --text:#eaf2ff; --muted:#9fb0c8;
+  --bg:#070a10;
+  --text:#eaf2ff;
+  --muted:#a7b6cf;
   --line:rgba(255,255,255,.12);
-  --accent:#ff7a18;
-  --ok:#25d07f; --warn:#ffb020; --danger:#ff4d4d;
-  --radius:18px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  color:var(--text);
-  background:
-    radial-gradient(900px 400px at 15% -10%, rgba(255,122,24,.14), transparent 60%),
-    radial-gradient(900px 400px at 100% 10%, rgba(255,122,24,.08), transparent 60%),
-    linear-gradient(180deg,#070a10,#0b1220);
-}
-.wrap{max-width:1100px;margin:auto;padding:18px}
-.card{
-  background:rgba(16,24,36,.75);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow: 0 22px 70px rgba(0,0,0,.45);
-}
-h2{margin:0 0 10px 0;font-size:16px;letter-spacing:.2px}
-.small{color:var(--muted);font-size:12px;line-height:1.4}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.hidden{display:none}
 
-.btn{
-  padding:12px 14px;border-radius:14px;
+  --accent:#ff7a18;
+  --accentSoft:rgba(255,122,24,.18);
+
+  --ok:#25d07f;
+  --warn:#ffb020;
+  --danger:#ff4d4d;
+
+  --radius:20px;
+  --shadow: 0 26px 80px rgba(0,0,0,.55);
+  --shadow2: 0 14px 36px rgba(0,0,0,.35);
+
+  --cardA: rgba(16,24,36,.78);
+  --cardB: rgba(10,14,22,.70);
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--text);
+  background: #070a10;
+  overflow-x:hidden;
+}
+
+/* ============ CARBON + HEX BACKGROUND (SUBTLE) ============ */
+.bg{
+  position:fixed; inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(900px 420px at 14% -10%, rgba(255,122,24,.14), transparent 62%),
+    radial-gradient(900px 420px at 100% 10%, rgba(255,122,24,.08), transparent 64%),
+    radial-gradient(900px 420px at 55% 115%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, #070a10 0%, #0b1323 55%, #070a10 100%);
+}
+
+/* Carbon texture via repeating gradients (no image needed) */
+.bg::before{
+  content:"";
+  position:absolute; inset:0;
+  opacity:.55;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.05) 0 6px, rgba(0,0,0,0) 6px 12px),
+    linear-gradient(315deg, rgba(255,255,255,.035) 0 6px, rgba(0,0,0,0) 6px 12px);
+  background-size: 22px 22px;
+  mix-blend-mode: overlay;
+  filter: contrast(1.1);
+}
+
+/* Hexagon pattern (very subtle) */
+.bg::after{
+  content:"";
+  position:absolute; inset:0;
+  opacity:.12;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.25) 1px, transparent 1.2px),
+    linear-gradient(60deg, rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(-60deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 22px 22px, 44px 38px, 44px 38px;
+  background-position: 0 0, 0 0, 0 0;
+  mix-blend-mode: screen;
+}
+
+.wrap{max-width:1100px;margin:auto;padding:18px 14px 26px}
+
+/* ============ CARDS / TYPO ============ */
+.card{
   border:1px solid var(--line);
-  background:rgba(0,0,0,.25);
-  color:var(--text); font-weight:900;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--cardA), var(--cardB));
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.cardPad{padding:16px}
+h2{
+  margin:0 0 10px 0;
+  font-size:18px;
+  letter-spacing:.2px;
+}
+.small{color:var(--muted);font-size:13px;line-height:1.45}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0}
+.hr{border:none;border-top:1px solid var(--line); margin:12px 0}
+
+/* ============ TOP BAR ============ */
+.top{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(700px 220px at 10% 0%, rgba(255,122,24,.20), transparent 60%),
+    radial-gradient(700px 220px at 90% 10%, rgba(255,122,24,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+}
+.brand{
+  display:flex; align-items:center; gap:12px;
+}
+.logoDot{
+  width:42px; height:42px; border-radius:16px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
+    linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.45));
+  box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 55px rgba(255,122,24,.18);
+}
+.brandTitle{font-weight:1000; letter-spacing:.2px}
+.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+
+.pill{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.22);
+  box-shadow: var(--shadow2);
+  font-weight:900;
+  font-size:13px;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 5px rgba(37,208,127,.10);
+}
+
+/* ============ BUTTONS (BIGGER / CLEAR) ============ */
+.btn{
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  font-weight:1000;
   cursor:pointer;
+  font-size:14px;
 }
 .btn:active{transform:translateY(1px)}
-.btn.primary{background:rgba(255,122,24,.16); border-color:rgba(255,122,24,.7)}
-.btn.ok{background:rgba(37,208,127,.14); border-color:rgba(37,208,127,.45)}
-.btn.ghost{background:rgba(255,255,255,.05)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-
-.input{
-  padding:12px;border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.25);
-  color:white;width:100%;
+.btn.primary{
+  border-color: rgba(255,122,24,.75);
+  background: linear-gradient(135deg, rgba(255,122,24,.20), rgba(255,255,255,.02));
+  box-shadow: 0 18px 55px rgba(255,122,24,.12);
 }
+.btn.ok{
+  border-color: rgba(37,208,127,.55);
+  background: rgba(37,208,127,.12);
+}
+.btn.ghost{background: rgba(255,255,255,.06)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
 
+/* ============ TAGS ============ */
 .tag{
-  padding:6px 12px;border-radius:999px;
-  background:rgba(255,255,255,.08);
-  font-size:12px;font-weight:900;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
   white-space:nowrap;
 }
-.tag.ok{background:rgba(37,208,127,.15); border:1px solid rgba(37,208,127,.35)}
-.tag.warn{background:rgba(255,176,32,.14); border:1px solid rgba(255,176,32,.35)}
-.tag.danger{background:rgba(255,77,77,.14); border:1px solid rgba(255,77,77,.35)}
+.tag.ok{background: rgba(37,208,127,.14); border-color: rgba(37,208,127,.35)}
+.tag.warn{background: rgba(255,176,32,.14); border-color: rgba(255,176,32,.35)}
+.tag.danger{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.35)}
 
-.bigIcon{font-size:22px}
+/* ============ INPUTS ============ */
+.input{
+  padding:13px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  width:100%;
+  font-size:14px;
+  outline:none;
+}
+
+/* ============ LIST / SLOTS ============ */
 .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .slot{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:12px; border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
+  padding:12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
 }
-.slot strong{font-size:14px}
-.slot small{display:block;color:var(--muted);margin-top:2px;font-size:12px}
+.slot strong{font-size:15px; font-weight:1000}
+.slot small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
 .slot .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 
-hr{border:none;border-top:1px solid var(--line); margin:12px 0}
+/* Bigger icons */
+.bigIcon{font-size:26px; margin-right:8px}
 
-/* Modal */
+/* ============ MODALS ============ */
 .modalWrap{
   position:fixed; inset:0;
-  background:rgba(0,0,0,.6);
-  display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.62);
+  display:none;
+  align-items:center; justify-content:center;
   padding:16px; z-index:50;
 }
 .modal{
-  width:min(560px, 100%);
-  background:rgba(16,24,36,.92);
+  width:min(600px, 100%);
+  background: linear-gradient(180deg, rgba(16,24,36,.94), rgba(10,14,22,.92));
   border:1px solid var(--line);
-  border-radius:18px;
+  border-radius:20px;
   overflow:hidden;
+  box-shadow: 0 36px 120px rgba(0,0,0,.65);
 }
 .modalHead{
-  padding:14px 16px; border-bottom:1px solid var(--line);
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between;
+  background:
+    radial-gradient(700px 220px at 15% 0%, rgba(255,122,24,.16), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent);
 }
-.modalHead b{font-size:14px}
-.x{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:white;cursor:pointer;font-weight:900}
+.modalHead b{font-size:14px; letter-spacing:.2px}
+.x{
+  width:44px;height:44px;border-radius:16px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.22);
+  color:white;
+  cursor:pointer;
+  font-weight:1000;
+}
 .modalBody{padding:16px}
-.modalActions{padding:14px 16px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+.modalActions{
+  padding:14px 16px;
+  border-top:1px solid var(--line);
+  display:flex; gap:10px; justify-content:flex-end;
+}
 
-/* Toast */
+/* ============ TOAST ============ */
 .toast{
   position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-  background:rgba(16,24,36,.92);
+  background: rgba(16,24,36,.94);
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:18px;
   padding:12px 14px;
-  display:none; z-index:60;
-  font-size:12px; color:var(--muted);
-  box-shadow:0 18px 60px rgba(0,0,0,.55);
+  display:none;
+  z-index:60;
+  font-size:13px;
+  color:var(--muted);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
 }
 .toast b{color:var(--text)}
 </style>
 </head>
 
 <body>
+<div class="bg"></div>
+
 <div class="wrap">
 
-  <!-- MODE TOGGLE -->
+  <!-- HEADER -->
   <div class="card">
-    <div class="row">
-      <div>
-        <div style="font-weight:1000;letter-spacing:.2px">SmartGen Fussball Akademie</div>
-        <div class="small">Spieler ↔ Eltern • Fitness-Buchung mit Zeitblockierung</div>
+    <div class="top">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <div class="brandTitle">SmartGen Fussball Akademie</div>
+          <div class="small">Spieler ↔ Eltern • Design Upgrade (Carbon + Hex) • Fitness-Buchung</div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+
+      <div class="pills">
+        <div class="pill" title="Status">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Aktiv</span>
+        </div>
         <button class="btn primary" onclick="setMode('player')">⚽ Spieler</button>
         <button class="btn" onclick="openPin()">👨‍👩‍👦 Eltern</button>
+      </div>
+    </div>
+
+    <div class="cardPad">
+      <div class="small">
+        <b>Regel:</b> Eltern-Fitness ist <b>gesperrt</b>, wenn Kindertraining läuft. Freie Slots sind buchbar und werden gespeichert.
       </div>
     </div>
   </div>
 
   <div class="grid">
-    <!-- LEFT -->
+
+    <!-- LEFT COLUMN -->
     <div>
-      <!-- SPIELER DASHBOARD -->
+
+      <!-- PLAYER DASH -->
       <div id="playerDash" class="card">
-        <h2>⚽ Spieler Dashboard</h2>
-        <div class="row"><b>Name</b><span>Amine B.</span></div>
-        <div class="row"><b>Alter</b><span>13 Jahre</span></div>
-        <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
-        <div class="row"><b>Nächster Termin</b><span id="kidNext">Mi 18:00</span></div>
-        <div class="row"><b>Status</b><span class="tag ok">Aktiv</span></div>
-        <hr>
-        <div class="small">
-          Hinweis: Kinder-Trainingszeiten werden im Eltern-Fitness automatisch gesperrt.
+        <div class="cardPad">
+          <h2>⚽ Spieler Dashboard</h2>
+          <div class="row"><b>Name</b><span>Amine B.</span></div>
+          <div class="row"><b>Alter</b><span>13 Jahre</span></div>
+          <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
+          <div class="row"><b>Nächster Termin</b><span>Mi 18:00</span></div>
+          <div class="row"><b>Status</b><span class="tag ok" id="playerStatusTag">Aktiv</span></div>
+          <hr class="hr">
+          <div class="small">Hinweis: Kinder-Trainingszeiten blockieren automatisch Eltern-Fitness.</div>
         </div>
       </div>
 
-      <!-- ELTERN DASHBOARD: Kind & Vertrag -->
+      <!-- PARENT DASH -->
       <div id="parentDash" class="hidden">
+
         <div class="card">
-          <h2>👦 Kind – Übersicht</h2>
-          <div class="row"><b>Name</b><span>Amine B.</span></div>
-          <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
-          <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
-          <div class="row"><b>Anwesenheit</b><span>84 %</span></div>
-          <div class="small">Eltern sehen nur die wichtigsten Infos – kindgerecht & klar.</div>
+          <div class="cardPad">
+            <h2>👦 Kind – Übersicht</h2>
+            <div class="row"><b>Name</b><span>Amine B.</span></div>
+            <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
+            <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
+            <div class="row"><b>Anwesenheit</b><span>84%</span></div>
+            <div class="small">Eltern sehen klare Infos – ohne komplizierte Menüs.</div>
+          </div>
         </div>
 
         <div class="card">
-          <h2>💬 Kommunikation</h2>
-          <div class="row"><b>Trainer</b><span>Salem</span></div>
-          <input class="input" placeholder="Nachricht an Trainer schreiben…" />
-          <button class="btn primary" style="margin-top:10px;width:100%">📨 Senden</button>
-          <div class="small" style="margin-top:10px">
-            (Demo) Später: echte Chat-Historie + Schnellbuttons: „Termin verschieben“, „Frage“, „Feedback“.
+          <div class="cardPad">
+            <h2>💬 Kommunikation</h2>
+            <div class="row"><b>Trainer</b><span>Salem</span></div>
+            <input class="input" placeholder="Nachricht an Trainer schreiben…" />
+            <button class="btn primary" style="margin-top:10px;width:100%">📨 Senden</button>
+            <div class="small" style="margin-top:10px">
+              (Demo) Später: Chat-Verlauf + Schnellbuttons: „Termin verschieben“, „Frage“, „Feedback“.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+      <!-- FITNESS -->
+      <div id="fitnessCard" class="card hidden">
+        <div class="cardPad">
+          <h2>🏋️ Eltern-Fitness buchen</h2>
+
+          <div class="row" style="margin-top:12px">
+            <div><b>Heute</b> <span class="small" id="todayLabel"></span></div>
+            <button class="btn ghost" onclick="resetBookings()">Reset (Demo)</button>
+          </div>
+
+          <div class="list" id="fitnessSlots"></div>
+
+          <hr class="hr">
+          <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s) • Du kannst auch stornieren.</div>
+        </div>
+      </div>
+
+      <!-- NOT OPENED YET -->
+      <div id="parentHint" class="card">
+        <div class="cardPad">
+          <h2>👨‍👩‍👦 Eltern Bereich</h2>
+          <div class="small">
+            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung.
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- RIGHT -->
-    <div>
-      <!-- ELTERN FITNESS BOOKING -->
-      <div id="fitnessCard" class="card hidden">
-        <h2>🏋️ Eltern-Fitness buchen</h2>
-        <div class="small">
-          <b>Regel:</b> Während Kinder-Training ist Fitness für Eltern <b>gesperrt</b>.
-          Freie Zeiten kannst du sofort buchen. Buchungen werden gespeichert.
-        </div>
-
-        <div style="margin-top:12px" class="row">
-          <div><b>Heute</b> <span class="small" id="todayLabel"></span></div>
-          <button class="btn ghost" onclick="resetBookings()">Reset (Demo)</button>
-        </div>
-
-        <div class="list" id="fitnessSlots"></div>
-
-        <hr>
-        <div class="small">
-          <b>Gebucht:</b> <span id="bookCount">0</span> Slot(s) •
-          <span class="small">Du kannst auch stornieren.</span>
-        </div>
-      </div>
-
-      <!-- Wenn Eltern nicht freigeschaltet -->
-      <div id="parentHint" class="card">
-        <h2>👨‍👩‍👦 Eltern Bereich</h2>
-        <div class="small">
-          Bitte über <b>Eltern</b> oben öffnen und PIN eingeben.
-          Danach erscheint hier die Fitness-Buchung.
-        </div>
-      </div>
-
-      <!-- OPTIONALS -->
+      <!-- EXTRAS -->
       <div id="extrasCard" class="card hidden">
-        <h2>⭐ Zusatzoptionen</h2>
-        <div class="row"><span class="bigIcon">📊</span><b>Extra Analyse</b><span class="tag">Optional</span></div>
-        <div class="row"><span class="bigIcon">🥗</span><b>KI Ernährung</b><span class="tag warn">Nächster Schritt</span></div>
-        <div class="row"><span class="bigIcon">🧠</span><b>KI Motivation</b><span class="tag warn">Nächster Schritt</span></div>
+        <div class="cardPad">
+          <h2>⭐ Zusatzoptionen</h2>
+          <div class="row"><span><span class="bigIcon">🥗</span><b>KI Ernährung</b></span><span class="tag warn">Nächster Schritt</span></div>
+          <div class="row"><span><span class="bigIcon">🧠</span><b>KI Motivation</b></span><span class="tag warn">Nächster Schritt</span></div>
+          <div class="row"><span><span class="bigIcon">📊</span><b>Extra Analyse</b></span><span class="tag">Optional</span></div>
+        </div>
       </div>
+
     </div>
   </div>
-
 </div>
 
 <!-- PIN MODAL -->
@@ -282,31 +448,29 @@ hr{border:none;border-top:1px solid var(--line); margin:12px 0}
 ========================= */
 const PARENT_PIN = "1234";
 
-// Kinder-Training (blockiert Eltern-Fitness)
+// Kinder-Training blockiert Eltern-Fitness
 const kidTrainings = [
-  // day: 0=So ... 6=Sa
-  { day: 2, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
-  { day: 4, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
+  { day: 3, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
+  { day: 5, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
   { day: 6, start: "10:00", end: "11:30", label: "Kindertraining (Sa 10:00–11:30)" },
 ];
 
-// Eltern-Fitness Slot-Katalog (jede Woche wiederkehrend)
+// Eltern-Fitness (wiederkehrend)
 const fitnessSlotsCatalog = [
   { id:"mon_0900", day:1, start:"09:00", end:"10:00", title:"Eltern Fitness", desc:"Kraft • Core" },
   { id:"mon_1100", day:1, start:"11:00", end:"12:00", title:"Eltern Fitness", desc:"Cardio • Intervall" },
   { id:"tue_0930", day:2, start:"09:30", end:"10:30", title:"Mobility", desc:"Beweglichkeit • Rücken" },
-  { id:"wed_1700", day:3, start:"17:00", end:"18:00", title:"Eltern Fitness", desc:"Kraft • Basics" },     // direkt vor Training ok
-  { id:"wed_1830", day:3, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Cardio • HIIT" },      // kollidiert mit Kindertraining -> block
+  { id:"wed_1700", day:3, start:"17:00", end:"18:00", title:"Eltern Fitness", desc:"Kraft • Basics" },
+  { id:"wed_1830", day:3, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Cardio • HIIT" },
   { id:"fri_0900", day:5, start:"09:00", end:"10:00", title:"Regeneration", desc:"Stretch • Atmung" },
-  { id:"fri_1800", day:5, start:"18:00", end:"19:00", title:"Eltern Fitness", desc:"Kraft • Mix" },        // kollidiert teilweise -> block
+  { id:"fri_1800", day:5, start:"18:00", end:"19:00", title:"Eltern Fitness", desc:"Kraft • Mix" },
   { id:"sat_1830", day:6, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Abend Slot" },
 ];
 
-// LocalStorage keys
 const KEY_BOOK = "sg_parent_bookings_v1";
 
 /* =========================
-   STATE
+   STATE / HELPERS
 ========================= */
 let mode = "player";
 let selectedSlotId = null;
@@ -321,9 +485,35 @@ function toast(msg){
   window.__to = setTimeout(()=> t.style.display="none", 2600);
 }
 
+function dayName(d){ return ["So","Mo","Di","Mi","Do","Fr","Sa"][d]; }
+function now(){ return new Date(); }
+function toMin(hhmm){ const [h,m]=hhmm.split(":").map(Number); return h*60+m; }
+function overlaps(aStart,aEnd,bStart,bEnd){ return Math.max(aStart,bStart) < Math.min(aEnd,bEnd); }
+
+function isBlockedByKidTraining(slot){
+  const sA = toMin(slot.start), sB = toMin(slot.end);
+  const blocks = kidTrainings.filter(k=>k.day === slot.day);
+  for(const k of blocks){
+    const kA = toMin(k.start), kB = toMin(k.end);
+    if(overlaps(sA,sB,kA,kB)) return {blocked:true, reason:k.label};
+  }
+  return {blocked:false, reason:""};
+}
+
 /* =========================
-   MODE / PIN
+   MODE / STATUS UI
 ========================= */
+function setStatusUI(text){
+  $("statusText").textContent = text;
+  const dot = $("statusDot");
+  dot.style.background = (text==="Aktiv") ? "var(--ok)" : (text==="Pause") ? "var(--warn)" : "var(--danger)";
+  dot.style.boxShadow = (text==="Aktiv")
+    ? "0 0 0 5px rgba(37,208,127,.10)"
+    : (text==="Pause")
+      ? "0 0 0 5px rgba(255,176,32,.10)"
+      : "0 0 0 5px rgba(255,77,77,.10)";
+}
+
 function setMode(next){
   mode = next;
   $("playerDash").classList.toggle("hidden", mode !== "player");
@@ -331,18 +521,18 @@ function setMode(next){
   $("fitnessCard").classList.toggle("hidden", mode !== "parent");
   $("extrasCard").classList.toggle("hidden", mode !== "parent");
   $("parentHint").classList.toggle("hidden", mode === "parent");
-  if(mode === "parent"){
-    renderFitness();
-  }
+  if(mode === "parent") renderFitness();
 }
 
+/* =========================
+   PIN
+========================= */
 function openPin(){
   $("pinModal").style.display = "flex";
   $("pinInput").value = "";
   $("pinInput").focus();
 }
 function closePin(){ $("pinModal").style.display = "none"; }
-
 function checkPin(){
   const pin = $("pinInput").value.trim();
   if(pin === PARENT_PIN){
@@ -355,53 +545,18 @@ function checkPin(){
 }
 
 /* =========================
-   TIME HELPERS
-========================= */
-function now(){ return new Date(); }
-
-function dayName(d){
-  return ["So","Mo","Di","Mi","Do","Fr","Sa"][d];
-}
-
-function toMin(hhmm){
-  const [h,m] = hhmm.split(":").map(Number);
-  return h*60 + m;
-}
-
-function overlaps(aStart,aEnd,bStart,bEnd){
-  return Math.max(aStart,bStart) < Math.min(aEnd,bEnd);
-}
-
-function isBlockedByKidTraining(slot){
-  const sDay = slot.day;
-  const sA = toMin(slot.start), sB = toMin(slot.end);
-
-  const blocks = kidTrainings.filter(k=>k.day === sDay);
-  for(const k of blocks){
-    const kA = toMin(k.start), kB = toMin(k.end);
-    if(overlaps(sA,sB,kA,kB)){
-      return { blocked:true, reason:k.label };
-    }
-  }
-  return { blocked:false, reason:"" };
-}
-
-/* =========================
    BOOKINGS
 ========================= */
 function loadBookings(){
   const raw = localStorage.getItem(KEY_BOOK);
   return raw ? JSON.parse(raw) : [];
 }
-
 function saveBookings(list){
   localStorage.setItem(KEY_BOOK, JSON.stringify(list));
 }
-
 function isBooked(slotId){
   return loadBookings().some(b => b.slotId === slotId);
 }
-
 function resetBookings(){
   localStorage.removeItem(KEY_BOOK);
   renderFitness();
@@ -412,7 +567,6 @@ function resetBookings(){
    FITNESS UI
 ========================= */
 function renderFitness(){
-  // Today label
   const d = now();
   $("todayLabel").textContent = `(${dayName(d.getDay())} • ${d.toLocaleDateString()})`;
 
@@ -422,7 +576,6 @@ function renderFitness(){
   const bookings = loadBookings();
   $("bookCount").textContent = bookings.length;
 
-  // Sort slots by day then time
   const sorted = [...fitnessSlotsCatalog].sort((a,b)=>{
     if(a.day !== b.day) return a.day - b.day;
     return toMin(a.start) - toMin(b.start);
@@ -469,7 +622,6 @@ function openBook(slotId){
   const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
   if(!slot) return;
 
-  // extra safety
   const blockInfo = isBlockedByKidTraining(slot);
   if(blockInfo.blocked){
     toast("⛔ <b>Gesperrt</b><br>Dieser Slot kollidiert mit Kindertraining.");
@@ -482,10 +634,7 @@ function openBook(slotId){
 
   selectedSlotId = slotId;
   $("bookTitle").textContent = `Slot buchen: ${dayName(slot.day)} ${slot.start}–${slot.end}`;
-  $("bookInfo").innerHTML = `
-    <b>${slot.title}</b> – ${slot.desc}<br>
-    Regel: keine Buchung während Kindertraining.
-  `;
+  $("bookInfo").innerHTML = `<b>${slot.title}</b> – ${slot.desc}<br>Regel: keine Buchung während Kindertraining.`;
   $("bookType").value = "Eltern Fitness – Kraft";
   $("bookNote").value = "";
   $("bookModal").style.display = "flex";
@@ -506,12 +655,7 @@ function confirmBooking(){
   const note = $("bookNote").value.trim();
 
   const bookings = loadBookings();
-  bookings.push({
-    slotId: selectedSlotId,
-    createdAt: new Date().toISOString(),
-    type,
-    note
-  });
+  bookings.push({ slotId:selectedSlotId, createdAt:new Date().toISOString(), type, note });
   saveBookings(bookings);
 
   closeBook();
@@ -528,6 +672,7 @@ function cancelBooking(slotId){
 }
 
 /* init */
+setStatusUI("Aktiv");
 setMode("player");
 </script>
 </body>
