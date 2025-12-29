@@ -1,160 +1,534 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SmartGen – Spieler & Eltern Dashboard</title>
 
 <style>
 :root{
- --bg:#070a10; --panel:#0c1220; --text:#eaf2ff; --muted:#9fb0c8;
- --line:rgba(255,255,255,.12);
- --accent:#ff7a18;
- --ok:#25d07f;
- --radius:18px;
+  --bg:#070a10; --panel:#0c1220; --text:#eaf2ff; --muted:#9fb0c8;
+  --line:rgba(255,255,255,.12);
+  --accent:#ff7a18;
+  --ok:#25d07f; --warn:#ffb020; --danger:#ff4d4d;
+  --radius:18px;
 }
 *{box-sizing:border-box}
 body{
- margin:0;font-family:system-ui;color:var(--text);
- background:linear-gradient(180deg,#070a10,#0b1220);
+  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--text);
+  background:
+    radial-gradient(900px 400px at 15% -10%, rgba(255,122,24,.14), transparent 60%),
+    radial-gradient(900px 400px at 100% 10%, rgba(255,122,24,.08), transparent 60%),
+    linear-gradient(180deg,#070a10,#0b1220);
 }
-.wrap{max-width:1100px;margin:auto;padding:20px}
+.wrap{max-width:1100px;margin:auto;padding:18px}
 .card{
- background:rgba(16,24,36,.75);
- border:1px solid var(--line);
- border-radius:var(--radius);
- padding:16px;
- margin-bottom:16px;
+  background:rgba(16,24,36,.75);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.45);
 }
-h2{margin:0 0 10px 0;font-size:16px}
-.btn{
- padding:12px 14px;border-radius:14px;
- border:1px solid var(--line);
- background:rgba(0,0,0,.25);
- color:white;font-weight:800;
- cursor:pointer;
-}
-.btn.primary{
- background:rgba(255,122,24,.15);
- border-color:var(--accent);
-}
+h2{margin:0 0 10px 0;font-size:16px;letter-spacing:.2px}
+.small{color:var(--muted);font-size:12px;line-height:1.4}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:800px){.grid{grid-template-columns:1fr}}
 .hidden{display:none}
+
+.btn{
+  padding:12px 14px;border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.25);
+  color:var(--text); font-weight:900;
+  cursor:pointer;
+}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:rgba(255,122,24,.16); border-color:rgba(255,122,24,.7)}
+.btn.ok{background:rgba(37,208,127,.14); border-color:rgba(37,208,127,.45)}
+.btn.ghost{background:rgba(255,255,255,.05)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
 .input{
- padding:12px;border-radius:12px;
- border:1px solid var(--line);
- background:rgba(0,0,0,.25);
- color:white;width:100%;
+  padding:12px;border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.25);
+  color:white;width:100%;
 }
-.icon{font-size:22px;margin-right:6px}
-.row{display:flex;align-items:center;justify-content:space-between;margin:8px 0}
+
 .tag{
- padding:6px 12px;border-radius:999px;
- background:rgba(255,255,255,.08);
- font-size:12px;font-weight:700;
+  padding:6px 12px;border-radius:999px;
+  background:rgba(255,255,255,.08);
+  font-size:12px;font-weight:900;
+  white-space:nowrap;
 }
-.ok{background:rgba(37,208,127,.15)}
+.tag.ok{background:rgba(37,208,127,.15); border:1px solid rgba(37,208,127,.35)}
+.tag.warn{background:rgba(255,176,32,.14); border:1px solid rgba(255,176,32,.35)}
+.tag.danger{background:rgba(255,77,77,.14); border:1px solid rgba(255,77,77,.35)}
+
+.bigIcon{font-size:22px}
+.list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.slot{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:12px; border-radius:16px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+}
+.slot strong{font-size:14px}
+.slot small{display:block;color:var(--muted);margin-top:2px;font-size:12px}
+.slot .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+
+hr{border:none;border-top:1px solid var(--line); margin:12px 0}
+
+/* Modal */
+.modalWrap{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.6);
+  display:none; align-items:center; justify-content:center;
+  padding:16px; z-index:50;
+}
+.modal{
+  width:min(560px, 100%);
+  background:rgba(16,24,36,.92);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+}
+.modalHead{
+  padding:14px 16px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.modalHead b{font-size:14px}
+.x{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:white;cursor:pointer;font-weight:900}
+.modalBody{padding:16px}
+.modalActions{padding:14px 16px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+
+/* Toast */
+.toast{
+  position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+  background:rgba(16,24,36,.92);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px 14px;
+  display:none; z-index:60;
+  font-size:12px; color:var(--muted);
+  box-shadow:0 18px 60px rgba(0,0,0,.55);
+}
+.toast b{color:var(--text)}
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<!-- MODE TOGGLE -->
-<div class="card">
- <div class="row">
-  <div><b>Ansicht wechseln</b></div>
-  <div>
-   <button class="btn primary" onclick="setMode('player')">⚽ Spieler</button>
-   <button class="btn" onclick="openPin()">👨‍👩‍👦 Eltern</button>
+  <!-- MODE TOGGLE -->
+  <div class="card">
+    <div class="row">
+      <div>
+        <div style="font-weight:1000;letter-spacing:.2px">SmartGen Fussball Akademie</div>
+        <div class="small">Spieler ↔ Eltern • Fitness-Buchung mit Zeitblockierung</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+        <button class="btn primary" onclick="setMode('player')">⚽ Spieler</button>
+        <button class="btn" onclick="openPin()">👨‍👩‍👦 Eltern</button>
+      </div>
+    </div>
   </div>
- </div>
-</div>
 
-<!-- SPIELER DASHBOARD -->
-<div id="playerDash" class="card">
- <h2>⚽ Spieler Dashboard</h2>
- <div class="row"><b>Name</b><span>Amine B.</span></div>
- <div class="row"><b>Alter</b><span>13 Jahre</span></div>
- <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
- <div class="row"><b>Nächster Termin</b><span>Mi 18:00</span></div>
- <div class="row"><b>Status</b><span class="tag ok">Aktiv</span></div>
-</div>
+  <div class="grid">
+    <!-- LEFT -->
+    <div>
+      <!-- SPIELER DASHBOARD -->
+      <div id="playerDash" class="card">
+        <h2>⚽ Spieler Dashboard</h2>
+        <div class="row"><b>Name</b><span>Amine B.</span></div>
+        <div class="row"><b>Alter</b><span>13 Jahre</span></div>
+        <div class="row"><b>Level</b><span>Fortgeschritten</span></div>
+        <div class="row"><b>Nächster Termin</b><span id="kidNext">Mi 18:00</span></div>
+        <div class="row"><b>Status</b><span class="tag ok">Aktiv</span></div>
+        <hr>
+        <div class="small">
+          Hinweis: Kinder-Trainingszeiten werden im Eltern-Fitness automatisch gesperrt.
+        </div>
+      </div>
 
-<!-- ELTERN DASHBOARD -->
-<div id="parentDash" class="hidden">
+      <!-- ELTERN DASHBOARD: Kind & Vertrag -->
+      <div id="parentDash" class="hidden">
+        <div class="card">
+          <h2>👦 Kind – Übersicht</h2>
+          <div class="row"><b>Name</b><span>Amine B.</span></div>
+          <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
+          <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
+          <div class="row"><b>Anwesenheit</b><span>84 %</span></div>
+          <div class="small">Eltern sehen nur die wichtigsten Infos – kindgerecht & klar.</div>
+        </div>
 
- <!-- KIND INFO -->
- <div class="card">
-  <h2>👦 Kind – Übersicht</h2>
-  <div class="row"><b>Name</b><span>Amine B.</span></div>
-  <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
-  <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
-  <div class="row"><b>Anwesenheit</b><span>84 %</span></div>
- </div>
+        <div class="card">
+          <h2>💬 Kommunikation</h2>
+          <div class="row"><b>Trainer</b><span>Salem</span></div>
+          <input class="input" placeholder="Nachricht an Trainer schreiben…" />
+          <button class="btn primary" style="margin-top:10px;width:100%">📨 Senden</button>
+          <div class="small" style="margin-top:10px">
+            (Demo) Später: echte Chat-Historie + Schnellbuttons: „Termin verschieben“, „Frage“, „Feedback“.
+          </div>
+        </div>
+      </div>
+    </div>
 
- <!-- KOMMUNIKATION -->
- <div class="card">
-  <h2>💬 Kommunikation mit Trainer</h2>
-  <div class="row"><b>Trainer</b><span>Salem</span></div>
-  <input class="input" placeholder="Nachricht an Trainer schreiben…" />
-  <button class="btn primary" style="margin-top:8px">📨 Senden</button>
- </div>
+    <!-- RIGHT -->
+    <div>
+      <!-- ELTERN FITNESS BOOKING -->
+      <div id="fitnessCard" class="card hidden">
+        <h2>🏋️ Eltern-Fitness buchen</h2>
+        <div class="small">
+          <b>Regel:</b> Während Kinder-Training ist Fitness für Eltern <b>gesperrt</b>.
+          Freie Zeiten kannst du sofort buchen. Buchungen werden gespeichert.
+        </div>
 
- <!-- ELTERN FITNESS -->
- <div class="card">
-  <h2>🏋️ Eltern-Fitness (außer Kinderzeiten)</h2>
-  <div class="row">
-   <span>Mo–Fr 09:00–14:00</span>
-   <button class="btn">Buchen</button>
+        <div style="margin-top:12px" class="row">
+          <div><b>Heute</b> <span class="small" id="todayLabel"></span></div>
+          <button class="btn ghost" onclick="resetBookings()">Reset (Demo)</button>
+        </div>
+
+        <div class="list" id="fitnessSlots"></div>
+
+        <hr>
+        <div class="small">
+          <b>Gebucht:</b> <span id="bookCount">0</span> Slot(s) •
+          <span class="small">Du kannst auch stornieren.</span>
+        </div>
+      </div>
+
+      <!-- Wenn Eltern nicht freigeschaltet -->
+      <div id="parentHint" class="card">
+        <h2>👨‍👩‍👦 Eltern Bereich</h2>
+        <div class="small">
+          Bitte über <b>Eltern</b> oben öffnen und PIN eingeben.
+          Danach erscheint hier die Fitness-Buchung.
+        </div>
+      </div>
+
+      <!-- OPTIONALS -->
+      <div id="extrasCard" class="card hidden">
+        <h2>⭐ Zusatzoptionen</h2>
+        <div class="row"><span class="bigIcon">📊</span><b>Extra Analyse</b><span class="tag">Optional</span></div>
+        <div class="row"><span class="bigIcon">🥗</span><b>KI Ernährung</b><span class="tag warn">Nächster Schritt</span></div>
+        <div class="row"><span class="bigIcon">🧠</span><b>KI Motivation</b><span class="tag warn">Nächster Schritt</span></div>
+      </div>
+    </div>
   </div>
-  <div class="row">
-   <span>Sa 18:30–20:00</span>
-   <button class="btn">Buchen</button>
-  </div>
- </div>
 
- <!-- ZUSATZ OPTION -->
- <div class="card">
-  <h2>⭐ Zusatzoptionen</h2>
-  <div class="row"><span>📊 Extra Analyse</span><span class="tag">Optional</span></div>
-  <div class="row"><span>🎥 Video-Highlights</span><span class="tag">Coming</span></div>
- </div>
 </div>
 
 <!-- PIN MODAL -->
-<div id="pinModal" class="hidden">
- <div class="card">
-  <h2>🔐 Eltern-PIN</h2>
-  <input id="pinInput" class="input" placeholder="PIN eingeben">
-  <button class="btn primary" style="margin-top:10px" onclick="checkPin()">Freigeben</button>
- </div>
+<div id="pinModal" class="modalWrap">
+  <div class="modal">
+    <div class="modalHead">
+      <b>🔐 Eltern-Freigabe (PIN)</b>
+      <button class="x" onclick="closePin()">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="small">Demo-PIN: <b>1234</b> (später individuell pro Elternkonto)</div>
+      <div style="margin-top:10px">
+        <input id="pinInput" class="input" placeholder="PIN eingeben">
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="btn" onclick="closePin()">Abbrechen</button>
+      <button class="btn primary" onclick="checkPin()">Freigeben</button>
+    </div>
+  </div>
 </div>
 
+<!-- BOOK MODAL -->
+<div id="bookModal" class="modalWrap">
+  <div class="modal">
+    <div class="modalHead">
+      <b id="bookTitle">Slot buchen</b>
+      <button class="x" onclick="closeBook()">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="small" id="bookInfo"></div>
+
+      <div style="margin-top:12px">
+        <label class="small"><b>Trainingstyp</b></label>
+        <select id="bookType" class="input" style="margin-top:6px">
+          <option>Eltern Fitness – Kraft</option>
+          <option>Eltern Fitness – Cardio</option>
+          <option>Mobility / Rücken</option>
+          <option>Regeneration / Stretching</option>
+        </select>
+      </div>
+
+      <div style="margin-top:12px">
+        <label class="small"><b>Notiz (optional)</b></label>
+        <input id="bookNote" class="input" style="margin-top:6px" placeholder="z.B. Fokus: Rücken / Kondition">
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="btn" onclick="closeBook()">Abbrechen</button>
+      <button class="btn ok" onclick="confirmBooking()">✅ Buchen</button>
+    </div>
+  </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
+/* =========================
+   CONFIG
+========================= */
 const PARENT_PIN = "1234";
 
-function setMode(mode){
- document.getElementById("playerDash").classList.toggle("hidden",mode!=="player");
- document.getElementById("parentDash").classList.toggle("hidden",mode!=="parent");
+// Kinder-Training (blockiert Eltern-Fitness)
+const kidTrainings = [
+  // day: 0=So ... 6=Sa
+  { day: 2, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
+  { day: 4, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
+  { day: 6, start: "10:00", end: "11:30", label: "Kindertraining (Sa 10:00–11:30)" },
+];
+
+// Eltern-Fitness Slot-Katalog (jede Woche wiederkehrend)
+const fitnessSlotsCatalog = [
+  { id:"mon_0900", day:1, start:"09:00", end:"10:00", title:"Eltern Fitness", desc:"Kraft • Core" },
+  { id:"mon_1100", day:1, start:"11:00", end:"12:00", title:"Eltern Fitness", desc:"Cardio • Intervall" },
+  { id:"tue_0930", day:2, start:"09:30", end:"10:30", title:"Mobility", desc:"Beweglichkeit • Rücken" },
+  { id:"wed_1700", day:3, start:"17:00", end:"18:00", title:"Eltern Fitness", desc:"Kraft • Basics" },     // direkt vor Training ok
+  { id:"wed_1830", day:3, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Cardio • HIIT" },      // kollidiert mit Kindertraining -> block
+  { id:"fri_0900", day:5, start:"09:00", end:"10:00", title:"Regeneration", desc:"Stretch • Atmung" },
+  { id:"fri_1800", day:5, start:"18:00", end:"19:00", title:"Eltern Fitness", desc:"Kraft • Mix" },        // kollidiert teilweise -> block
+  { id:"sat_1830", day:6, start:"18:30", end:"19:30", title:"Eltern Fitness", desc:"Abend Slot" },
+];
+
+// LocalStorage keys
+const KEY_BOOK = "sg_parent_bookings_v1";
+
+/* =========================
+   STATE
+========================= */
+let mode = "player";
+let selectedSlotId = null;
+
+function $(id){ return document.getElementById(id); }
+
+function toast(msg){
+  const t = $("toast");
+  t.innerHTML = msg;
+  t.style.display = "block";
+  clearTimeout(window.__to);
+  window.__to = setTimeout(()=> t.style.display="none", 2600);
+}
+
+/* =========================
+   MODE / PIN
+========================= */
+function setMode(next){
+  mode = next;
+  $("playerDash").classList.toggle("hidden", mode !== "player");
+  $("parentDash").classList.toggle("hidden", mode !== "parent");
+  $("fitnessCard").classList.toggle("hidden", mode !== "parent");
+  $("extrasCard").classList.toggle("hidden", mode !== "parent");
+  $("parentHint").classList.toggle("hidden", mode === "parent");
+  if(mode === "parent"){
+    renderFitness();
+  }
 }
 
 function openPin(){
- document.getElementById("pinModal").classList.remove("hidden");
+  $("pinModal").style.display = "flex";
+  $("pinInput").value = "";
+  $("pinInput").focus();
 }
+function closePin(){ $("pinModal").style.display = "none"; }
 
 function checkPin(){
- const pin=document.getElementById("pinInput").value;
- if(pin===PARENT_PIN){
-  document.getElementById("pinModal").classList.add("hidden");
-  setMode("parent");
- }else{
-  alert("Falscher PIN");
- }
+  const pin = $("pinInput").value.trim();
+  if(pin === PARENT_PIN){
+    closePin();
+    setMode("parent");
+    toast("✅ <b>Eltern-Freigabe aktiv</b><br>Fitness-Buchung ist jetzt verfügbar.");
+  } else {
+    toast("❌ <b>Falscher PIN</b><br>Bitte erneut versuchen.");
+  }
 }
+
+/* =========================
+   TIME HELPERS
+========================= */
+function now(){ return new Date(); }
+
+function dayName(d){
+  return ["So","Mo","Di","Mi","Do","Fr","Sa"][d];
+}
+
+function toMin(hhmm){
+  const [h,m] = hhmm.split(":").map(Number);
+  return h*60 + m;
+}
+
+function overlaps(aStart,aEnd,bStart,bEnd){
+  return Math.max(aStart,bStart) < Math.min(aEnd,bEnd);
+}
+
+function isBlockedByKidTraining(slot){
+  const sDay = slot.day;
+  const sA = toMin(slot.start), sB = toMin(slot.end);
+
+  const blocks = kidTrainings.filter(k=>k.day === sDay);
+  for(const k of blocks){
+    const kA = toMin(k.start), kB = toMin(k.end);
+    if(overlaps(sA,sB,kA,kB)){
+      return { blocked:true, reason:k.label };
+    }
+  }
+  return { blocked:false, reason:"" };
+}
+
+/* =========================
+   BOOKINGS
+========================= */
+function loadBookings(){
+  const raw = localStorage.getItem(KEY_BOOK);
+  return raw ? JSON.parse(raw) : [];
+}
+
+function saveBookings(list){
+  localStorage.setItem(KEY_BOOK, JSON.stringify(list));
+}
+
+function isBooked(slotId){
+  return loadBookings().some(b => b.slotId === slotId);
+}
+
+function resetBookings(){
+  localStorage.removeItem(KEY_BOOK);
+  renderFitness();
+  toast("🧹 <b>Reset</b><br>Alle Demo-Buchungen gelöscht.");
+}
+
+/* =========================
+   FITNESS UI
+========================= */
+function renderFitness(){
+  // Today label
+  const d = now();
+  $("todayLabel").textContent = `(${dayName(d.getDay())} • ${d.toLocaleDateString()})`;
+
+  const list = $("fitnessSlots");
+  list.innerHTML = "";
+
+  const bookings = loadBookings();
+  $("bookCount").textContent = bookings.length;
+
+  // Sort slots by day then time
+  const sorted = [...fitnessSlotsCatalog].sort((a,b)=>{
+    if(a.day !== b.day) return a.day - b.day;
+    return toMin(a.start) - toMin(b.start);
+  });
+
+  for(const slot of sorted){
+    const blockInfo = isBlockedByKidTraining(slot);
+    const booked = isBooked(slot.id);
+
+    const div = document.createElement("div");
+    div.className = "slot";
+
+    const statusTag = blockInfo.blocked
+      ? `<span class="tag danger">Gesperrt</span>`
+      : booked
+        ? `<span class="tag ok">Gebucht</span>`
+        : `<span class="tag warn">Frei</span>`;
+
+    const actionBtn = blockInfo.blocked
+      ? `<button class="btn" disabled>⛔ Nicht möglich</button>`
+      : booked
+        ? `<button class="btn ghost" onclick="cancelBooking('${slot.id}')">Stornieren</button>`
+        : `<button class="btn ok" onclick="openBook('${slot.id}')">Buchen</button>`;
+
+    div.innerHTML = `
+      <div>
+        <strong>${dayName(slot.day)} • ${slot.start}–${slot.end} — ${slot.title}</strong>
+        <small>${slot.desc}${blockInfo.blocked ? " • <b>Block:</b> "+blockInfo.reason : ""}</small>
+      </div>
+      <div class="right">
+        ${statusTag}
+        ${actionBtn}
+      </div>
+    `;
+
+    list.appendChild(div);
+  }
+}
+
+/* =========================
+   BOOK MODAL
+========================= */
+function openBook(slotId){
+  const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
+  if(!slot) return;
+
+  // extra safety
+  const blockInfo = isBlockedByKidTraining(slot);
+  if(blockInfo.blocked){
+    toast("⛔ <b>Gesperrt</b><br>Dieser Slot kollidiert mit Kindertraining.");
+    return;
+  }
+  if(isBooked(slotId)){
+    toast("✅ <b>Schon gebucht</b><br>Du kannst ihn stornieren.");
+    return;
+  }
+
+  selectedSlotId = slotId;
+  $("bookTitle").textContent = `Slot buchen: ${dayName(slot.day)} ${slot.start}–${slot.end}`;
+  $("bookInfo").innerHTML = `
+    <b>${slot.title}</b> – ${slot.desc}<br>
+    Regel: keine Buchung während Kindertraining.
+  `;
+  $("bookType").value = "Eltern Fitness – Kraft";
+  $("bookNote").value = "";
+  $("bookModal").style.display = "flex";
+}
+
+function closeBook(){
+  $("bookModal").style.display = "none";
+  selectedSlotId = null;
+}
+
+function confirmBooking(){
+  if(!selectedSlotId) return;
+
+  const slot = fitnessSlotsCatalog.find(s=>s.id===selectedSlotId);
+  if(!slot) return;
+
+  const type = $("bookType").value;
+  const note = $("bookNote").value.trim();
+
+  const bookings = loadBookings();
+  bookings.push({
+    slotId: selectedSlotId,
+    createdAt: new Date().toISOString(),
+    type,
+    note
+  });
+  saveBookings(bookings);
+
+  closeBook();
+  renderFitness();
+  toast(`✅ <b>Buchung bestätigt</b><br>${dayName(slot.day)} ${slot.start}–${slot.end} • ${type}${note? "<br><span class='small'>Notiz: "+note+"</span>":""}`);
+}
+
+function cancelBooking(slotId){
+  const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
+  const bookings = loadBookings().filter(b => b.slotId !== slotId);
+  saveBookings(bookings);
+  renderFitness();
+  toast(`🗑️ <b>Storniert</b><br>${slot ? (dayName(slot.day)+" "+slot.start+"–"+slot.end) : "Slot"} wurde entfernt.`);
+}
+
+/* init */
+setMode("player");
 </script>
 </body>
 </html>
