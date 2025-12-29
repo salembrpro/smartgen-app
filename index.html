@@ -26,11 +26,9 @@
   --cardA: rgba(16,24,36,.78);
   --cardB: rgba(10,14,22,.70);
 
-  /* Parent Mode boost */
   --pGlow: 0 0 0 1px rgba(255,122,24,.26), 0 0 55px rgba(255,122,24,.18);
 }
 
-/* ============ BASE ============ */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -41,7 +39,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ============ BACKGROUND (Carbon + Hex) ============ */
+/* BACKGROUND (Carbon + Hex) */
 .bg{
   position:fixed; inset:0; z-index:-2;
   background:
@@ -73,7 +71,7 @@ body{
   mix-blend-mode: screen;
 }
 
-/* ============ Parent Mode Overlay (more orange neon) ============ */
+/* Parent Mode Overlay (more orange neon) */
 .parentFX{
   position:fixed; inset:0; z-index:-1;
   opacity:0; pointer-events:none;
@@ -86,7 +84,6 @@ body{
 }
 body.parent .parentFX{ opacity:1; }
 
-/* ============ LAYOUT ============ */
 .wrap{max-width:1120px;margin:auto;padding:18px 14px 26px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:860px){.grid{grid-template-columns:1fr}}
@@ -106,7 +103,7 @@ h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0}
 .hr{border:none;border-top:1px solid var(--line); margin:12px 0}
 
-/* ============ TOP ============ */
+/* TOP */
 .top{
   display:flex; align-items:center; justify-content:space-between;
   gap:12px;
@@ -144,7 +141,7 @@ h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
   box-shadow: 0 0 0 5px rgba(37,208,127,.10);
 }
 
-/* ============ BUTTONS ============ */
+/* BUTTONS */
 .btn{
   padding:12px 14px;
   border-radius:16px;
@@ -166,10 +163,14 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   border-color: rgba(37,208,127,.55);
   background: rgba(37,208,127,.12);
 }
+.btn.warn{
+  border-color: rgba(255,176,32,.55);
+  background: rgba(255,176,32,.12);
+}
 .btn.ghost{background: rgba(255,255,255,.06)}
 .btn:disabled{opacity:.45; cursor:not-allowed}
 
-/* ============ TAGS ============ */
+/* TAGS */
 .tag{
   padding:7px 12px;
   border-radius:999px;
@@ -183,7 +184,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .tag.warn{background: rgba(255,176,32,.14); border-color: rgba(255,176,32,.35)}
 .tag.danger{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.35)}
 
-/* ============ INPUTS ============ */
+/* INPUTS */
 .input{
   padding:13px 12px;
   border-radius:14px;
@@ -195,7 +196,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
   outline:none;
 }
 
-/* ============ LIST / SLOTS ============ */
+/* LIST / SLOTS */
 .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .slot{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -208,7 +209,7 @@ body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .slot small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
 .slot .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 
-/* ============ Coach / Video Demo ============ */
+/* Coach / Video Demo */
 .coachGrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
 .coachCard{
   border:1px solid rgba(255,122,24,.25);
@@ -229,7 +230,6 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
   position:relative;
   height:170px;
 }
-/* fake "video" animation */
 .videoDemo::before{
   content:"";
   position:absolute; inset:-30px;
@@ -261,7 +261,7 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
   font-size:22px;
 }
 
-/* ============ Wallet / NFC Card ============ */
+/* Wallet / NFC Card */
 .walletBtn{
   width:100%;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -277,7 +277,75 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
 .walletBtn .ic{font-size:24px}
 .walletBtn .right{opacity:.9}
 
-/* ============ MODALS ============ */
+/* AI Motivation + Nutrition */
+.aiPanel{
+  border:1px solid rgba(255,122,24,.28);
+  border-radius:18px;
+  padding:14px;
+  background: linear-gradient(180deg, rgba(255,122,24,.08), rgba(0,0,0,.18));
+}
+body.parent .aiPanel{ box-shadow: var(--pGlow); }
+.aiHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.aiHeader b{font-size:14px}
+.aiChoice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media(max-width:420px){.aiChoice{grid-template-columns:1fr}}
+.cardMini{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+}
+.cardMini .ttl{font-weight:1000}
+.cardMini .sub{color:var(--muted);font-size:13px;margin-top:4px}
+
+.kpiRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.kpi{
+  flex:1; min-width:160px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+}
+.kpi b{display:block;font-size:12px;color:var(--muted)}
+.kpi span{display:block;font-size:18px;font-weight:1000;margin-top:4px}
+
+.progressBar{
+  height:12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  overflow:hidden;margin-top:10px;
+}
+.progressFill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, rgba(255,122,24,.25), rgba(255,177,74,.22));
+  box-shadow: var(--pGlow);
+}
+
+.planGrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+.planItem{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:18px;
+  padding:12px;
+}
+.planItem .head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.planItem .head b{font-size:14px}
+.planItem ul{margin:10px 0 0 16px;color:rgba(255,255,255,.86)}
+.planItem li{margin:5px 0}
+
+.shopList{
+  border:1px dashed rgba(255,122,24,.45);
+  background: rgba(255,122,24,.06);
+  border-radius:18px;
+  padding:12px;
+  margin-top:10px;
+}
+.shopList b{display:block;margin-bottom:8px}
+.shopList .item{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,.10)}
+.shopList .item:first-of-type{border-top:none}
+.chk{accent-color: var(--accent); transform: scale(1.2);}
+
+/* MODALS */
 .modalWrap{
   position:fixed; inset:0;
   background:rgba(0,0,0,.62);
@@ -317,7 +385,6 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
   display:flex; gap:10px; justify-content:flex-end;
 }
 
-/* Wallet card inside modal */
 .idCard{
   border-radius:22px;
   border:1px solid rgba(255,122,24,.40);
@@ -366,7 +433,7 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
   font-weight:1000;
 }
 
-/* ============ TOAST ============ */
+/* TOAST */
 .toast{
   position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
   background: rgba(16,24,36,.94);
@@ -478,6 +545,70 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
           </div>
         </div>
 
+        <!-- AI Motivation + Nutrition -->
+        <div class="card">
+          <div class="cardPad">
+            <h2>🤖 KI Motivation + Ernährung (Eltern)</h2>
+
+            <div class="aiPanel">
+              <div class="aiHeader">
+                <b>Wähle dein Ziel</b>
+                <span class="tag warn" id="aiGoalTag">Noch nicht gewählt</span>
+              </div>
+
+              <div class="aiChoice">
+                <div class="cardMini">
+                  <div class="ttl">🔥 Abnehmen / Energie</div>
+                  <div class="sub">Kalorien smart • weniger Zucker • mehr Energie</div>
+                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('cut')">Ziel wählen</button>
+                </div>
+                <div class="cardMini">
+                  <div class="ttl">💪 Fit & Stark (Kraft)</div>
+                  <div class="sub">Protein • Routine • einfache Pläne</div>
+                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('strength')">Ziel wählen</button>
+                </div>
+                <div class="cardMini">
+                  <div class="ttl">🧘 Rücken / Mobility</div>
+                  <div class="sub">Entlastung • Dehnen • weniger Schmerzen</div>
+                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('mobility')">Ziel wählen</button>
+                </div>
+                <div class="cardMini">
+                  <div class="ttl">🥗 Gesund & Alltag</div>
+                  <div class="sub">Besser essen ohne Stress • Familie kompatibel</div>
+                  <button class="btn primary" style="margin-top:10px;width:100%" onclick="setGoal('healthy')">Ziel wählen</button>
+                </div>
+              </div>
+
+              <hr class="hr">
+
+              <div class="kpiRow">
+                <div class="kpi"><b>Wasser heute</b><span id="waterNow">0/6</span></div>
+                <div class="kpi"><b>Motivation heute</b><span id="motNow">—</span></div>
+              </div>
+
+              <div class="progressBar" title="Wochen-Fokus (Demo)">
+                <div class="progressFill" id="weekFill"></div>
+              </div>
+              <div class="small" style="margin-top:8px">
+                Wochen-Fokus: <b id="weekLabel">0%</b> (Demo – steigt, wenn du Plan nutzt)
+              </div>
+
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+                <button class="btn ok" onclick="waterPlus()">💧 Wasser +1</button>
+                <button class="btn ghost" onclick="newMotivation()">✨ Neue Motivation</button>
+                <button class="btn warn" onclick="generateDayPlan()">🍽️ Tagesplan erstellen</button>
+              </div>
+
+              <div class="planGrid" id="planGrid"></div>
+              <div class="shopList" id="shopList" style="display:none"></div>
+            </div>
+
+            <div class="small" style="margin-top:10px">
+              Hinweis: Später kann die KI echte Videos/Übungen zeigen und Ernährung an Ziele, Allergien, Ramadan etc. anpassen.
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -515,7 +646,7 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
         <div class="cardPad">
           <h2>👨‍👩‍👦 Eltern Bereich</h2>
           <div class="small">
-            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung + KI Coach.
+            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung + KI Coach + Motivation + Ernährung.
           </div>
         </div>
       </div>
@@ -532,7 +663,7 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
       <button class="x" onclick="closePin()">✕</button>
     </div>
     <div class="modalBody">
-      <div class="small">Demo-PIN: <b>1234</b> (später individuell pro Elternkonto)</div>
+      <div class="small">Demo-PIN: <b>1234</b></div>
       <div style="margin-top:10px">
         <input id="pinInput" class="input" placeholder="PIN eingeben">
       </div>
@@ -624,14 +755,12 @@ body.parent .coachCard{ box-shadow: var(--pGlow); }
 ========================= */
 const PARENT_PIN = "1234";
 
-// Kinder-Training blockiert Eltern-Fitness
 const kidTrainings = [
   { day: 3, start: "18:00", end: "19:30", label: "Kindertraining (Mi 18:00–19:30)" },
   { day: 5, start: "17:30", end: "19:00", label: "Kindertraining (Fr 17:30–19:00)" },
   { day: 6, start: "10:00", end: "11:30", label: "Kindertraining (Sa 10:00–11:30)" },
 ];
 
-// Eltern-Fitness (wiederkehrend)
 const fitnessSlotsCatalog = [
   { id:"mon_0900", day:1, start:"09:00", end:"10:00", title:"Eltern Fitness", desc:"Kraft • Core" },
   { id:"mon_1100", day:1, start:"11:00", end:"12:00", title:"Eltern Fitness", desc:"Cardio • Intervall" },
@@ -645,45 +774,31 @@ const fitnessSlotsCatalog = [
 
 const KEY_BOOK = "sg_parent_bookings_v1";
 
-/* KI Coach Demo (Texte + “Mini-Video” Placeholder) */
+/* Fitness Coach Demo */
 const COACH = [
-  {
-    title:"Rücken & Core (10 Min)",
-    steps:[
-      "1) Cat-Cow (45s)",
-      "2) Plank (3×20s)",
-      "3) Glute Bridge (3×10)",
-      "4) Stretch (2 Min)"
-    ],
-    tip:"Perfekt nach der Arbeit. Fokus: Rücken entlasten."
-  },
-  {
-    title:"Cardio Quick (12 Min)",
-    steps:[
-      "1) Warm-up (2 Min)",
-      "2) 6× (30s schnell / 30s locker)",
-      "3) Cooldown (2 Min)"
-    ],
-    tip:"Wenn du wenig Zeit hast – aber schnell Energie willst."
-  },
-  {
-    title:"Mobility Beine (8 Min)",
-    steps:[
-      "1) Hüftöffner (60s)",
-      "2) Kniebeugen langsam (2×8)",
-      "3) Wadenmobilität (60s)",
-      "4) Dehnen (2 Min)"
-    ],
-    tip:"Sehr gut, wenn du viel sitzt oder Schmerzen in den Knien hast."
-  }
+  { title:"Rücken & Core (10 Min)", steps:["Cat-Cow (45s)","Plank (3×20s)","Glute Bridge (3×10)","Stretch (2 Min)"], tip:"Perfekt nach der Arbeit. Fokus: Rücken entlasten." },
+  { title:"Cardio Quick (12 Min)", steps:["Warm-up (2 Min)","6× (30s schnell / 30s locker)","Cooldown (2 Min)"], tip:"Wenn du wenig Zeit hast – aber schnell Energie willst." },
+  { title:"Mobility Beine (8 Min)", steps:["Hüftöffner (60s)","Kniebeugen langsam (2×8)","Wadenmobilität (60s)","Dehnen (2 Min)"], tip:"Sehr gut, wenn du viel sitzt oder Kniespannung hast." }
 ];
 
-/* =========================
-   STATE / HELPERS
-========================= */
+/* KI Motivation + Ernährung */
+const KEY_AI = "sg_parent_ai_v1";
+const MOTIVATION = [
+  "Heute zählt nur eins: <b>du bleibst dran</b>.",
+  "Kleine Schritte = <b>große Veränderung</b>.",
+  "Du brauchst keine perfekte Woche – nur <b>Konstanz</b>.",
+  "Du bist Vorbild. <b>Dein Kind sieht alles</b>.",
+  "Wenn du heute 1% besser wirst, bist du in 100 Tagen <b>100% besser</b>.",
+  "Disziplin schlägt Motivation – aber heute bekommst du beides 😄",
+  "Stark ist, wer anfängt. <b>Noch stärker</b> ist, wer weitermacht."
+];
+
 let mode = "player";
 let selectedSlotId = null;
 
+/* =========================
+   HELPERS
+========================= */
 function $(id){ return document.getElementById(id); }
 
 function toast(msg){
@@ -691,7 +806,7 @@ function toast(msg){
   t.innerHTML = msg;
   t.style.display = "block";
   clearTimeout(window.__to);
-  window.__to = setTimeout(()=> t.style.display="none", 2700);
+  window.__to = setTimeout(()=> t.style.display="none", 2800);
 }
 
 function dayName(d){ return ["So","Mo","Di","Mi","Do","Fr","Sa"][d]; }
@@ -710,7 +825,7 @@ function isBlockedByKidTraining(slot){
 }
 
 /* =========================
-   MODE / STATUS UI
+   STATUS / MODE
 ========================= */
 function setStatusUI(text){
   $("statusText").textContent = text;
@@ -736,6 +851,7 @@ function setMode(next){
   if(mode === "parent"){
     renderFitness();
     renderCoach();
+    loadAI();
     setStatusUI("Aktiv");
   }else{
     setStatusUI("Aktiv");
@@ -756,7 +872,7 @@ function checkPin(){
   if(pin === PARENT_PIN){
     closePin();
     setMode("parent");
-    toast("✅ <b>Eltern-Freigabe aktiv</b><br>Orange Neon + KI Coach + Wallet ist verfügbar.");
+    toast("✅ <b>Eltern-Freigabe aktiv</b><br>KI Motivation + Ernährung ist jetzt drin.");
   } else {
     toast("❌ <b>Falscher PIN</b><br>Bitte erneut versuchen.");
   }
@@ -828,7 +944,6 @@ function renderFitness(){
         ${actionBtn}
       </div>
     `;
-
     list.appendChild(div);
   }
 }
@@ -846,7 +961,7 @@ function renderCoach(){
     card.innerHTML = `
       <div class="coachTop">
         <div class="coachTitle"><span class="ai">🤖</span> <span>${c.title}</span></div>
-        <button class="btn primary" onclick="useCoach(${idx})">Plan starten</button>
+        <button class="btn primary" onclick="toast('🤖 <b>Coach gestartet</b><br>${c.title}')">Plan starten</button>
       </div>
 
       <div class="videoDemo" title="Mini Video Demo (Placeholder)">
@@ -869,9 +984,208 @@ function renderCoach(){
   });
 }
 
-function useCoach(i){
-  const c = COACH[i];
-  toast(`🤖 <b>KI Coach aktiviert</b><br>${c.title}<br><span class="small">Plan: ${c.steps[0]}</span>`);
+/* =========================
+   KI Motivation + Ernährung
+========================= */
+function loadAIState(){
+  const raw = localStorage.getItem(KEY_AI);
+  if(raw) return JSON.parse(raw);
+  return {
+    goal: null,        // cut | strength | mobility | healthy
+    water: 0,          // 0..6
+    week: 10,          // 0..100 demo
+    motivation: null,
+    plan: null,        // generated plan object
+    shop: []           // shopping list
+  };
+}
+function saveAIState(s){ localStorage.setItem(KEY_AI, JSON.stringify(s)); }
+
+function goalLabel(g){
+  if(g==="cut") return "🔥 Abnehmen / Energie";
+  if(g==="strength") return "💪 Fit & Stark";
+  if(g==="mobility") return "🧘 Rücken / Mobility";
+  if(g==="healthy") return "🥗 Gesund & Alltag";
+  return "Noch nicht gewählt";
+}
+
+function loadAI(){
+  const s = loadAIState();
+  $("aiGoalTag").textContent = goalLabel(s.goal);
+  $("aiGoalTag").className = "tag " + (s.goal ? "ok" : "warn");
+
+  $("waterNow").textContent = `${Math.min(6,s.water)}/6`;
+  if(!s.motivation) s.motivation = randomMotivation();
+  $("motNow").innerHTML = s.motivation;
+
+  const week = Math.max(0, Math.min(100, s.week||0));
+  $("weekFill").style.width = week + "%";
+  $("weekLabel").textContent = week + "%";
+
+  renderPlan(s);
+  saveAIState(s);
+}
+
+function randomMotivation(){
+  return MOTIVATION[Math.floor(Math.random()*MOTIVATION.length)];
+}
+
+function setGoal(goal){
+  const s = loadAIState();
+  s.goal = goal;
+  s.week = Math.min(100, (s.week||10) + 8);
+  s.motivation = randomMotivation();
+  saveAIState(s);
+  loadAI();
+  toast("✅ <b>Ziel gespeichert</b><br>"+goalLabel(goal));
+}
+
+function waterPlus(){
+  const s = loadAIState();
+  s.water = Math.min(6, (s.water||0) + 1);
+  s.week = Math.min(100, (s.week||10) + 2);
+  saveAIState(s);
+  loadAI();
+  toast("💧 <b>Wasser getrunken</b><br>Sehr gut! Weiter so.");
+}
+
+function newMotivation(){
+  const s = loadAIState();
+  s.motivation = randomMotivation();
+  s.week = Math.min(100, (s.week||10) + 1);
+  saveAIState(s);
+  loadAI();
+  toast("✨ <b>Neue Motivation</b><br>Gib Gas!");
+}
+
+function generateDayPlan(){
+  const s = loadAIState();
+
+  if(!s.goal){
+    toast("⚠️ <b>Bitte zuerst Ziel wählen</b><br>Dann kann die KI deinen Tagesplan erzeugen.");
+    return;
+  }
+
+  const plan = buildPlanForGoal(s.goal);
+  s.plan = plan;
+  s.shop = plan.shop;
+  s.week = Math.min(100, (s.week||10) + 12);
+
+  saveAIState(s);
+  loadAI();
+  toast("🍽️ <b>Tagesplan erstellt</b><br>"+goalLabel(s.goal));
+}
+
+function buildPlanForGoal(goal){
+  // Demo: einfache, familienfreundliche Pläne (keine medizinische Beratung)
+  const base = {
+    breakfast: ["Haferflocken + Joghurt", "1 Banane", "Wasser oder ungesüßter Tee"],
+    lunch: ["Reis oder Kartoffeln", "Hähnchen/Tofu", "Gemüse (Brokkoli/Salat)"],
+    snack: ["Nüsse (kleine Hand)", "1 Apfel"],
+    dinner: ["Omelette oder Thunfisch-Salat", "Vollkornbrot klein", "Gemüse"]
+  };
+
+  let title = "Ausgewogener Tagesplan";
+  let tip = "Einfach, schnell, effektiv.";
+  let shop = ["Haferflocken", "Joghurt", "Bananen", "Reis/Kartoffeln", "Hähnchen oder Tofu", "Gemüse", "Nüsse", "Äpfel", "Eier", "Vollkornbrot"];
+
+  if(goal === "cut"){
+    title = "Abnehmen / Energie – Tagesplan";
+    tip = "Mehr Protein, weniger Zucker. Portionsgröße im Blick.";
+    base.snack = ["Skyr oder Quark", "Beeren"];
+    base.dinner = ["Großer Salat + Protein (Hähnchen/Thunfisch)", "Olivenöl 1 TL"];
+    shop = ["Skyr/Quark", "Beeren", "Salatmix", "Thunfisch/Hähnchen", "Olivenöl", ...shop];
+  }
+
+  if(goal === "strength"){
+    title = "Fit & Stark – Tagesplan";
+    tip = "Protein hoch + regelmäßige Mahlzeiten. Nach Training 1 Protein-Snack.";
+    base.breakfast = ["Eier + Vollkornbrot", "Joghurt", "1 Obst"];
+    base.snack = ["Protein Snack (z.B. Joghurt/Skyr)", "Nüsse"];
+    shop = ["Eier", "Vollkornbrot", "Skyr", "Hähnchen/Tofu", "Reis", "Nüsse", "Gemüse", "Obst"];
+  }
+
+  if(goal === "mobility"){
+    title = "Rücken / Mobility – Tagesplan";
+    tip = "Entzündungsarm: viel Gemüse, Wasser, weniger Fast Food.";
+    base.breakfast = ["Haferflocken", "Nüsse", "Wasser"];
+    base.lunch = ["Fisch oder Tofu", "Gemüse", "Kartoffeln"];
+    base.dinner = ["Gemüsepfanne", "Eier oder Bohnen"];
+    shop = ["Fisch (optional)", "Tofu", "Kartoffeln", "Gemüse (viel)", "Bohnen", "Nüsse", "Haferflocken"];
+  }
+
+  if(goal === "healthy"){
+    title = "Gesund & Alltag – Tagesplan";
+    tip = "Familien-kompatibel: gleiche Basis, nur Portionen anpassen.";
+    base.snack = ["Karotten/Gurke", "Hummus"];
+    shop = ["Karotten", "Gurke", "Hummus", ...shop];
+  }
+
+  return {
+    title,
+    tip,
+    meals: [
+      { name:"Frühstück", items: base.breakfast },
+      { name:"Mittag", items: base.lunch },
+      { name:"Snack", items: base.snack },
+      { name:"Abend", items: base.dinner },
+    ],
+    shop: [...new Set(shop)]
+  };
+}
+
+function renderPlan(s){
+  const grid = $("planGrid");
+  const shop = $("shopList");
+
+  grid.innerHTML = "";
+  shop.style.display = "none";
+  shop.innerHTML = "";
+
+  if(!s.plan) return;
+
+  const p = s.plan;
+
+  const planBox = document.createElement("div");
+  planBox.className = "planItem";
+  planBox.innerHTML = `
+    <div class="head">
+      <b>🍽️ ${p.title}</b>
+      <span class="tag ok">Heute</span>
+    </div>
+    <div class="small" style="margin-top:6px"><b>Tipp:</b> ${p.tip}</div>
+  `;
+  const ulWrap = document.createElement("div");
+  ulWrap.style.marginTop = "10px";
+
+  p.meals.forEach(m=>{
+    const item = document.createElement("div");
+    item.className = "planItem";
+    item.innerHTML = `
+      <div class="head"><b>${m.name}</b><span class="tag warn">einfach</span></div>
+      <ul>${m.items.map(x=>`<li>${x}</li>`).join("")}</ul>
+    `;
+    grid.appendChild(item);
+  });
+
+  grid.prepend(planBox);
+
+  // shopping list
+  shop.style.display = "block";
+  shop.innerHTML = `<b>🛒 Einkaufsliste (Demo)</b>` + p.shop.map((it,idx)=>`
+    <div class="item">
+      <label style="display:flex;gap:10px;align-items:center">
+        <input class="chk" type="checkbox" onchange="toggleShop(${idx}, this.checked)">
+        <span>${it}</span>
+      </label>
+      <span class="small">✓</span>
+    </div>
+  `).join("");
+}
+
+function toggleShop(idx, checked){
+  // Demo only (could store per item)
+  if(checked) toast("✅ <b>Zur Liste abgehakt</b><br>Top!");
 }
 
 /* =========================
@@ -932,9 +1246,7 @@ function cancelBooking(slotId){
 ========================= */
 function openWallet(){ $("walletModal").style.display="flex"; }
 function closeWallet(){ $("walletModal").style.display="none"; }
-function simulateNFC(){
-  toast("📶 <b>NFC Tap OK</b><br>Zugang/Check-in registriert (Demo).");
-}
+function simulateNFC(){ toast("📶 <b>NFC Tap OK</b><br>Zugang/Check-in registriert (Demo)."); }
 
 /* init */
 setStatusUI("Aktiv");
