@@ -13,7 +13,7 @@
   --line:rgba(255,255,255,.12);
 
   --accent:#ff7a18;
-  --accentSoft:rgba(255,122,24,.18);
+  --accent2:#ffb14a;
 
   --ok:#25d07f;
   --warn:#ffb020;
@@ -25,6 +25,9 @@
 
   --cardA: rgba(16,24,36,.78);
   --cardB: rgba(10,14,22,.70);
+
+  /* Parent Mode boost */
+  --pGlow: 0 0 0 1px rgba(255,122,24,.26), 0 0 55px rgba(255,122,24,.18);
 }
 
 /* ============ BASE ============ */
@@ -34,22 +37,19 @@ body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color:var(--text);
-  background: #070a10;
+  background:#070a10;
   overflow-x:hidden;
 }
 
-/* ============ CARBON + HEX BACKGROUND (SUBTLE) ============ */
+/* ============ BACKGROUND (Carbon + Hex) ============ */
 .bg{
-  position:fixed; inset:0;
-  z-index:-1;
+  position:fixed; inset:0; z-index:-2;
   background:
     radial-gradient(900px 420px at 14% -10%, rgba(255,122,24,.14), transparent 62%),
     radial-gradient(900px 420px at 100% 10%, rgba(255,122,24,.08), transparent 64%),
     radial-gradient(900px 420px at 55% 115%, rgba(255,255,255,.06), transparent 60%),
     linear-gradient(180deg, #070a10 0%, #0b1323 55%, #070a10 100%);
 }
-
-/* Carbon texture via repeating gradients (no image needed) */
 .bg::before{
   content:"";
   position:absolute; inset:0;
@@ -61,8 +61,6 @@ body{
   mix-blend-mode: overlay;
   filter: contrast(1.1);
 }
-
-/* Hexagon pattern (very subtle) */
 .bg::after{
   content:"";
   position:absolute; inset:0;
@@ -72,13 +70,27 @@ body{
     linear-gradient(60deg, rgba(255,255,255,.08) 1px, transparent 1px),
     linear-gradient(-60deg, rgba(255,255,255,.08) 1px, transparent 1px);
   background-size: 22px 22px, 44px 38px, 44px 38px;
-  background-position: 0 0, 0 0, 0 0;
   mix-blend-mode: screen;
 }
 
-.wrap{max-width:1100px;margin:auto;padding:18px 14px 26px}
+/* ============ Parent Mode Overlay (more orange neon) ============ */
+.parentFX{
+  position:fixed; inset:0; z-index:-1;
+  opacity:0; pointer-events:none;
+  transition: opacity .25s ease;
+  background:
+    radial-gradient(900px 500px at 18% 0%, rgba(255,122,24,.22), transparent 62%),
+    radial-gradient(900px 500px at 90% 20%, rgba(255,122,24,.14), transparent 62%),
+    radial-gradient(900px 500px at 50% 120%, rgba(255,177,74,.10), transparent 65%);
+  filter: blur(.2px);
+}
+body.parent .parentFX{ opacity:1; }
 
-/* ============ CARDS / TYPO ============ */
+/* ============ LAYOUT ============ */
+.wrap{max-width:1120px;margin:auto;padding:18px 14px 26px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
 .card{
   border:1px solid var(--line);
   border-radius: var(--radius);
@@ -87,20 +99,14 @@ body{
   overflow:hidden;
 }
 .cardPad{padding:16px}
-h2{
-  margin:0 0 10px 0;
-  font-size:18px;
-  letter-spacing:.2px;
-}
+.hidden{display:none}
+
+h2{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
 .small{color:var(--muted);font-size:13px;line-height:1.45}
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:860px){.grid{grid-template-columns:1fr}}
-
 .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0}
 .hr{border:none;border-top:1px solid var(--line); margin:12px 0}
 
-/* ============ TOP BAR ============ */
+/* ============ TOP ============ */
 .top{
   display:flex; align-items:center; justify-content:space-between;
   gap:12px;
@@ -111,19 +117,17 @@ h2{
     radial-gradient(700px 220px at 90% 10%, rgba(255,122,24,.10), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,.04), transparent);
 }
-.brand{
-  display:flex; align-items:center; gap:12px;
-}
+.brand{display:flex; align-items:center; gap:12px;}
 .logoDot{
-  width:42px; height:42px; border-radius:16px;
+  width:44px; height:44px; border-radius:16px;
   background:
     radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 55%),
     linear-gradient(135deg, rgba(255,122,24,.95), rgba(255,177,74,.45));
   box-shadow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 55px rgba(255,122,24,.18);
 }
 .brandTitle{font-weight:1000; letter-spacing:.2px}
-.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 
+.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 .pill{
   display:inline-flex; align-items:center; gap:10px;
   padding:10px 12px;
@@ -131,7 +135,7 @@ h2{
   border:1px solid var(--line);
   background: rgba(0,0,0,.22);
   box-shadow: var(--shadow2);
-  font-weight:900;
+  font-weight:1000;
   font-size:13px;
 }
 .dot{
@@ -140,7 +144,7 @@ h2{
   box-shadow: 0 0 0 5px rgba(37,208,127,.10);
 }
 
-/* ============ BUTTONS (BIGGER / CLEAR) ============ */
+/* ============ BUTTONS ============ */
 .btn{
   padding:12px 14px;
   border-radius:16px;
@@ -154,9 +158,10 @@ h2{
 .btn:active{transform:translateY(1px)}
 .btn.primary{
   border-color: rgba(255,122,24,.75);
-  background: linear-gradient(135deg, rgba(255,122,24,.20), rgba(255,255,255,.02));
+  background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(255,255,255,.02));
   box-shadow: 0 18px 55px rgba(255,122,24,.12);
 }
+body.parent .btn.primary{ box-shadow: var(--pGlow); }
 .btn.ok{
   border-color: rgba(37,208,127,.55);
   background: rgba(37,208,127,.12);
@@ -203,8 +208,74 @@ h2{
 .slot small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
 .slot .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 
-/* Bigger icons */
-.bigIcon{font-size:26px; margin-right:8px}
+/* ============ Coach / Video Demo ============ */
+.coachGrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+.coachCard{
+  border:1px solid rgba(255,122,24,.25);
+  background: linear-gradient(180deg, rgba(255,122,24,.10), rgba(0,0,0,.18));
+  border-radius:18px;
+  padding:14px;
+}
+body.parent .coachCard{ box-shadow: var(--pGlow); }
+.coachTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.coachTitle{display:flex;align-items:center;gap:10px;font-weight:1000}
+.coachTitle .ai{font-size:22px}
+.videoDemo{
+  margin-top:10px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.20);
+  position:relative;
+  height:170px;
+}
+/* fake "video" animation */
+.videoDemo::before{
+  content:"";
+  position:absolute; inset:-30px;
+  background:
+    radial-gradient(120px 120px at 25% 30%, rgba(255,122,24,.25), transparent 60%),
+    radial-gradient(160px 160px at 70% 55%, rgba(255,177,74,.12), transparent 62%),
+    linear-gradient(135deg, rgba(255,255,255,.05), rgba(0,0,0,.25));
+  transform: rotate(8deg);
+  animation: floaty 5.2s ease-in-out infinite;
+}
+@keyframes floaty{
+  0%,100%{transform:translateY(0) rotate(8deg)}
+  50%{transform:translateY(-10px) rotate(8deg)}
+}
+.videoOverlay{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  gap:10px;
+  color:rgba(255,255,255,.92);
+  font-weight:1000;
+  text-shadow: 0 10px 30px rgba(0,0,0,.7);
+}
+.play{
+  width:56px;height:56px;border-radius:20px;
+  border:1px solid rgba(255,122,24,.55);
+  background: rgba(255,122,24,.16);
+  display:grid;place-items:center;
+  box-shadow: var(--pGlow);
+  font-size:22px;
+}
+
+/* ============ Wallet / NFC Card ============ */
+.walletBtn{
+  width:100%;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,122,24,.35);
+  background: linear-gradient(135deg, rgba(255,122,24,.14), rgba(0,0,0,.20));
+  cursor:pointer;
+  font-weight:1000;
+}
+.walletBtn:hover{border-color: rgba(255,122,24,.55)}
+.walletBtn .left{display:flex;align-items:center;gap:12px}
+.walletBtn .ic{font-size:24px}
+.walletBtn .right{opacity:.9}
 
 /* ============ MODALS ============ */
 .modalWrap{
@@ -215,7 +286,7 @@ h2{
   padding:16px; z-index:50;
 }
 .modal{
-  width:min(600px, 100%);
+  width:min(640px, 100%);
   background: linear-gradient(180deg, rgba(16,24,36,.94), rgba(10,14,22,.92));
   border:1px solid var(--line);
   border-radius:20px;
@@ -227,7 +298,7 @@ h2{
   border-bottom:1px solid var(--line);
   display:flex; align-items:center; justify-content:space-between;
   background:
-    radial-gradient(700px 220px at 15% 0%, rgba(255,122,24,.16), transparent 60%),
+    radial-gradient(700px 220px at 15% 0%, rgba(255,122,24,.18), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,.04), transparent);
 }
 .modalHead b{font-size:14px; letter-spacing:.2px}
@@ -244,6 +315,55 @@ h2{
   padding:14px 16px;
   border-top:1px solid var(--line);
   display:flex; gap:10px; justify-content:flex-end;
+}
+
+/* Wallet card inside modal */
+.idCard{
+  border-radius:22px;
+  border:1px solid rgba(255,122,24,.40);
+  background:
+    radial-gradient(420px 240px at 20% 0%, rgba(255,122,24,.26), transparent 60%),
+    radial-gradient(420px 240px at 90% 40%, rgba(255,177,74,.14), transparent 62%),
+    linear-gradient(135deg, rgba(0,0,0,.25), rgba(255,255,255,.03));
+  padding:16px;
+  box-shadow: var(--pGlow);
+}
+.idTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.idName{font-weight:1000;font-size:16px}
+.idSub{color:rgba(255,230,210,.85);font-weight:900;font-size:12px}
+.idGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.kv{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  border-radius:14px;
+  padding:10px;
+}
+.kv b{display:block;font-size:12px}
+.kv span{color:rgba(255,255,255,.85);font-weight:900}
+.qr{
+  margin-top:12px;
+  display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+}
+.qrBox{
+  width:120px;height:120px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.16) 0 6px, rgba(0,0,0,.0) 6px 12px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 6px, rgba(0,0,0,.0) 6px 12px);
+  opacity:.9;
+}
+.nfcPill{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,122,24,.45);
+  background: rgba(255,122,24,.12);
+  font-weight:1000;
 }
 
 /* ============ TOAST ============ */
@@ -265,6 +385,7 @@ h2{
 
 <body>
 <div class="bg"></div>
+<div class="parentFX"></div>
 
 <div class="wrap">
 
@@ -275,7 +396,7 @@ h2{
         <div class="logoDot"></div>
         <div>
           <div class="brandTitle">SmartGen Fussball Akademie</div>
-          <div class="small">Spieler ↔ Eltern • Design Upgrade (Carbon + Hex) • Fitness-Buchung</div>
+          <div class="small" id="modeLabel">Modus: Spieler</div>
         </div>
       </div>
 
@@ -320,12 +441,28 @@ h2{
 
         <div class="card">
           <div class="cardPad">
-            <h2>👦 Kind – Übersicht</h2>
-            <div class="row"><b>Name</b><span>Amine B.</span></div>
+            <h2>👨‍👩‍👦 Eltern Dashboard</h2>
+            <div class="row"><b>Kind</b><span>Amine B.</span></div>
             <div class="row"><b>Vertrag</b><span class="tag ok">Aktiv (Premium)</span></div>
             <div class="row"><b>Laufzeit</b><span>01.02.2025 – 31.01.2026</span></div>
             <div class="row"><b>Anwesenheit</b><span>84%</span></div>
-            <div class="small">Eltern sehen klare Infos – ohne komplizierte Menüs.</div>
+
+            <hr class="hr">
+
+            <button class="walletBtn" onclick="openWallet()">
+              <div class="left">
+                <span class="ic">🧡</span>
+                <div>
+                  <div style="font-weight:1000">SmartGen NFC / Wallet Karte</div>
+                  <div class="small">Tap & Check-in • QR • Orange Edition</div>
+                </div>
+              </div>
+              <div class="right">›</div>
+            </button>
+
+            <div class="small" style="margin-top:10px">
+              Tipp: Das ist später Apple Wallet / Google Wallet. Jetzt ist es als Demo in der App.
+            </div>
           </div>
         </div>
 
@@ -361,6 +498,15 @@ h2{
 
           <hr class="hr">
           <div class="small"><b>Gebucht:</b> <span id="bookCount">0</span> Slot(s) • Du kannst auch stornieren.</div>
+
+          <hr class="hr">
+          <h2>🧠 KI Fitness Coach (Eltern)</h2>
+
+          <div class="coachGrid" id="coachGrid"></div>
+
+          <div class="small" style="margin-top:10px">
+            Idee: Später echte Videos + personalisierte Pläne (Rücken, Cardio, Kraft) je nach Ziel.
+          </div>
         </div>
       </div>
 
@@ -369,18 +515,8 @@ h2{
         <div class="cardPad">
           <h2>👨‍👩‍👦 Eltern Bereich</h2>
           <div class="small">
-            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung.
+            Klicke oben auf <b>Eltern</b> und gib den PIN ein. Dann erscheint hier die Fitness-Buchung + KI Coach.
           </div>
-        </div>
-      </div>
-
-      <!-- EXTRAS -->
-      <div id="extrasCard" class="card hidden">
-        <div class="cardPad">
-          <h2>⭐ Zusatzoptionen</h2>
-          <div class="row"><span><span class="bigIcon">🥗</span><b>KI Ernährung</b></span><span class="tag warn">Nächster Schritt</span></div>
-          <div class="row"><span><span class="bigIcon">🧠</span><b>KI Motivation</b></span><span class="tag warn">Nächster Schritt</span></div>
-          <div class="row"><span><span class="bigIcon">📊</span><b>Extra Analyse</b></span><span class="tag">Optional</span></div>
         </div>
       </div>
 
@@ -440,6 +576,46 @@ h2{
   </div>
 </div>
 
+<!-- WALLET MODAL -->
+<div id="walletModal" class="modalWrap">
+  <div class="modal">
+    <div class="modalHead">
+      <b>🧡 SmartGen NFC / Wallet Karte</b>
+      <button class="x" onclick="closeWallet()">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="idCard">
+        <div class="idTop">
+          <div>
+            <div class="idName">Eltern-ID • SmartGen</div>
+            <div class="idSub">Orange NFC Edition • Demo</div>
+          </div>
+          <div class="nfcPill">📶 NFC aktiv</div>
+        </div>
+
+        <div class="idGrid">
+          <div class="kv"><b>Elternteil</b><span>Parent One</span></div>
+          <div class="kv"><b>Kind</b><span>Amine B.</span></div>
+          <div class="kv"><b>Vertrag</b><span>Premium</span></div>
+          <div class="kv"><b>Status</b><span>Aktiv</span></div>
+        </div>
+
+        <div class="qr">
+          <div class="qrBox" title="QR Demo"></div>
+          <div style="flex:1;min-width:200px">
+            <div style="font-weight:1000">Check-in / Zugang</div>
+            <div class="small">QR scannen oder NFC tap am Eingang (Demo Logik).</div>
+            <button class="btn primary" style="margin-top:10px" onclick="simulateNFC()">📶 NFC Tap simulieren</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="btn" onclick="closeWallet()">Schließen</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -469,6 +645,39 @@ const fitnessSlotsCatalog = [
 
 const KEY_BOOK = "sg_parent_bookings_v1";
 
+/* KI Coach Demo (Texte + “Mini-Video” Placeholder) */
+const COACH = [
+  {
+    title:"Rücken & Core (10 Min)",
+    steps:[
+      "1) Cat-Cow (45s)",
+      "2) Plank (3×20s)",
+      "3) Glute Bridge (3×10)",
+      "4) Stretch (2 Min)"
+    ],
+    tip:"Perfekt nach der Arbeit. Fokus: Rücken entlasten."
+  },
+  {
+    title:"Cardio Quick (12 Min)",
+    steps:[
+      "1) Warm-up (2 Min)",
+      "2) 6× (30s schnell / 30s locker)",
+      "3) Cooldown (2 Min)"
+    ],
+    tip:"Wenn du wenig Zeit hast – aber schnell Energie willst."
+  },
+  {
+    title:"Mobility Beine (8 Min)",
+    steps:[
+      "1) Hüftöffner (60s)",
+      "2) Kniebeugen langsam (2×8)",
+      "3) Wadenmobilität (60s)",
+      "4) Dehnen (2 Min)"
+    ],
+    tip:"Sehr gut, wenn du viel sitzt oder Schmerzen in den Knien hast."
+  }
+];
+
 /* =========================
    STATE / HELPERS
 ========================= */
@@ -482,7 +691,7 @@ function toast(msg){
   t.innerHTML = msg;
   t.style.display = "block";
   clearTimeout(window.__to);
-  window.__to = setTimeout(()=> t.style.display="none", 2600);
+  window.__to = setTimeout(()=> t.style.display="none", 2700);
 }
 
 function dayName(d){ return ["So","Mo","Di","Mi","Do","Fr","Sa"][d]; }
@@ -516,12 +725,21 @@ function setStatusUI(text){
 
 function setMode(next){
   mode = next;
+  document.body.classList.toggle("parent", mode==="parent");
+  $("modeLabel").textContent = "Modus: " + (mode==="parent" ? "Eltern (Orange Neon)" : "Spieler");
+
   $("playerDash").classList.toggle("hidden", mode !== "player");
   $("parentDash").classList.toggle("hidden", mode !== "parent");
   $("fitnessCard").classList.toggle("hidden", mode !== "parent");
-  $("extrasCard").classList.toggle("hidden", mode !== "parent");
   $("parentHint").classList.toggle("hidden", mode === "parent");
-  if(mode === "parent") renderFitness();
+
+  if(mode === "parent"){
+    renderFitness();
+    renderCoach();
+    setStatusUI("Aktiv");
+  }else{
+    setStatusUI("Aktiv");
+  }
 }
 
 /* =========================
@@ -538,7 +756,7 @@ function checkPin(){
   if(pin === PARENT_PIN){
     closePin();
     setMode("parent");
-    toast("✅ <b>Eltern-Freigabe aktiv</b><br>Fitness-Buchung ist jetzt verfügbar.");
+    toast("✅ <b>Eltern-Freigabe aktiv</b><br>Orange Neon + KI Coach + Wallet ist verfügbar.");
   } else {
     toast("❌ <b>Falscher PIN</b><br>Bitte erneut versuchen.");
   }
@@ -616,6 +834,47 @@ function renderFitness(){
 }
 
 /* =========================
+   COACH UI
+========================= */
+function renderCoach(){
+  const grid = $("coachGrid");
+  grid.innerHTML = "";
+
+  COACH.forEach((c,idx)=>{
+    const card = document.createElement("div");
+    card.className = "coachCard";
+    card.innerHTML = `
+      <div class="coachTop">
+        <div class="coachTitle"><span class="ai">🤖</span> <span>${c.title}</span></div>
+        <button class="btn primary" onclick="useCoach(${idx})">Plan starten</button>
+      </div>
+
+      <div class="videoDemo" title="Mini Video Demo (Placeholder)">
+        <div class="videoOverlay">
+          <div class="play">▶</div>
+          <div>
+            <div style="font-weight:1000">Mini-Video Demo</div>
+            <div class="small">So trainierst du (Demo)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="small" style="margin-top:10px">
+        <b>Übungen:</b><br>
+        ${c.steps.map(s=>`• ${s}`).join("<br>")}
+        <div style="margin-top:8px"><b>Tipp:</b> ${c.tip}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function useCoach(i){
+  const c = COACH[i];
+  toast(`🤖 <b>KI Coach aktiviert</b><br>${c.title}<br><span class="small">Plan: ${c.steps[0]}</span>`);
+}
+
+/* =========================
    BOOK MODAL
 ========================= */
 function openBook(slotId){
@@ -639,12 +898,10 @@ function openBook(slotId){
   $("bookNote").value = "";
   $("bookModal").style.display = "flex";
 }
-
 function closeBook(){
   $("bookModal").style.display = "none";
   selectedSlotId = null;
 }
-
 function confirmBooking(){
   if(!selectedSlotId) return;
 
@@ -662,13 +919,21 @@ function confirmBooking(){
   renderFitness();
   toast(`✅ <b>Buchung bestätigt</b><br>${dayName(slot.day)} ${slot.start}–${slot.end} • ${type}${note? "<br><span class='small'>Notiz: "+note+"</span>":""}`);
 }
-
 function cancelBooking(slotId){
   const slot = fitnessSlotsCatalog.find(s=>s.id===slotId);
   const bookings = loadBookings().filter(b => b.slotId !== slotId);
   saveBookings(bookings);
   renderFitness();
   toast(`🗑️ <b>Storniert</b><br>${slot ? (dayName(slot.day)+" "+slot.start+"–"+slot.end) : "Slot"} wurde entfernt.`);
+}
+
+/* =========================
+   WALLET / NFC DEMO
+========================= */
+function openWallet(){ $("walletModal").style.display="flex"; }
+function closeWallet(){ $("walletModal").style.display="none"; }
+function simulateNFC(){
+  toast("📶 <b>NFC Tap OK</b><br>Zugang/Check-in registriert (Demo).");
 }
 
 /* init */
